@@ -1,0 +1,18 @@
+{
+  "general": [
+    "ID",
+    "LPAREN"
+  ],
+  "expression": [
+    "ID",
+    "LPAREN"
+  ],
+  "term": [
+    "ID",
+    "LPAREN"
+  ],
+  "factor": [
+    "ID",
+    "LPAREN"
+  ]
+}

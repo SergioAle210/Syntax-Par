@@ -1,0 +1,162 @@
+{
+    "0": {
+        "ID": "s2",
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": "s1",
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
+    },
+    "1": {
+        "ID": "s2",
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": "s1",
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
+    },
+    "2": {
+        "ID": null,
+        "PLUS": "r8",
+        "TIMES": "r8",
+        "LPAREN": null,
+        "RPAREN": "r8",
+        "WS": null,
+        "SEMICOLON": "r8",
+        "$": "r8"
+    },
+    "3": {
+        "ID": null,
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": null,
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": "s8",
+        "$": null
+    },
+    "4": {
+        "ID": null,
+        "PLUS": "s10",
+        "TIMES": null,
+        "LPAREN": null,
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": "s9",
+        "$": null
+    },
+    "5": {
+        "ID": null,
+        "PLUS": "r4",
+        "TIMES": "s11",
+        "LPAREN": null,
+        "RPAREN": "r4",
+        "WS": null,
+        "SEMICOLON": "r4",
+        "$": "r4"
+    },
+    "6": {
+        "ID": null,
+        "PLUS": "r6",
+        "TIMES": "r6",
+        "LPAREN": null,
+        "RPAREN": "r6",
+        "WS": null,
+        "SEMICOLON": "r6",
+        "$": "r6"
+    },
+    "7": {
+        "ID": null,
+        "PLUS": "s10",
+        "TIMES": null,
+        "LPAREN": null,
+        "RPAREN": "s12",
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
+    },
+    "8": {
+        "ID": "s2",
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": "s1",
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
+    },
+    "9": {
+        "ID": null,
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": null,
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": "r2",
+        "$": "r2"
+    },
+    "10": {
+        "ID": "s2",
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": "s1",
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
+    },
+    "11": {
+        "ID": "s2",
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": "s1",
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
+    },
+    "12": {
+        "ID": null,
+        "PLUS": "r7",
+        "TIMES": "r7",
+        "LPAREN": null,
+        "RPAREN": "r7",
+        "WS": null,
+        "SEMICOLON": "r7",
+        "$": "r7"
+    },
+    "13": {
+        "ID": null,
+        "PLUS": "s10",
+        "TIMES": null,
+        "LPAREN": null,
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": "r1",
+        "$": "r1"
+    },
+    "14": {
+        "ID": null,
+        "PLUS": "r3",
+        "TIMES": "s11",
+        "LPAREN": null,
+        "RPAREN": "r3",
+        "WS": null,
+        "SEMICOLON": "r3",
+        "$": "r3"
+    },
+    "15": {
+        "ID": null,
+        "PLUS": "r5",
+        "TIMES": "r5",
+        "LPAREN": null,
+        "RPAREN": "r5",
+        "WS": null,
+        "SEMICOLON": "r5",
+        "$": "r5"
+    }
+}

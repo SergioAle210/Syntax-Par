@@ -1,0 +1,24 @@
+let delim   = [' ' '\t' '\n']
+let ws      = delim+                        (* al menos un espacio/tab/salto *)
+let digit   = ['0'-'9']
+let digits  = digit+                        (* al menos un dígito *)
+let number  = digits ('.' digits)? ('E' ['+' '-' ]? digits)? 
+    (* Un número entero o con parte decimal, opcional exponente E±... *)
+
+rule tokens =
+
+    ws        { /* ignorar espacios en blanco */  }
+
+  | number    { return ID; }    (* en lugar de “number” devolvemos ID *)
+
+  | '+'       { return PLUS; }  (* en lugar de “+” devolvemos PLUS *)
+
+  | '*'       { return TIMES; } (* en lugar de “*” devolvemos TIMES *)
+
+  | '('       { return LPAREN; }
+
+  | ')'       { return RPAREN; }
+
+  | ';'       { return SEMICOLON; }
+
+  | eof       { exit 0; }

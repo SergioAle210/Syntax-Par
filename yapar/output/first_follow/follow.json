@@ -1,0 +1,26 @@
+{
+  "general": [
+    "$",
+    "SEMICOLON"
+  ],
+  "expression": [
+    "SEMICOLON",
+    "RPAREN",
+    "$",
+    "PLUS"
+  ],
+  "term": [
+    "TIMES",
+    "RPAREN",
+    "SEMICOLON",
+    "PLUS",
+    "$"
+  ],
+  "factor": [
+    "TIMES",
+    "RPAREN",
+    "SEMICOLON",
+    "PLUS",
+    "$"
+  ]
+}

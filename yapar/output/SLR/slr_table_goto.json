@@ -1,0 +1,98 @@
+{
+    "0": {
+        "general": 3,
+        "expression": 4,
+        "term": 5,
+        "factor": 6
+    },
+    "1": {
+        "general": null,
+        "expression": 7,
+        "term": 5,
+        "factor": 6
+    },
+    "2": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "3": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "4": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "5": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "6": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "7": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "8": {
+        "general": null,
+        "expression": 13,
+        "term": 5,
+        "factor": 6
+    },
+    "9": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "10": {
+        "general": null,
+        "expression": null,
+        "term": 14,
+        "factor": 6
+    },
+    "11": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": 15
+    },
+    "12": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "13": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "14": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    },
+    "15": {
+        "general": null,
+        "expression": null,
+        "term": null,
+        "factor": null
+    }
+}

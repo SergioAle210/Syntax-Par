@@ -1,0 +1,11 @@
+=== Simulación del parser SLR(1) ===
+Cadena de entrada (tokens): ID + ID ; ws ID * ID ; ws ( ID + ID ) * ID ; ws ID + ID * ID * ID + ID ; ws ID + ID * ID + ID ; ws
+
+=== Lista de acciones del parser ===
+1: ('shift', 0, 'ID', 2)
+2: ('error', 2, '+', "Error sintáctico en estado 2 con token '+'. Esperaba uno de: ID, PLUS, TIMES, LPAREN, RPAREN, WS, SEMICOLON, $.")
+
+=== Resultado final ===
+ERROR
+Detalles del error:
+Error sintáctico en estado 2 con token '+'. Esperaba uno de: ID, PLUS, TIMES, LPAREN, RPAREN, WS, SEMICOLON, $.
