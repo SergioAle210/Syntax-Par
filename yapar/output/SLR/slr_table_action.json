@@ -20,66 +20,86 @@
         "$": null
     },
     "2": {
-        "ID": null,
+        "ID": "r7",
         "PLUS": "r7",
         "TIMES": "r7",
-        "LPAREN": null,
+        "LPAREN": "r7",
         "RPAREN": "r7",
         "WS": null,
         "SEMICOLON": "r7",
-        "$": null
+        "$": "r7"
     },
     "3": {
+        "ID": "r9",
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": "r9",
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": "s10",
+        "$": "r9"
+    },
+    "4": {
+        "ID": null,
+        "PLUS": "s12",
+        "TIMES": null,
+        "LPAREN": null,
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": "s11",
+        "$": null
+    },
+    "5": {
+        "ID": "r3",
+        "PLUS": "r3",
+        "TIMES": "s13",
+        "LPAREN": "r3",
+        "RPAREN": "r3",
+        "WS": null,
+        "SEMICOLON": "r3",
+        "$": "r3"
+    },
+    "6": {
+        "ID": "r5",
+        "PLUS": "r5",
+        "TIMES": "r5",
+        "LPAREN": "r5",
+        "RPAREN": "r5",
+        "WS": null,
+        "SEMICOLON": "r5",
+        "$": "r5"
+    },
+    "7": {
         "ID": "s2",
         "PLUS": null,
         "TIMES": null,
         "LPAREN": "s1",
-        "RPAREN": null,
-        "WS": null,
-        "SEMICOLON": null,
-        "$": "r10"
-    },
-    "4": {
-        "ID": null,
-        "PLUS": "s13",
-        "TIMES": null,
-        "LPAREN": null,
-        "RPAREN": null,
-        "WS": null,
-        "SEMICOLON": "s12",
-        "$": null
-    },
-    "5": {
-        "ID": null,
-        "PLUS": "r3",
-        "TIMES": "s14",
-        "LPAREN": null,
-        "RPAREN": "r3",
-        "WS": null,
-        "SEMICOLON": "r3",
-        "$": null
-    },
-    "6": {
-        "ID": null,
-        "PLUS": "r5",
-        "TIMES": "r5",
-        "LPAREN": null,
-        "RPAREN": "r5",
-        "WS": null,
-        "SEMICOLON": "r5",
-        "$": null
-    },
-    "7": {
-        "ID": null,
-        "PLUS": null,
-        "TIMES": null,
-        "LPAREN": null,
         "RPAREN": null,
         "WS": null,
         "SEMICOLON": null,
         "$": null
     },
     "8": {
+        "ID": null,
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": null,
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
+    },
+    "9": {
+        "ID": null,
+        "PLUS": "s12",
+        "TIMES": null,
+        "LPAREN": null,
+        "RPAREN": "s15",
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
+    },
+    "10": {
         "ID": "s2",
         "PLUS": null,
         "TIMES": null,
@@ -87,47 +107,27 @@
         "RPAREN": null,
         "WS": null,
         "SEMICOLON": null,
-        "$": "r8"
-    },
-    "9": {
-        "ID": null,
-        "PLUS": null,
-        "TIMES": null,
-        "LPAREN": null,
-        "RPAREN": null,
-        "WS": null,
-        "SEMICOLON": null,
-        "$": null
-    },
-    "10": {
-        "ID": null,
-        "PLUS": "s13",
-        "TIMES": null,
-        "LPAREN": null,
-        "RPAREN": "s16",
-        "WS": null,
-        "SEMICOLON": null,
         "$": null
     },
     "11": {
-        "ID": null,
-        "PLUS": "s13",
-        "TIMES": null,
-        "LPAREN": null,
-        "RPAREN": null,
-        "WS": null,
-        "SEMICOLON": "s17",
-        "$": null
-    },
-    "12": {
         "ID": "r1",
         "PLUS": null,
         "TIMES": null,
         "LPAREN": "r1",
         "RPAREN": null,
         "WS": null,
-        "SEMICOLON": null,
+        "SEMICOLON": "r1",
         "$": "r1"
+    },
+    "12": {
+        "ID": "s2",
+        "PLUS": null,
+        "TIMES": null,
+        "LPAREN": "s1",
+        "RPAREN": null,
+        "WS": null,
+        "SEMICOLON": null,
+        "$": null
     },
     "13": {
         "ID": "s2",
@@ -140,38 +140,28 @@
         "$": null
     },
     "14": {
-        "ID": "s2",
+        "ID": "r8",
         "PLUS": null,
         "TIMES": null,
-        "LPAREN": "s1",
+        "LPAREN": "r8",
         "RPAREN": null,
         "WS": null,
-        "SEMICOLON": null,
-        "$": null
+        "SEMICOLON": "s10",
+        "$": "r8"
     },
     "15": {
-        "ID": "s2",
-        "PLUS": null,
-        "TIMES": null,
-        "LPAREN": "s1",
-        "RPAREN": null,
-        "WS": null,
-        "SEMICOLON": null,
-        "$": "r9"
-    },
-    "16": {
-        "ID": null,
+        "ID": "r6",
         "PLUS": "r6",
         "TIMES": "r6",
-        "LPAREN": null,
+        "LPAREN": "r6",
         "RPAREN": "r6",
         "WS": null,
         "SEMICOLON": "r6",
-        "$": null
+        "$": "r6"
     },
-    "17": {
+    "16": {
         "ID": null,
-        "PLUS": null,
+        "PLUS": "s12",
         "TIMES": null,
         "LPAREN": null,
         "RPAREN": null,
@@ -179,24 +169,24 @@
         "SEMICOLON": null,
         "$": "acc"
     },
-    "18": {
-        "ID": null,
+    "17": {
+        "ID": "r2",
         "PLUS": "r2",
-        "TIMES": "s14",
-        "LPAREN": null,
+        "TIMES": "s13",
+        "LPAREN": "r2",
         "RPAREN": "r2",
         "WS": null,
         "SEMICOLON": "r2",
-        "$": null
+        "$": "r2"
     },
-    "19": {
-        "ID": null,
+    "18": {
+        "ID": "r4",
         "PLUS": "r4",
         "TIMES": "r4",
-        "LPAREN": null,
+        "LPAREN": "r4",
         "RPAREN": "r4",
         "WS": null,
         "SEMICOLON": "r4",
-        "$": null
+        "$": "r4"
     }
 }

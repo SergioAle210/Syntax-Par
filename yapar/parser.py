@@ -13,9 +13,21 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../l
 from lexer import lex
 
 # --- FUNCIÓN PARA PARSEAR .YALP ---
+# --- FUNCIÓN PARA PARSEAR .YALP ---
 def parse_yalp_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         lines = f.readlines()
+
+    # Mapeo clásico para traducir símbolos concretos a nombres de token
+    known_symbol_map = {
+        '+': 'PLUS',
+        '*': 'TIMES',
+        '-': 'MINUS',
+        '/': 'DIV',
+        '(': 'LPAREN',
+        ')': 'RPAREN',
+        ';': 'SEMICOLON',
+    }
 
     tokens = []
     productions = {}
@@ -26,15 +38,15 @@ def parse_yalp_file(filepath):
     for line in lines:
         line = line.strip()
 
-        # Parse tokens
+        # %token declaraciones
         if line.startswith('%token'):
             tokens += line.split()[1:]
 
-        # Ignorar líneas vacías o comentarios
+        # Ignorar líneas vacías, comentarios y reglas de IGNORE
         elif not line or line.startswith('/*') or line.startswith('IGNORE'):
             continue
 
-        # LHS con definición
+        # Nueva producción con ':'
         elif ':' in line:
             if current_lhs is not None and alternatives:
                 productions[current_lhs] = alternatives
@@ -49,19 +61,18 @@ def parse_yalp_file(filepath):
                 start_symbol = lhs
 
             if rhs:
-                if '|' in rhs:
-                    for alt in rhs.split('|'):
-                        alt = alt.strip()
-                        if alt:
-                            alternatives.append(alt.split())
-                else:
-                    alternatives.append(rhs.split())
+                rhs_alts = rhs.split('|')
+                for alt in rhs_alts:
+                    alt_tokens = [known_symbol_map.get(tok, tok) for tok in alt.strip().split()]
+                    if alt_tokens:
+                        alternatives.append(alt_tokens)
 
-        # Línea alternativa con '|'
+        # Producción alternativa con '|'
         elif line.startswith('|'):
             alt = line[1:].strip()
-            if alt:
-                alternatives.append(alt.split())
+            alt_tokens = [known_symbol_map.get(tok, tok) for tok in alt.split()]
+            if alt_tokens:
+                alternatives.append(alt_tokens)
 
         # Fin de producción con ';'
         elif line.startswith(';'):
@@ -70,22 +81,33 @@ def parse_yalp_file(filepath):
                 alternatives = []
                 current_lhs = None
 
-        # Alternativas continuadas en otra línea
+        # Línea con producción continuada
         elif current_lhs and line:
-            alternatives.append(line.split())
+            alt_tokens = [known_symbol_map.get(tok, tok) for tok in line.split()]
+            if alt_tokens:
+                alternatives.append(alt_tokens)
 
-    # Última producción si quedó sin cerrar con ;
+    # Guardar última producción si quedó sin cerrar
     if current_lhs and alternatives:
         productions[current_lhs] = alternatives
 
-    # === Agregar producción aumentada ===
-    augmented_start = start_symbol + "'"
-    while augmented_start in productions:
-        augmented_start += "'"
+    # === INYECTAR PRODUCCIÓN SUPERIOR SI ES NECESARIO ===
+    if start_symbol == "general":
+        # Agregar nueva producción recursiva izquierda para múltiples general
+        productions["S"] = [["S", "general"], ["general"]]
+        final_start = "S"
+    else:
+        final_start = start_symbol
 
-    # DEBUG
-    print("Productions:", productions)
-    return tokens, productions, start_symbol
+    # Agregar producción aumentada
+    start_symbol_aug = final_start + "'"
+    while start_symbol_aug in productions:
+        start_symbol_aug += "'"
+    productions[start_symbol_aug] = [[final_start]]
+
+    return tokens, productions, start_symbol_aug, final_start
+
+
 
 
 
@@ -161,24 +183,12 @@ def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
     lr0_dir = os.path.join(output_dir, "LR0")
     ff_dir = os.path.join(output_dir, "first_follow")
     slr_dir = os.path.join(output_dir, "SLR")
+    tokens, productions, augmented_start, start_symbol = parse_yalp_file(yalp_path)
 
-    # 1. Parsear el archivo YALP
-    tokens, productions, raw_start_symbol = parse_yalp_file(yalp_path)
 
     token_map = infer_token_map(tokens, productions)
 
-    if raw_start_symbol == 'general':
-        productions['S'] = [['general_list']]
-        productions['general_list'] = [['general_list', 'general'], ['general']]
-        start_symbol = 'S'
-    else:
-        start_symbol = raw_start_symbol
 
-    # Aumentar después de haber decidido el start_symbol
-    augmented_start = start_symbol + "'"
-    while augmented_start in productions:
-        augmented_start += "'"
-    productions[augmented_start] = [[start_symbol]]
 
 
 

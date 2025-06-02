@@ -3,10 +3,9 @@ LR(0) Automaton States:
 State I0:
   S'' →  • S'
   S' →  • S
-  S →  • general_list
-  general_list →  • general_list general
-  general_list →  • general
-  general →  • general expression SEMICOLON
+  S →  • S general
+  S →  • general
+  general →  • general SEMICOLON expression
   general →  • expression SEMICOLON
   expression →  • expression PLUS term
   expression →  • term
@@ -28,14 +27,8 @@ State I2:
   factor → ID • 
 
 State I3:
-  general_list → general • 
-  general → general • expression SEMICOLON
-  expression →  • expression PLUS term
-  expression →  • term
-  term →  • term TIMES factor
-  term →  • factor
-  factor →  • LPAREN expression RPAREN
-  factor →  • ID
+  S → general • 
+  general → general • SEMICOLON expression
 
 State I4:
   general → expression • SEMICOLON
@@ -50,11 +43,8 @@ State I6:
 
 State I7:
   S' → S • 
-
-State I8:
-  S → general_list • 
-  general_list → general_list • general
-  general →  • general expression SEMICOLON
+  S → S • general
+  general →  • general SEMICOLON expression
   general →  • expression SEMICOLON
   expression →  • expression PLUS term
   expression →  • term
@@ -63,35 +53,15 @@ State I8:
   factor →  • LPAREN expression RPAREN
   factor →  • ID
 
-State I9:
+State I8:
   S'' → S' • 
 
-State I10:
+State I9:
   factor → LPAREN expression • RPAREN
   expression → expression • PLUS term
 
-State I11:
-  general → general expression • SEMICOLON
-  expression → expression • PLUS term
-
-State I12:
-  general → expression SEMICOLON • 
-
-State I13:
-  expression → expression PLUS • term
-  term →  • term TIMES factor
-  term →  • factor
-  factor →  • LPAREN expression RPAREN
-  factor →  • ID
-
-State I14:
-  term → term TIMES • factor
-  factor →  • LPAREN expression RPAREN
-  factor →  • ID
-
-State I15:
-  general_list → general_list general • 
-  general → general • expression SEMICOLON
+State I10:
+  general → general SEMICOLON • expression
   expression →  • expression PLUS term
   expression →  • term
   term →  • term TIMES factor
@@ -99,17 +69,37 @@ State I15:
   factor →  • LPAREN expression RPAREN
   factor →  • ID
 
-State I16:
+State I11:
+  general → expression SEMICOLON • 
+
+State I12:
+  expression → expression PLUS • term
+  term →  • term TIMES factor
+  term →  • factor
+  factor →  • LPAREN expression RPAREN
+  factor →  • ID
+
+State I13:
+  term → term TIMES • factor
+  factor →  • LPAREN expression RPAREN
+  factor →  • ID
+
+State I14:
+  S → S general • 
+  general → general • SEMICOLON expression
+
+State I15:
   factor → LPAREN expression RPAREN • 
 
-State I17:
-  general → general expression SEMICOLON • 
+State I16:
+  general → general SEMICOLON expression • 
+  expression → expression • PLUS term
 
-State I18:
+State I17:
   expression → expression PLUS term • 
   term → term • TIMES factor
 
-State I19:
+State I18:
   term → term TIMES factor • 
 
 LR(0) Automaton Transitions:
@@ -120,41 +110,36 @@ LR(0) Automaton Transitions:
   I0 --term--> I5
   I0 --factor--> I6
   I0 --S--> I7
-  I0 --general_list--> I8
-  I0 --S'--> I9
+  I0 --S'--> I8
   I1 --LPAREN--> I1
   I1 --ID--> I2
-  I1 --expression--> I10
+  I1 --expression--> I9
   I1 --term--> I5
   I1 --factor--> I6
-  I3 --LPAREN--> I1
-  I3 --ID--> I2
-  I3 --expression--> I11
-  I3 --term--> I5
-  I3 --factor--> I6
-  I4 --SEMICOLON--> I12
-  I4 --PLUS--> I13
-  I5 --TIMES--> I14
-  I8 --LPAREN--> I1
-  I8 --ID--> I2
-  I8 --general--> I15
-  I8 --expression--> I4
-  I8 --term--> I5
-  I8 --factor--> I6
-  I10 --PLUS--> I13
-  I10 --RPAREN--> I16
-  I11 --SEMICOLON--> I17
-  I11 --PLUS--> I13
+  I3 --SEMICOLON--> I10
+  I4 --SEMICOLON--> I11
+  I4 --PLUS--> I12
+  I5 --TIMES--> I13
+  I7 --LPAREN--> I1
+  I7 --ID--> I2
+  I7 --general--> I14
+  I7 --expression--> I4
+  I7 --term--> I5
+  I7 --factor--> I6
+  I9 --PLUS--> I12
+  I9 --RPAREN--> I15
+  I10 --LPAREN--> I1
+  I10 --ID--> I2
+  I10 --expression--> I16
+  I10 --term--> I5
+  I10 --factor--> I6
+  I12 --LPAREN--> I1
+  I12 --ID--> I2
+  I12 --term--> I17
+  I12 --factor--> I6
   I13 --LPAREN--> I1
   I13 --ID--> I2
-  I13 --term--> I18
-  I13 --factor--> I6
-  I14 --LPAREN--> I1
-  I14 --ID--> I2
-  I14 --factor--> I19
-  I15 --LPAREN--> I1
-  I15 --ID--> I2
-  I15 --expression--> I11
-  I15 --term--> I5
-  I15 --factor--> I6
-  I18 --TIMES--> I14
+  I13 --factor--> I18
+  I14 --SEMICOLON--> I10
+  I16 --PLUS--> I12
+  I17 --TIMES--> I13

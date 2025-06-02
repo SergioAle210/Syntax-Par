@@ -5,17 +5,15 @@
         "term": 5,
         "factor": 6,
         "S": 7,
-        "general_list": 8,
-        "S'": 9,
+        "S'": 8,
         "S''": null
     },
     "1": {
         "general": null,
-        "expression": 10,
+        "expression": 9,
         "term": 5,
         "factor": 6,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -25,17 +23,15 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
     "3": {
         "general": null,
-        "expression": 11,
-        "term": 5,
-        "factor": 6,
+        "expression": null,
+        "term": null,
+        "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -45,7 +41,6 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -55,7 +50,6 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -65,27 +59,24 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
     "7": {
+        "general": 14,
+        "expression": 4,
+        "term": 5,
+        "factor": 6,
+        "S": null,
+        "S'": null,
+        "S''": null
+    },
+    "8": {
         "general": null,
         "expression": null,
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
-        "S'": null,
-        "S''": null
-    },
-    "8": {
-        "general": 15,
-        "expression": 4,
-        "term": 5,
-        "factor": 6,
-        "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -95,17 +86,15 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
     "10": {
         "general": null,
-        "expression": null,
-        "term": null,
-        "factor": null,
+        "expression": 16,
+        "term": 5,
+        "factor": 6,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -115,27 +104,24 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
     "12": {
         "general": null,
         "expression": null,
-        "term": null,
-        "factor": null,
+        "term": 17,
+        "factor": 6,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
     "13": {
         "general": null,
         "expression": null,
-        "term": 18,
-        "factor": 6,
+        "term": null,
+        "factor": 18,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -143,19 +129,17 @@
         "general": null,
         "expression": null,
         "term": null,
-        "factor": 19,
+        "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
     "15": {
         "general": null,
-        "expression": 11,
-        "term": 5,
-        "factor": 6,
+        "expression": null,
+        "term": null,
+        "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -165,7 +149,6 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -175,7 +158,6 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     },
@@ -185,17 +167,6 @@
         "term": null,
         "factor": null,
         "S": null,
-        "general_list": null,
-        "S'": null,
-        "S''": null
-    },
-    "19": {
-        "general": null,
-        "expression": null,
-        "term": null,
-        "factor": null,
-        "S": null,
-        "general_list": null,
         "S'": null,
         "S''": null
     }

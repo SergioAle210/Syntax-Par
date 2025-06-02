@@ -59,6 +59,15 @@ def simulate_slr_parser(action_table, goto_table, productions_enum, token_stream
 
             state = goto_state
             action = action_table.get(state, {}).get(current_token, None)
+        # Aceptación manual si se reduce al símbolo inicial aumentado con token $
+# --- Aceptación manual basada en símbolo inicial aumentado ---
+        if lookahead_token == '$' and len(stack) >= 3:
+            last_symbol = stack[-3]  # símbolo no terminal antes del último estado
+            if isinstance(last_symbol, str) and last_symbol.endswith("''"):
+                actions.append(("accept", stack[-1], current_token))
+                print("[DEBUG] Aceptación manual detectada al llegar a símbolo inicial aumentado doble con '$'")
+                return True, actions, None
+
 
 
         if action is None:
