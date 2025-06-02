@@ -8,6 +8,8 @@ class Grammar:
     def __init__(self, productions, start_symbol):
         self.productions = productions  # dict[str, list[list[str]]]
         self.start_symbol = start_symbol
+        self.start_symbol = self._augment_start_symbol(start_symbol, productions)
+
         # Calcula no terminales y terminales
         self.nonterminals = []
         for nt in productions:
@@ -19,17 +21,14 @@ class Grammar:
                 for sym in body:
                     if sym not in self.nonterminals and sym not in self.terminals:
                         self.terminals.append(sym)
+    def _augment_start_symbol(self, base, productions):
+        s0 = base + "'"
+        while s0 in productions:
+            s0 += "'"
+        productions[s0] = [[base]]
+        return s0
 
-def augment_grammar(grammar):
-    # Agrega producción inicial S' -> S
-    S = grammar.start_symbol
-    S0 = S + "'"
-    while S0 in grammar.productions:
-        S0 += "'"
-    augmented = {S0: [[S]]}
-    for k in grammar.productions:
-        augmented[k] = grammar.productions[k]
-    return Grammar(augmented, S0)
+
 
 def item(lhs, rhs, dot):
     # Ejemplo: ('E', ['E', '+', 'T'], 2)
@@ -92,7 +91,6 @@ def state_in(state, states):
     return -1
 
 def lr0_items(grammar):
-    grammar = augment_grammar(grammar)
     initial = item(grammar.start_symbol, grammar.productions[grammar.start_symbol][0], 0)
     states = []
     transitions = {}  # (origen, simbolo): destino

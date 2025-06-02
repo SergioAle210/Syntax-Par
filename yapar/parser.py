@@ -16,28 +16,38 @@ from lexer import lex
 def parse_yalp_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         lines = f.readlines()
+
     tokens = []
     productions = {}
     start_symbol = None
     current_lhs = None
     alternatives = []
+
     for line in lines:
         line = line.strip()
+
+        # Parse tokens
         if line.startswith('%token'):
             tokens += line.split()[1:]
-        elif not line or line.startswith('/*'):
+
+        # Ignorar líneas vacías o comentarios
+        elif not line or line.startswith('/*') or line.startswith('IGNORE'):
             continue
+
+        # LHS con definición
         elif ':' in line:
-            # Procesa regla previa si existe
             if current_lhs is not None and alternatives:
                 productions[current_lhs] = alternatives
                 alternatives = []
+
             lhs, rhs = line.split(':', 1)
             lhs = lhs.strip()
             rhs = rhs.strip()
             current_lhs = lhs
+
             if start_symbol is None:
                 start_symbol = lhs
+
             if rhs:
                 if '|' in rhs:
                     for alt in rhs.split('|'):
@@ -46,26 +56,64 @@ def parse_yalp_file(filepath):
                             alternatives.append(alt.split())
                 else:
                     alternatives.append(rhs.split())
+
+        # Línea alternativa con '|'
         elif line.startswith('|'):
             alt = line[1:].strip()
             if alt:
                 alternatives.append(alt.split())
+
+        # Fin de producción con ';'
         elif line.startswith(';'):
-            if current_lhs is not None and alternatives:
+            if current_lhs and alternatives:
                 productions[current_lhs] = alternatives
                 alternatives = []
                 current_lhs = None
-        else:
-            # Si hay línea con contenido y estamos leyendo una regla, agrégala como alternativa
-            if current_lhs is not None and line:
-                alternatives.append(line.split())
-    # Procesa al final si quedó algo pendiente
-    if current_lhs is not None and alternatives:
+
+        # Alternativas continuadas en otra línea
+        elif current_lhs and line:
+            alternatives.append(line.split())
+
+    # Última producción si quedó sin cerrar con ;
+    if current_lhs and alternatives:
         productions[current_lhs] = alternatives
 
-    # DEBUG: Imprime producciones finales
+    # === Agregar producción aumentada ===
+    augmented_start = start_symbol + "'"
+    while augmented_start in productions:
+        augmented_start += "'"
+
+    # DEBUG
     print("Productions:", productions)
     return tokens, productions, start_symbol
+
+
+
+def infer_token_map(tokens, productions):
+    """
+    Infiera el mapeo entre lexemas concretos (como '+', '*') y nombres simbólicos de tokens
+    (como 'PLUS', 'TIMES'), utilizando los tokens definidos en %token.
+    """
+    # Mapeo clásico de símbolos a nombres comunes
+    known_map = {
+        '+': 'PLUS',
+        '*': 'TIMES',
+        '-': 'MINUS',
+        '/': 'DIV',
+        '(': 'LPAREN',
+        ')': 'RPAREN',
+        ';': 'SEMICOLON',
+    }
+
+    symbol_map = {}
+
+    # Solo agregar si están efectivamente en los tokens declarados
+    for sym, token_name in known_map.items():
+        if token_name in tokens:
+            symbol_map[sym] = token_name
+
+    print(">>> TOKEN_MAP INFERIDO:", symbol_map)
+    return symbol_map
 
 
 
@@ -115,10 +163,28 @@ def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
     slr_dir = os.path.join(output_dir, "SLR")
 
     # 1. Parsear el archivo YALP
-    tokens, productions, start_symbol = parse_yalp_file(yalp_path)
+    tokens, productions, raw_start_symbol = parse_yalp_file(yalp_path)
+
+    token_map = infer_token_map(tokens, productions)
+
+    if raw_start_symbol == 'general':
+        productions['S'] = [['general_list']]
+        productions['general_list'] = [['general_list', 'general'], ['general']]
+        start_symbol = 'S'
+    else:
+        start_symbol = raw_start_symbol
+
+    # Aumentar después de haber decidido el start_symbol
+    augmented_start = start_symbol + "'"
+    while augmented_start in productions:
+        augmented_start += "'"
+    productions[augmented_start] = [[start_symbol]]
+
+
+
 
     # 2. Construir el automata LR(0)
-    grammar = Grammar(productions, start_symbol)
+    grammar = Grammar(productions, augmented_start)
     states, transitions, grammar = lr0_items(grammar)
     save_pickle((states, transitions), f"{lr0_dir}/lr0_states_transitions.pickle")
     visualize_lr0_automaton(states, transitions, grammar, filename=f"{lr0_dir}/lr0_automaton")
@@ -126,13 +192,21 @@ def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
     # 3. Calcular FIRST y FOLLOW
     first = compute_first(productions)
     follow = compute_follow(productions, first, start_symbol)
+
+    # === DEBUG: IMPRIMIR FOLLOW SETS ===
+    print("\n=== FOLLOW SETS DEBUG ===")
+    for nt, follow_set in follow.items():
+        print(f"FOLLOW({nt}) = {follow_set}")
+
     save_pickle((first, follow), f"{ff_dir}/first_follow.pickle")
     save_json(first, f"{ff_dir}/first.json")
     save_json(follow, f"{ff_dir}/follow.json")
 
+
     # 4. Enumerar producciones
     print("\n=== Producciones enumeradas ===")
-    productions_list = enumerate_productions(productions, start_symbol)
+    productions_list = enumerate_productions(grammar.productions, grammar.start_symbol)
+
     save_pickle(productions_list, f"{slr_dir}/productions_enum.pickle")
     for idx, (lhs, rhs) in enumerate(productions_list):
         print(f"{idx}: {lhs} → {' '.join(rhs)}")
@@ -163,6 +237,12 @@ def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
             if next_state is not None:
                 print(f"Estado {state}, no-terminal {nt}: {next_state}")
 
+    print("\n=== FIRST SETS DEBUG ===")
+    for nt, first_set in first.items():
+        print(f"FIRST({nt}) = {first_set}")
+
+    
+
 
 
     with open(dfa_pickle_path, "rb") as f:
@@ -175,7 +255,9 @@ def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
     def token_stream_gen():
         for token, lexema in lex(input_text, dfa):
             if token not in ("WHITESPACE", "WS", "TAB", "ENTER"):
-                yield (token, lexema)
+                yield (token_map.get(token, token), lexema)
+
+
 
     # --- PASA EL GENERADOR DIRECTAMENTE AL PARSER ---
     accepted, actions, error_msg = simulate_slr_parser(
@@ -183,7 +265,7 @@ def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
     )
 
     # Para mostrar los tokens consumidos (solo para el reporte, no para el parser)
-    tokens_for_parser = [token for token, _ in lex(input_text, dfa) if token not in ("WHITESPACE", "WS", "TAB", "ENTER")]
+    tokens_for_parser = [token_map.get(token, token) for token, _ in lex(input_text, dfa) if token not in ("WHITESPACE", "WS", "TAB", "ENTER")]
 
     parser_outfile = os.path.join(output_dir, "parser_output.txt")
     save_parser_output(actions, accepted, error_msg, tokens_for_parser, parser_outfile)

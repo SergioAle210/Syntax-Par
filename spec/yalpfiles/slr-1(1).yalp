@@ -13,10 +13,9 @@
 IGNORE WS, TAB, ENTER
 
 
-general :
-    general SEMICOLON expression
-  | expression SEMICOLON
-  ;
+general : general expression SEMICOLON
+        | expression SEMICOLON
+        ;
 
 expression:
     expression PLUS term

@@ -8,89 +8,101 @@ def simulate_slr_parser(action_table, goto_table, productions_enum, token_stream
       - lista de acciones realizadas
       - mensaje de error detallado si ocurre
     """
-    stack = [0]  # Stack de estados y símbolos
+    stack = [0]
     actions = []
     tokens = iter(token_stream)
-    lookahead_token = None  # El token que está viendo el parser
+    
+    def next_valid_token():
+        while True:
+            try:
+                tok, lex = next(tokens)
+                if tok != 'ws':
+                    return tok, lex
+                else:
+                    print(f"[DEBUG] Ignorando token: {tok} (lexema: '{lex}')")
+            except StopIteration:
+                return '$', ''
 
-    # Obtenemos el primer token del stream
-    try:
-        lookahead_token, _ = next(tokens)
-    except StopIteration:
-        lookahead_token = '$'  # Usamos $ como fin de entrada si no hay nada
+    lookahead_token, lookahead_lexeme = next_valid_token()
+    print(f">>> [DEBUG] Primer token: {lookahead_token} (lexema: '{lookahead_lexeme}')")
 
     while True:
         state = stack[-1]
         current_token = lookahead_token if lookahead_token is not None else '$'
-
         action = action_table.get(state, {}).get(current_token, None)
 
-        # Debug: print before reduction cycle
         print(f"[DEBUG] Antes del ciclo de reducciones: state={state}, token={current_token}, stack={stack}")
+        print(">> DEBUG: Entrando a ciclo de reducción global")
 
-        # Si hay múltiples reducciones, sigue reduciendo antes de intentar shift
         while action is not None and action.startswith("r"):
             prod_num = int(action[1:])
             _, lhs, rhs = productions_enum[prod_num]
             actions.append(("reduce", state, f"{lhs} → {' '.join(rhs) if rhs else 'λ'}"))
-            # Debug de reduce
             print(f"\n[DEBUG] Reduciendo {lhs} → {' '.join(rhs)} en estado {state} con token {current_token}")
             for _ in range(len(rhs) * 2):
                 stack.pop()
-            print("  Stack después del pop:", stack)
-            state = stack[-1]
+            prev_state = stack[-1]
             stack.append(lhs)
-            goto_state = goto_table[state][lhs]
-            print(f"  Hago GOTO({state}, '{lhs}') = {goto_state}")
+            if lhs not in goto_table[prev_state]:
+                print(f"[ERROR] No hay GOTO({prev_state}, {lhs})")
+                return False, actions, f"Error: GOTO no definido para ({prev_state}, {lhs})"
+            goto_state = goto_table[prev_state][lhs]
             stack.append(goto_state)
+            state = goto_state  # IMPORTANTE: usamos el GOTO para el nuevo estado
             print("  Stack después del push:", stack)
-            # Invariant check: states at even, symbols at odd positions
+            
             for i, v in enumerate(stack):
                 if i % 2 == 0 and not isinstance(v, int):
                     print(f"[INVARIANT ERROR] Posición {i} debería ser estado, pero es {v}")
                 if i % 2 == 1 and isinstance(v, int):
                     print(f"[INVARIANT ERROR] Posición {i} debería ser símbolo, pero es {v}")
-            state = stack[-1]
+
+            state = goto_state
             action = action_table.get(state, {}).get(current_token, None)
 
+
         if action is None:
-            print(f"[DEBUG] Stack antes del error: {stack}")
-            print(f"[DEBUG] Estado actual: {state}, Token actual: {current_token}")
-            print("[DEBUG] Acción esperada según tabla:", action_table.get(state, {}))
-            mensaje = (
-                f"Error sintáctico en estado {state} con token '{current_token}'."
-            )
-            posibles = list(action_table.get(state, {}).keys())
-            if posibles:
-                mensaje += f" Esperaba uno de: {', '.join(map(str, posibles))}."
+            print(f"[ERROR] Sintáctico en estado {state} con token '{current_token}'")
+            mensaje = f"Error sintáctico en estado {state} con token '{current_token}'. Intentando recuperación..."
+            sync_tokens = {'SEMICOLON', '$', 'ID', 'LPAREN'}
             actions.append(("error", state, current_token, mensaje))
-            return False, actions, mensaje
+
+            while lookahead_token not in sync_tokens:
+                print(f"[RECOVERY] Descartando token: {lookahead_token}")
+                lookahead_token, lookahead_lexeme = next_valid_token()
+                print(f">>> [DEBUG] Nuevo token: {lookahead_token} (lexema: '{lookahead_lexeme}')")
+
+            recovered = False
+            for i in reversed(range(0, len(stack), 2)):
+                recovery_state = stack[i]
+                posibles_acciones = action_table.get(recovery_state, {})
+                if (lookahead_token in posibles_acciones and
+                    posibles_acciones[lookahead_token] and
+                    not posibles_acciones[lookahead_token].startswith('r')):
+                    print(f"[RECOVERY] Saltando a estado {recovery_state} con token {lookahead_token}")
+                    stack = stack[:i + 1]
+                    recovered = True
+                    break
+
+            if not recovered or lookahead_token == '$':
+                actions.append(("fatal", state, lookahead_token, "No se pudo recuperar el análisis"))
+                return False, actions, "Error fatal: No se pudo recuperar del error sintáctico"
+
+            lookahead_token, lookahead_lexeme = next_valid_token()
+            print(f">>> [DEBUG] Nuevo token: {lookahead_token} (lexema: '{lookahead_lexeme}')")
+            continue
 
         elif action == "acc":
             actions.append(("accept", state, current_token))
             return True, actions, None
 
-        elif action.startswith("s"):  # Shift
+        elif action.startswith("s"):
             next_state = int(action[1:])
             actions.append(("shift", state, current_token, next_state))
             stack.append(current_token)
             stack.append(next_state)
             print(f"[DEBUG] Shift: stack después de shift: {stack}")
-            # Invariant check: states at even, symbols at odd positions
-            for i, v in enumerate(stack):
-                if i % 2 == 0 and not isinstance(v, int):
-                    print(f"[INVARIANT ERROR] Posición {i} debería ser estado, pero es {v}")
-                if i % 2 == 1 and isinstance(v, int):
-                    print(f"[INVARIANT ERROR] Posición {i} debería ser símbolo, pero es {v}")
-            # Consumimos el siguiente token del generador
-            try:
-                lookahead_token, _ = next(tokens)
-            except StopIteration:
-                lookahead_token = '$'
 
-        else:
-            mensaje = (
-                f"Error sintáctico inesperado en estado {state} con token '{current_token}', acción '{action}'."
-            )
-            actions.append(("error", state, current_token, mensaje))
-            return False, actions, mensaje
+            lookahead_token, lookahead_lexeme = next_valid_token()
+            print(f">>> [DEBUG] Nuevo token: {lookahead_token} (lexema: '{lookahead_lexeme}')")
+            continue

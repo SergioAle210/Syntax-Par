@@ -60,7 +60,8 @@ class LexicalError(Exception):
 
 def lex(input_text: str, dfa: dict):
     """
-    [docstring igual...]
+    Función léxica que convierte una cadena de entrada en una secuencia de tokens usando un AFD.
+    Devuelve tuplas (token_type, lexeme), donde token_type es el nombre simbólico (ej. 'PLUS').
     """
     i = 0
     n = len(input_text)
@@ -91,41 +92,41 @@ def lex(input_text: str, dfa: dict):
 
         lexeme = input_text[i : last_accepting_index + 1]
         mapping = token_actions.get(last_accepting_state, {})
+        token_type = "ID"  # valor por defecto
 
-        def get_numeric_keys(d):
-            keys = []
-            for k in d.keys():
+        if "merged" in mapping:
+            merged_mapping = mapping["merged"]
+            numeric_keys = []
+            for k in merged_mapping.keys():
                 if isinstance(k, int):
-                    keys.append(k)
-                elif isinstance(k, str) and custom_all_digits(k):
-                    keys.append(custom_to_int(k))
-            return keys
-
-        if mapping:
-            if "merged" in mapping:
-                merged_mapping = mapping["merged"]
-                numeric_keys = get_numeric_keys(merged_mapping)
-                if numeric_keys:
-                    min_key = min(numeric_keys)
-                    token_type = merged_mapping.get(
-                        min_key, merged_mapping.get(str(min_key), "ID")
-                    )
-                else:
-                    token_type = list(merged_mapping.values())[0]
+                    numeric_keys.append(k)
+                elif isinstance(k, str) and k.isdigit():
+                    numeric_keys.append(int(k))
+            if numeric_keys:
+                min_key = min(numeric_keys)
+                token_type = merged_mapping.get(min_key, merged_mapping.get(str(min_key), "ID"))
             else:
-                numeric_keys = get_numeric_keys(mapping)
-                if numeric_keys:
-                    min_key = min(numeric_keys)
-                    token_type = mapping.get(min_key, mapping.get(str(min_key), "ID"))
-                else:
-                    token_type = "ID"
+                token_type = list(merged_mapping.values())[0]
         else:
-            token_type = "ID"
+            numeric_keys = []
+            for k in mapping.keys():
+                if isinstance(k, int):
+                    numeric_keys.append(k)
+                elif isinstance(k, str) and k.isdigit():
+                    numeric_keys.append(int(k))
+            if numeric_keys:
+                min_key = min(numeric_keys)
+                token_type = mapping.get(min_key, mapping.get(str(min_key), "ID"))
+            else:
+                token_type = "ID"
 
+        # Asegurar que cualquier token codificado como ASCII se traduzca
         token_type = ascii_numbers_to_chars(token_type)
 
         yield (token_type, lexeme)
         i = last_accepting_index + 1
+
+
 
 
 

@@ -54,16 +54,24 @@ def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transiti
                     continue
 
                 # Si es la producción aumentada S' -> S., aceptar
-                # Si es la producción aumentada S' -> S, aceptar
-                if lhs == grammar.start_symbol + "'" and rhs == [grammar.start_symbol] and prod_idx == 0:
+                                                # Si es la producción aumentada S' -> S, aceptar
+                if prod_idx == 0:
                     action_table[i]['$'] = 'acc'
+
+
+
 
                 else:
                     # Para cada terminal 'a' en FOLLOW(lhs)
                     for terminal in follow_sets.get(lhs, set()):
+                        if terminal not in action_table[i]:
+                            continue  # Evitar error si terminal no es parte de la tabla
+
                         if action_table[i][terminal] is not None and action_table[i][terminal] != f"r{prod_idx}":
                             print(f"Conflicto Reduce-Reduce o Shift-Reduce en estado {i}, símbolo {terminal}")
                         action_table[i][terminal] = f"r{prod_idx}"
+
+
 
         # Regla 3: GOTO
         for nonterminal in nonterminals:
@@ -96,8 +104,6 @@ def enumerate_productions(productions, start_symbol):
     La primera producción es la aumentada: S' -> S
     """
     prod_list = []
-    augmented = start_symbol + "'"
-    prod_list.append((augmented, [start_symbol]))  # Producción aumentada al inicio
     for head in productions:
         for body in productions[head]:
             prod_list.append((head, body))

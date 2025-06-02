@@ -1,7 +1,36 @@
 [
   [
     [
-      "general'",
+      "S''",
+      [
+        "S'"
+      ],
+      0
+    ],
+    [
+      "S'",
+      [
+        "S"
+      ],
+      0
+    ],
+    [
+      "S",
+      [
+        "general_list"
+      ],
+      0
+    ],
+    [
+      "general_list",
+      [
+        "general_list",
+        "general"
+      ],
+      0
+    ],
+    [
+      "general_list",
       [
         "general"
       ],
@@ -11,8 +40,8 @@
       "general",
       [
         "general",
-        "SEMICOLON",
-        "expression"
+        "expression",
+        "SEMICOLON"
       ],
       0
     ],
@@ -143,7 +172,7 @@
   ],
   [
     [
-      "general'",
+      "general_list",
       [
         "general"
       ],
@@ -153,10 +182,58 @@
       "general",
       [
         "general",
-        "SEMICOLON",
-        "expression"
+        "expression",
+        "SEMICOLON"
       ],
       1
+    ],
+    [
+      "expression",
+      [
+        "expression",
+        "PLUS",
+        "term"
+      ],
+      0
+    ],
+    [
+      "expression",
+      [
+        "term"
+      ],
+      0
+    ],
+    [
+      "term",
+      [
+        "term",
+        "TIMES",
+        "factor"
+      ],
+      0
+    ],
+    [
+      "term",
+      [
+        "factor"
+      ],
+      0
+    ],
+    [
+      "factor",
+      [
+        "LPAREN",
+        "expression",
+        "RPAREN"
+      ],
+      0
+    ],
+    [
+      "factor",
+      [
+        "ID"
+      ],
+      0
     ]
   ],
   [
@@ -201,6 +278,106 @@
       "term",
       [
         "factor"
+      ],
+      1
+    ]
+  ],
+  [
+    [
+      "S'",
+      [
+        "S"
+      ],
+      1
+    ]
+  ],
+  [
+    [
+      "S",
+      [
+        "general_list"
+      ],
+      1
+    ],
+    [
+      "general_list",
+      [
+        "general_list",
+        "general"
+      ],
+      1
+    ],
+    [
+      "general",
+      [
+        "general",
+        "expression",
+        "SEMICOLON"
+      ],
+      0
+    ],
+    [
+      "general",
+      [
+        "expression",
+        "SEMICOLON"
+      ],
+      0
+    ],
+    [
+      "expression",
+      [
+        "expression",
+        "PLUS",
+        "term"
+      ],
+      0
+    ],
+    [
+      "expression",
+      [
+        "term"
+      ],
+      0
+    ],
+    [
+      "term",
+      [
+        "term",
+        "TIMES",
+        "factor"
+      ],
+      0
+    ],
+    [
+      "term",
+      [
+        "factor"
+      ],
+      0
+    ],
+    [
+      "factor",
+      [
+        "LPAREN",
+        "expression",
+        "RPAREN"
+      ],
+      0
+    ],
+    [
+      "factor",
+      [
+        "ID"
+      ],
+      0
+    ]
+  ],
+  [
+    [
+      "S''",
+      [
+        "S'"
       ],
       1
     ]
@@ -230,8 +407,8 @@
       "general",
       [
         "general",
-        "SEMICOLON",
-        "expression"
+        "expression",
+        "SEMICOLON"
       ],
       2
     ],
@@ -242,46 +419,7 @@
         "PLUS",
         "term"
       ],
-      0
-    ],
-    [
-      "expression",
-      [
-        "term"
-      ],
-      0
-    ],
-    [
-      "term",
-      [
-        "term",
-        "TIMES",
-        "factor"
-      ],
-      0
-    ],
-    [
-      "term",
-      [
-        "factor"
-      ],
-      0
-    ],
-    [
-      "factor",
-      [
-        "LPAREN",
-        "expression",
-        "RPAREN"
-      ],
-      0
-    ],
-    [
-      "factor",
-      [
-        "ID"
-      ],
-      0
+      1
     ]
   ],
   [
@@ -346,6 +484,73 @@
         "factor"
       ],
       2
+    ],
+    [
+      "factor",
+      [
+        "LPAREN",
+        "expression",
+        "RPAREN"
+      ],
+      0
+    ],
+    [
+      "factor",
+      [
+        "ID"
+      ],
+      0
+    ]
+  ],
+  [
+    [
+      "general_list",
+      [
+        "general_list",
+        "general"
+      ],
+      2
+    ],
+    [
+      "general",
+      [
+        "general",
+        "expression",
+        "SEMICOLON"
+      ],
+      1
+    ],
+    [
+      "expression",
+      [
+        "expression",
+        "PLUS",
+        "term"
+      ],
+      0
+    ],
+    [
+      "expression",
+      [
+        "term"
+      ],
+      0
+    ],
+    [
+      "term",
+      [
+        "term",
+        "TIMES",
+        "factor"
+      ],
+      0
+    ],
+    [
+      "term",
+      [
+        "factor"
+      ],
+      0
     ],
     [
       "factor",
@@ -380,19 +585,10 @@
       "general",
       [
         "general",
-        "SEMICOLON",
-        "expression"
+        "expression",
+        "SEMICOLON"
       ],
       3
-    ],
-    [
-      "expression",
-      [
-        "expression",
-        "PLUS",
-        "term"
-      ],
-      1
     ]
   ],
   [

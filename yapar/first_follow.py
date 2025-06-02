@@ -63,44 +63,38 @@ def compute_first(grammar):
 # Función para calcular el conjunto FOLLOW de cada no terminal.
 # FOLLOW(A) es el conjunto de símbolos terminales que pueden aparecer inmediatamente a la derecha de A en alguna derivación.
 def compute_follow(grammar, first, start_symbol):
-    follow = {nonterm: set() for nonterm in grammar}
-    follow[start_symbol].add("$")
+    follow = {nt: set() for nt in grammar}
+    follow[start_symbol].add("$")  # EOF al símbolo inicial
 
     changed = True
     while changed:
         changed = False
-        for left in grammar:
-            for production in grammar[left]:
-                for i, symbol in enumerate(production):
-                    # Solo se procesa si el símbolo es un no terminal
-                    if symbol in grammar:
-                        beta = production[i + 1 :]
-                        # --- Regla 2: Si beta no es vacío, añade FIRST(beta) (sin λ) a FOLLOW(symbol) ---
-                        first_beta = set()
-                        for b in beta:
-                            if b not in grammar:  # terminal
-                                first_beta.add(b)
+        for lhs, productions in grammar.items():
+            for production in productions:
+                for i, B in enumerate(production):
+                    if B not in grammar:  # Sólo procesamos no terminales
+                        continue
+                    beta = production[i+1:]
+                    # FIRST(beta) - {λ} a FOLLOW(B)
+                    first_beta = set()
+                    for symbol in beta:
+                        if symbol in grammar:
+                            first_beta.update(first[symbol] - {"λ"})
+                            if "λ" in first[symbol]:
+                                continue
+                            else:
                                 break
-                            else:  # no terminal
-                                first_beta.update(first[b] - {"λ"})
-                                if "λ" in first[b]:
-                                    continue
-                                else:
-                                    break
-                        before = len(follow[symbol])
-                        follow[symbol].update(first_beta)
-                        if len(follow[symbol]) > before:
-                            changed = True
-
-                        # --- Regla 3: Si beta es vacío o puede derivar λ, añade FOLLOW(left) a FOLLOW(symbol) ---
-                        if (
-                            not beta or
-                            all((b in grammar and "λ" in first[b]) or (b not in grammar and b == "λ") for b in beta)
-                        ):
-                            before = len(follow[symbol])
-                            follow[symbol].update(follow[left])
-                            if len(follow[symbol]) > before:
-                                changed = True
+                        else:
+                            first_beta.add(symbol)
+                            break
+                    else:
+                        # Si todos en beta pueden derivar λ, añade FOLLOW(lhs)
+                        first_beta.update(follow[lhs])
+                    # Añadir a FOLLOW(B)
+                    before = len(follow[B])
+                    follow[B].update(first_beta)
+                    if len(follow[B]) > before:
+                        changed = True
     return follow
 
 

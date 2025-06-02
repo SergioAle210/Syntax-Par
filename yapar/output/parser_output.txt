@@ -1,11 +1,34 @@
 === Simulación del parser SLR(1) ===
-Cadena de entrada (tokens): ID + ID ; ws ID * ID ; ws ( ID + ID ) * ID ; ws ID + ID * ID * ID + ID ; ws ID + ID * ID + ID ; ws
+Cadena de entrada (tokens): ID PLUS ID SEMICOLON ws ID TIMES ID SEMICOLON ws ID PLUS ID TIMES ID SEMICOLON ws ID TIMES ID PLUS ID SEMICOLON ws ID PLUS ID PLUS ID SEMICOLON ws
 
 === Lista de acciones del parser ===
 1: ('shift', 0, 'ID', 2)
-2: ('error', 2, '+', "Error sintáctico en estado 2 con token '+'. Esperaba uno de: ID, PLUS, TIMES, LPAREN, RPAREN, WS, SEMICOLON, $.")
+2: ('reduce', 2, 'factor → ID')
+3: ('reduce', 6, 'term → factor')
+4: ('reduce', 5, 'expression → term')
+5: ('shift', 4, 'PLUS', 13)
+6: ('shift', 13, 'ID', 2)
+7: ('reduce', 2, 'factor → ID')
+8: ('reduce', 6, 'term → factor')
+9: ('reduce', 18, 'expression → expression PLUS term')
+10: ('shift', 4, 'SEMICOLON', 12)
+11: ('reduce', 12, 'general → expression SEMICOLON')
+12: ('shift', 3, 'ID', 2)
+13: ('reduce', 2, 'factor → ID')
+14: ('reduce', 6, 'term → factor')
+15: ('shift', 5, 'TIMES', 14)
+16: ('shift', 14, 'ID', 2)
+17: ('reduce', 2, 'factor → ID')
+18: ('reduce', 19, 'term → term TIMES factor')
+19: ('reduce', 5, 'expression → term')
+20: ('shift', 11, 'SEMICOLON', 17)
+21: ('error', 17, 'ID', "Error sintáctico en estado 17 con token 'ID'. Intentando recuperación...")
+22: ('error', 3, 'PLUS', "Error sintáctico en estado 3 con token 'PLUS'. Intentando recuperación...")
+23: ('error', 3, 'TIMES', "Error sintáctico en estado 3 con token 'TIMES'. Intentando recuperación...")
+24: ('error', 3, 'SEMICOLON', "Error sintáctico en estado 3 con token 'SEMICOLON'. Intentando recuperación...")
+25: ('fatal', 3, 'SEMICOLON', 'No se pudo recuperar el análisis')
 
 === Resultado final ===
 ERROR
 Detalles del error:
-Error sintáctico en estado 2 con token '+'. Esperaba uno de: ID, PLUS, TIMES, LPAREN, RPAREN, WS, SEMICOLON, $.
+Error fatal: No se pudo recuperar del error sintáctico
