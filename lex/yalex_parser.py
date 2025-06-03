@@ -130,7 +130,7 @@ def visualize_syntax_tree(root, route, file_format="png"):
 if __name__ == "__main__":
     # 1. Parsear el archivo YAL (usando nuestra versión manual en yalex_utils)
 
-    route = "slr-test"
+    route = "slr-1"
     name_yalfile = route + ".yal"
     filepath = os.path.join("../spec/yalfiles", name_yalfile)
 
@@ -174,8 +174,9 @@ if __name__ == "__main__":
 
     # 10. Asignar marcadores a las acciones asociadas a los tokens
     final_expr, marker_mapping = attach_markers_to_final_regexp(
-        expr_simplificada, regex_alternatives
+        expr_simplificada, action_alternatives
     )
+
 
     print("\nExpresión final:")
     print(final_expr)
@@ -236,10 +237,10 @@ if __name__ == "__main__":
 
     # Exportar a JSON para lexing (solo para visualizar)
     json_afd = make_json_serializable(afd_minimized)
-    with open("../lexers/lexer-test.json", "w") as f:
+    with open("../lexers/lexer-1.json", "w") as f:
         json.dump(json_afd, f, indent=4)
     print("\nDatos del AFD minimizado exportados a lexer.json.")
 
-    with open("../lexers/lexer-test.pickle", "wb") as f:
+    with open("../lexers/lexer-1.pickle", "wb") as f:
         pickle.dump(afd_minimized, f)
     print("\nDatos del AFD minimizado exportados a lexer.pickle.")

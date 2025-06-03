@@ -1,40 +1,40 @@
 {
   "general": [
-    "$",
-    "ID",
     "SEMICOLON",
-    "LPAREN"
+    "ID",
+    "LPAREN",
+    "$"
   ],
   "expression": [
-    "ID",
     "SEMICOLON",
-    "$",
-    "RPAREN",
     "PLUS",
-    "LPAREN"
+    "ID",
+    "RPAREN",
+    "LPAREN",
+    "$"
   ],
   "term": [
-    "ID",
     "SEMICOLON",
-    "$",
-    "RPAREN",
     "PLUS",
-    "TIMES",
-    "LPAREN"
+    "ID",
+    "RPAREN",
+    "LPAREN",
+    "$",
+    "TIMES"
   ],
   "factor": [
-    "ID",
     "SEMICOLON",
-    "$",
-    "RPAREN",
     "PLUS",
-    "TIMES",
-    "LPAREN"
+    "ID",
+    "RPAREN",
+    "LPAREN",
+    "$",
+    "TIMES"
   ],
   "S": [
-    "$",
     "ID",
-    "LPAREN"
+    "LPAREN",
+    "$"
   ],
   "S'": [],
   "S''": []

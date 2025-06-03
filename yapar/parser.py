@@ -27,6 +27,10 @@ def parse_yalp_file(filepath):
         '(': 'LPAREN',
         ')': 'RPAREN',
         ';': 'SEMICOLON',
+        ':=': 'ASSIGNOP',
+        '<': 'LT',
+        '=': 'EQ',
+        '.': 'POINT'
     }
 
     tokens = []
