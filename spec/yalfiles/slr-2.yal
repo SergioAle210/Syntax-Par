@@ -20,5 +20,6 @@ rule tokens =
   | '/'       { return DIV }
   | '('       { return LPAREN }
   | ')'       { return RPAREN }
+  | ';'       { return SEMICOLON }
 
 (* Introducir cualquier trailer aqui *)

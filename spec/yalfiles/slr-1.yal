@@ -15,5 +15,6 @@ rule tokens =
   | '*'       { return TIMES }
   | '('       { return LPAREN }
   | ')'       { return RPAREN }
+  | ';'       { return SEMICOLON }
 
 (* Introducir cualquier trailer aqui *)
