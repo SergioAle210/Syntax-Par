@@ -7,9 +7,9 @@
 %token PLUS
 %token TIMES
 %token LPAREN RPAREN
-%token ws
+%token WHITESPACE
 %token SEMICOLON 
-IGNORE ws
+IGNORE WHITESPACE
 
 general : general SEMICOLON expresion | expresion ; 
 
