@@ -7,7 +7,7 @@ from SLR import enumerate_productions, save_slr_table, compute_slr_table
 from sim_slr import simulate_slr_parser
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../lex")))
-from lexer import lex  
+from lexer import lex
 
 
 def str_startswith(cadena: str, prefijo: str) -> bool:
@@ -89,7 +89,6 @@ def parse_yalp_file(filepath: str):
         raw_line = lines[idx]
         line = trim(raw_line)
 
- 
         if str_startswith(line, "%token"):
             partes = split_by_whitespace(line)
             i = 1
@@ -214,7 +213,7 @@ def infer_token_map_from_pickle(
         for sym_code, token_name in leaves.values():
             if token_name in usados:
                 continue
-            symbol = chr(int(sym_code)) if sym_code.isdigit() else sym_code
+            symbol = chr(int(sym_code)) if is_all_digits(sym_code) else sym_code
             if token_name in tokens_decl:
                 symbol_token_map[symbol] = token_name
                 usados.add(token_name)
@@ -295,6 +294,36 @@ def basename_noext(path: str) -> str:  ### NEW ###
     name = os.path.basename(path)
     dot = name.rfind(".")
     return name[:dot] if dot != -1 else name
+
+
+def to_upper(cadena: str) -> str:
+    """Convierte a mayúsculas sin usar str.upper()."""
+    resultado = ""
+    for ch in cadena:
+        code = ord(ch)
+        if 97 <= code <= 122:  # 'a'..'z'
+            resultado += chr(code - 32)
+        else:
+            resultado += ch
+    return resultado
+
+
+def split_by_whitespace_inline(cadena: str) -> list[str]:
+    """
+    Igual que split_by_whitespace, pero NO importa si ya existe otra
+    versión: esta no usa str.split().
+    """
+    partes, actual = [], ""
+    for ch in cadena:
+        if ch in (" ", "\t", "\n", "\r"):
+            if actual:
+                partes.append(actual)
+                actual = ""
+        else:
+            actual += ch
+    if actual:
+        partes.append(actual)
+    return partes
 
 
 def main(
@@ -391,7 +420,7 @@ def main(
         tokens_for_parser = [
             token_name
             for (_, token_name), _ in lex(input_text, dfa)
-            if token_name.upper() not in {"WHITESPACE", "WS", "TAB", "ENTER"}
+            if to_upper(token_name) not in {"WHITESPACE", "WS", "TAB", "ENTER"}
         ]
 
         parser_outfile = os.path.join(output_dir, "parser_output.txt")
