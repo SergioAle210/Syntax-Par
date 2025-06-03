@@ -33,11 +33,11 @@ def compute_slr_table(
             rhs = item[1]
             dot_pos = item[2]
 
-            # --- SHIFT ---
+            # SHIFT
             if dot_pos < len(rhs):
                 symbol = rhs[dot_pos]
 
-                # ─── traducir con token_map si hace falta ───
+                # traducir con token_map si hace falta
                 if symbol not in terminals and symbol in token_map:
                     symbol_mapped = token_map[symbol]  # '+' → 'PLUS'
                 else:
@@ -52,11 +52,11 @@ def compute_slr_table(
                             print("Conflicto Shift en estado", i, "símbolo", symbol)
                         action_table[i][symbol_mapped] = new
 
-            # --- REDUCE ---
+            # REDUCE
             elif dot_pos == len(rhs):
                 prod_idx = -1
 
-                # ── 1. Buscar la producción correspondiente en enumerated_productions ──
+                # 1. Buscar la producción correspondiente en enumerated_productions
                 for j in range(len(enumerated_productions)):
                     p_idx, p_lhs, p_rhs = enumerated_productions[j]
 
@@ -87,17 +87,17 @@ def compute_slr_table(
                 if prod_idx == -1:
                     continue  # No encontramos la producción; pasamos a la siguiente
 
-                # ── 2. Producción aumentada (aceptación) ──
+                # 2. Producción aumentada (aceptación)
                 if prod_idx == 0:
                     action_table[i]["$"] = "acc"
                 else:
-                    # ── 3. Para cada símbolo en FOLLOW(lhs) añadimos la reducción rX ──
+                    # 3. Para cada símbolo en FOLLOW(lhs) añadimos la reducción rX
                     follow_set = list(follow_sets.get(lhs, set()))
 
                     for j in range(len(follow_set)):
                         symbol = follow_set[j]
 
-                        # --- Caso especial: '$' debe considerarse terminal válido ---
+                        #  Caso especial: '$' debe considerarse terminal válido
                         if symbol == "$":
                             terminal = "$"
                         else:
@@ -123,7 +123,7 @@ def compute_slr_table(
                                 if not encontrado:
                                     continue  # No es terminal; seguir con el siguiente símbolo
 
-                        # --- 4. Registrar la acción de reducción r<prod_idx> ---
+                        # 4. Registrar la acción de reducción r<prod_idx>
                         nueva_accion = "r" + str(prod_idx)
                         vieja_accion = action_table[i][terminal]
 

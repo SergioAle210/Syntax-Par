@@ -55,7 +55,7 @@ def simulate_slr_parser(
     actions_log = []
     tokens = iter(token_stream)
 
-    # ─── Función interna para consumir el próximo token significativo ───
+    # Función interna para consumir el próximo token significativo
     def next_valid_token():
         skip = {"ws", "WHITESPACE", "WS", "TAB", "ENTER"}
         while True:
@@ -69,15 +69,12 @@ def simulate_slr_parser(
     lookahead_token, lookahead_lexeme = next_valid_token()
     print(f"[DEBUG] Primer token: {lookahead_token} ('{lookahead_lexeme}')")
 
-    # ──────────────────────────────────────────────────────────────
     # Bucle principal LR
-    # ──────────────────────────────────────────────────────────────
     while True:
         state = stack[-1]
         current_token = lookahead_token or "$"
         action = action_table.get(state, {}).get(current_token)
 
-        # ─── REDUCCIONES en cascada ──────────────────────────────
         while action and str_startswith(action, "r"):
             prod_num = int(action[1:])  # "r3" → 3
             _, lhs, rhs = productions_enum[prod_num]
@@ -98,7 +95,7 @@ def simulate_slr_parser(
             state = goto_state
             action = action_table.get(state, {}).get(current_token)
 
-        # ─── ACEPTACIÓN manual cuando lookahead == '$' ───────────
+        # ACEPTACIÓN manual cuando lookahead == '$'
         if lookahead_token == "$":
             for _, lhs, rhs in productions_enum:
                 if str_endswith(lhs, "'") and rhs == [start_symbol]:
@@ -106,7 +103,7 @@ def simulate_slr_parser(
                         actions_log.append(("accept", stack[-1], "$"))
                         return True, actions_log, None
 
-        # ─── MANEJO DE ERRORES ───────────────────────────────────
+        # MANEJO DE ERRORES
         if action is None:
             mensaje = f"Error sintáctico en estado {state} con token '{current_token}'."
             actions_log.append(("error", state, current_token, mensaje))
@@ -139,12 +136,12 @@ def simulate_slr_parser(
             # No hacemos shift/reduce todavía; volvemos al while principal
             continue
 
-        # ─── ACEPTACIÓN normal ───────────────────────────────────
+        # ACEPTACIÓN normal
         if action == "acc":
             actions_log.append(("accept", state, current_token))
             return True, actions_log, None
 
-        # ─── SHIFT ───────────────────────────────────────────────
+        # SHIFT
         if str_startswith(action, "s"):
             next_state = int(action[1:])  # "s12" → 12
             actions_log.append(("shift", state, current_token, next_state))

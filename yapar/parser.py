@@ -6,7 +6,6 @@ from first_follow import compute_first, compute_follow
 from SLR import enumerate_productions, save_slr_table, compute_slr_table
 from sim_slr import simulate_slr_parser
 
-# --- IMPORTAR EL LEXER ---
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../lex")))
 from lexer import lex  # noqa: E402 (import tardío intencional)
 

@@ -1,7 +1,6 @@
 EPS = "λ"  # marca para la producción vacía
 
 
-# ─────────────────── FIRST ───────────────────
 def compute_first(g):
     first = {A: set() for A in g}
 
@@ -42,7 +41,6 @@ def compute_first(g):
     return first
 
 
-# ─────────────────── FOLLOW ──────────────────
 def compute_follow(g, first, start):
     follow = {A: set() for A in g}
     follow[start].add("$")

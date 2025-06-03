@@ -3,6 +3,7 @@ import os
 import json
 import pickle
 
+
 # --- Representación de la gramática ---
 class Grammar:
     def __init__(self, productions, start_symbol):
@@ -21,6 +22,7 @@ class Grammar:
                 for sym in body:
                     if sym not in self.nonterminals and sym not in self.terminals:
                         self.terminals.append(sym)
+
     def _augment_start_symbol(self, base, productions):
         s0 = base + "'"
         while s0 in productions:
@@ -29,10 +31,10 @@ class Grammar:
         return s0
 
 
-
 def item(lhs, rhs, dot):
     # rhs es tuple
     return (lhs, tuple(rhs), dot)
+
 
 def item_eq(a, b):
     if a[0] != b[0]:
@@ -48,11 +50,13 @@ def item_eq(a, b):
         return False
     return True
 
+
 def item_in(it, items):
     for i in items:
         if item_eq(i, it):
             return True
     return False
+
 
 def closure(items, grammar):
     closure_set = []
@@ -80,6 +84,7 @@ def closure(items, grammar):
         idx += 1
     return closure_set
 
+
 def goto(I, X, grammar):
     next_items = []
     for it in I:
@@ -93,6 +98,7 @@ def goto(I, X, grammar):
         return []
     return closure(next_items, grammar)
 
+
 def states_eq(a, b):
     if len(a) != len(b):
         return False
@@ -104,6 +110,7 @@ def states_eq(a, b):
             return False
     return True
 
+
 def state_in(state, states):
     for idx in range(len(states)):
         s = states[idx]
@@ -111,8 +118,11 @@ def state_in(state, states):
             return idx
     return -1
 
+
 def lr0_items(grammar):
-    initial = item(grammar.start_symbol, grammar.productions[grammar.start_symbol][0], 0)
+    initial = item(
+        grammar.start_symbol, grammar.productions[grammar.start_symbol][0], 0
+    )
     states = []
     transitions = {}
 
@@ -122,7 +132,7 @@ def lr0_items(grammar):
     while len(pending) > 0:
         I = pending[0]
         for rm in range(1, len(pending)):
-            pending[rm-1] = pending[rm]
+            pending[rm - 1] = pending[rm]
         pending = pending[:-1]
         src_idx = state_in(I, states)
         symbols = []
@@ -142,7 +152,10 @@ def lr0_items(grammar):
                 transitions[(src_idx, X)] = idx
     return states, transitions, grammar
 
-def visualize_lr0_automaton(states, transitions, grammar, filename="output/LRO/lr0_automaton"):
+
+def visualize_lr0_automaton(
+    states, transitions, grammar, filename="output/LRO/lr0_automaton"
+):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     dot = graphviz.Digraph(format="png")
     dot.attr(rankdir="TB")
@@ -194,4 +207,12 @@ def visualize_lr0_automaton(states, transitions, grammar, filename="output/LRO/l
             src_idx = key[0]
             symbol = key[1]
             dst_idx = transitions[key]
-            f.write("  I" + str(src_idx) + " --" + str(symbol) + "--> I" + str(dst_idx) + "\n")
+            f.write(
+                "  I"
+                + str(src_idx)
+                + " --"
+                + str(symbol)
+                + "--> I"
+                + str(dst_idx)
+                + "\n"
+            )
