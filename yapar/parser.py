@@ -300,6 +300,12 @@ def dump_action_goto(action, goto, filename_prefix: str) -> None:
     save_txt(líneas, filename_prefix + "_goto.txt")
 
 
+def basename_noext(path: str) -> str:  ### NEW ###
+    name = os.path.basename(path)
+    dot = name.rfind(".")
+    return name[:dot] if dot != -1 else name
+
+
 def main(
     yalp_path: str,
     source_file_path: str,
@@ -307,24 +313,28 @@ def main(
     output_dir: str = "output",
 ) -> None:
 
-    # ─── 0. Capturar toda la salida de depuración ───────────────────────────
+    if output_dir is None:
+        tag = basename_noext(yalp_path)
+        output_dir = os.path.join("output", tag)
+
     os.makedirs(output_dir, exist_ok=True)
+
     log_path = os.path.join(output_dir, "debug_log.txt")
     original_stdout = sys.stdout
     log_file = open(log_path, "w", encoding="utf-8")
     sys.stdout = log_file  # todo print() ➜ debug_log.txt
 
     try:
-        # ─── 1. Rutas base ──────────────────────────────────────────────────
+        # 1. Rutas base
         lr0_dir = os.path.join(output_dir, "LR0")
         ff_dir = os.path.join(output_dir, "first_follow")
         slr_dir = os.path.join(output_dir, "SLR")
 
-        # ─── 2. Parsear el .yalp y AFD → token_map ──────────────────────────
+        # 2. Parsear el .yalp y AFD → token_map
         tokens, productions, augmented_start, start_symbol = parse_yalp_file(yalp_path)
         token_map = infer_token_map_from_pickle(dfa_pickle_path, tokens)
 
-        # ─── 3. Automata LR(0) ──────────────────────────────────────────────
+        # 3. Automata LR(0)
         grammar = Grammar(productions, augmented_start)
         states, transitions, _ = lr0_items(grammar)
         save_pickle((states, transitions), f"{lr0_dir}/lr0_states_transitions.pickle")
@@ -332,16 +342,16 @@ def main(
             states, transitions, grammar, filename=f"{lr0_dir}/lr0_automaton"
         )
 
-        # ─── 4. FIRST / FOLLOW ──────────────────────────────────────────────
+        # 4. FIRST / FOLLOW
         first = compute_first(productions)
-        follow = compute_follow(productions, first, start_symbol, token_map, tokens)
+        follow = compute_follow(productions, first, start_symbol)
 
         save_pickle((first, follow), f"{ff_dir}/first_follow.pickle")
         save_json(first, f"{ff_dir}/first.json")
         save_json(follow, f"{ff_dir}/follow.json")
         dump_follow_sets(follow, f"{ff_dir}/follow.txt")  # TXT ordenado
 
-        # ─── 5. Enumerar producciones ───────────────────────────────────────
+        # 5. Enumerar producciones
         productions_list = enumerate_productions(
             grammar.productions, grammar.start_symbol
         )
@@ -351,7 +361,7 @@ def main(
             f"{slr_dir}/productions_enum.txt",
         )
 
-        # ─── 6. Tabla SLR(1) ────────────────────────────────────────────────
+        # 6. Tabla SLR(1)
         action_table, goto_table = compute_slr_table(
             grammar,
             first,
@@ -367,7 +377,7 @@ def main(
         save_slr_table(action_table, goto_table, filename=f"{slr_dir}/slr_table")
         dump_action_goto(action_table, goto_table, f"{slr_dir}/slr_table")
 
-        # ─── 7. Preparar generador de tokens ────────────────────────────────
+        # 7. Preparar generador de tokens
         with open(dfa_pickle_path, "rb") as f:
             dfa = pickle.load(f)
 
@@ -381,7 +391,7 @@ def main(
                     continue
                 yield (token_name, lexeme)  # lo que el parser espera
 
-        # ─── 8. Simular el parser ───────────────────────────────────────
+        # 8. Simular el parser
         accepted, actions, error_msg = simulate_slr_parser(
             action_table, goto_table, productions_list, token_stream_gen(), start_symbol
         )
@@ -398,25 +408,27 @@ def main(
             actions, accepted, error_msg, tokens_for_parser, parser_outfile
         )
 
-        # ─── 9. Resumen final (va al log) ───────────────────────────────────
+        # 9. Resumen final (va al log)
         print("\nParser terminado →", "ACCEPTED" if accepted else "ERROR")
         print("Output escrito en :", parser_outfile)
 
     finally:
-        # ─── 10. Restaurar stdout y cerrar el log ───────────────────────────
+        # 10. Restaurar stdout y cerrar el log
         sys.stdout = original_stdout
         log_file.close()
         print(f"[INFO] Ejecución completada. Log detallado en {log_path}")
 
 
-# --- ENTRYPOINT -------------------------------------------------------------
 if __name__ == "__main__":
     if len(sys.argv) < 4:
-        print("Uso: python parser.py <ruta_a_yalp> <archivo_fuente> <dfa_pickle>")
+        print(
+            "Uso: python parser.py <ruta_a_yalp> <archivo_fuente> <dfa_pickle> [out_dir]"
+        )
         sys.exit(1)
 
     yalp_path = sys.argv[1]
     source_file_path = sys.argv[2]
     dfa_pickle_path = sys.argv[3]
+    out_dir_arg = sys.argv[4] if len(sys.argv) >= 5 else None
 
-    main(yalp_path, source_file_path, dfa_pickle_path)
+    main(yalp_path, source_file_path, dfa_pickle_path, out_dir_arg)
