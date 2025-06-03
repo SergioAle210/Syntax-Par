@@ -62,7 +62,7 @@ def compute_first(grammar):
 
 # Función para calcular el conjunto FOLLOW de cada no terminal.
 # FOLLOW(A) es el conjunto de símbolos terminales que pueden aparecer inmediatamente a la derecha de A en alguna derivación.
-def compute_follow(grammar, first, start_symbol):
+def compute_follow(grammar, first, start_symbol, token_map, tokens):
     follow = {nt: set() for nt in grammar}
     follow[start_symbol].add("$")  # EOF al símbolo inicial
 
@@ -72,33 +72,29 @@ def compute_follow(grammar, first, start_symbol):
         for lhs, productions in grammar.items():
             for production in productions:
                 for i, B in enumerate(production):
-                    if B not in grammar:  # Sólo procesamos no terminales
+                    if B not in grammar:
                         continue
                     beta = production[i+1:]
-                    # FIRST(beta) - {λ} a FOLLOW(B)
                     first_beta = set()
                     for symbol in beta:
-                        if symbol in grammar:
+                        if symbol not in grammar:
+                            # SOLO nombre de token: o por token_map, o si ya está en tokens declarados
+                            if symbol in token_map:
+                                first_beta.add(token_map[symbol])
+                            elif symbol in tokens:
+                                first_beta.add(symbol)
+                            # Si no, ignoramos (no agregamos el literal nunca)
+                            break
+                        else:
                             first_beta.update(first[symbol] - {"λ"})
                             if "λ" in first[symbol]:
                                 continue
                             else:
                                 break
-                        else:
-                            first_beta.add(symbol)
-                            break
                     else:
-                        # Si todos en beta pueden derivar λ, añade FOLLOW(lhs)
                         first_beta.update(follow[lhs])
-                    # Añadir a FOLLOW(B)
                     before = len(follow[B])
                     follow[B].update(first_beta)
                     if len(follow[B]) > before:
                         changed = True
     return follow
-
-
-# Cálculo de los conjuntos FIRST y FOLLOW para la gramática dada.
-first = compute_first(grammar)
-follow = compute_follow(grammar, first, "E")
-

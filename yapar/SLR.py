@@ -2,109 +2,149 @@ import os
 import json
 import pickle
 
-
-def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transitions, enumerated_productions, terminals, nonterminals):
-    """
-    Construye la tabla de análisis sintáctico SLR(1).
-
-    Args:
-        grammar (Grammar): Objeto Grammar con las producciones.
-        first_sets (dict): Diccionario de conjuntos FIRST.
-        follow_sets (dict): Diccionario de conjuntos FOLLOW.
-        lr0_states (list): Lista de estados LR(0).
-        lr0_transitions (dict): Diccionario de transiciones LR(0).
-        enumerated_productions (list): Lista de producciones enumeradas (idx, lhs, rhs).
-        terminals (list): Lista de símbolos terminales.
-        nonterminals (list): Lista de símbolos no terminales.
-
-    Returns:
-        tuple: Una tupla que contiene (action_table, goto_table).
-    """
+def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transitions, enumerated_productions, terminals, nonterminals, token_map):
     action_table = {}
     goto_table = {}
 
-    # Inicializar tablas
     for i in range(len(lr0_states)):
-        action_table[i] = {t: None for t in terminals + ['$']}
-        goto_table[i] = {nt: None for nt in nonterminals}
+        action_table[i] = {}
+        for t in terminals:
+            action_table[i][t] = None
+        action_table[i]['$'] = None
+        goto_table[i] = {}
+        for nt in nonterminals:
+            goto_table[i][nt] = None
 
-    # Llenar tablas
-    for i, state in enumerate(lr0_states):
+    for i in range(len(lr0_states)):
+        state = lr0_states[i]
         for item in state:
-            lhs, rhs, dot_pos = item
-            # Regla 1: Shift
-            if dot_pos < len(rhs) and rhs[dot_pos] in terminals:
+            lhs = item[0]
+            rhs = item[1]
+            dot_pos = item[2]
+
+            # --- SHIFT ---
+            if dot_pos < len(rhs):
                 symbol = rhs[dot_pos]
-                next_state_idx = lr0_transitions.get((i, symbol))
-                if next_state_idx is not None:
-                    if action_table[i][symbol] is not None and action_table[i][symbol] != f"s{next_state_idx}":
-                        print(f"Conflicto Shift-Shift o Shift-Reduce en estado {i}, símbolo {symbol}")
-                    action_table[i][symbol] = f"s{next_state_idx}"
-            # Regla 2: Reduce
+                is_terminal = False
+                for t in terminals:
+                    if t == symbol:
+                        is_terminal = True
+                        break
+                print(f"[DEBUG SHIFT] Estado {i}, símbolo esperado tras punto: '{symbol}' | Terminales: {terminals}")
+                if is_terminal:
+                    next_state_idx = None
+                    key = (i, symbol)
+                    if key in lr0_transitions:
+                        next_state_idx = lr0_transitions[key]
+                    print(f"[DEBUG SHIFT] key={key}, next_state_idx={next_state_idx}")
+                    if next_state_idx is not None:
+                        if action_table[i][symbol] is not None and action_table[i][symbol] != ("s" + str(next_state_idx)):
+                            print("Conflicto Shift-Shift o Shift-Reduce en estado", i, "símbolo", symbol)
+                        print(f"[DEBUG SHIFT] Acción agregada: estado {i}, símbolo '{symbol}' => SHIFT a estado {next_state_idx}")
+                        action_table[i][symbol] = "s" + str(next_state_idx)
+
+            # --- REDUCE ---
             elif dot_pos == len(rhs):
-                # Encontrar el índice de la producción original
                 prod_idx = -1
-                for p_idx, p_lhs, p_rhs in enumerated_productions:
-                    if p_lhs == lhs and tuple(p_rhs) == tuple(rhs):
+                # Buscar el índice de la producción exactamente igual a (lhs, rhs)
+                for j in range(len(enumerated_productions)):
+                    prod = enumerated_productions[j]
+                    p_idx = prod[0]
+                    p_lhs = prod[1]
+                    p_rhs = prod[2]
+                    # Comparar lhs
+                    lhs_igual = True
+                    if len(p_lhs) != len(lhs):
+                        lhs_igual = False
+                    else:
+                        for k in range(len(lhs)):
+                            if p_lhs[k] != lhs[k]:
+                                lhs_igual = False
+                                break
+                    # Comparar rhs
+                    rhs_igual = True
+                    if len(p_rhs) != len(rhs):
+                        rhs_igual = False
+                    else:
+                        for k in range(len(rhs)):
+                            if p_rhs[k] != rhs[k]:
+                                rhs_igual = False
+                                break
+                    # Si ambos coinciden, encontramos el índice
+                    if lhs_igual and rhs_igual:
                         prod_idx = p_idx
                         break
-                
                 if prod_idx == -1:
-                    # Esto no debería pasar si enumerated_productions está bien construida
                     continue
 
-                # Si es la producción aumentada S' -> S., aceptar
-                                                # Si es la producción aumentada S' -> S, aceptar
+                # Producción aumentada
                 if prod_idx == 0:
                     action_table[i]['$'] = 'acc'
-
-
-
-
                 else:
-                    # Para cada terminal 'a' en FOLLOW(lhs)
-                    for terminal in follow_sets.get(lhs, set()):
-                        if terminal not in action_table[i]:
-                            continue  # Evitar error si terminal no es parte de la tabla
+                    # Recorrer el conjunto FOLLOW
+                    follow_set = []
+                    for sym in follow_sets.get(lhs, set()):
+                        follow_set.append(sym)
+                    for j in range(len(follow_set)):
+                        symbol = follow_set[j]
+                        # Verificar si symbol está en terminals
+                        es_terminal = False
+                        for k in range(len(terminals)):
+                            if terminals[k] == symbol:
+                                es_terminal = True
+                                break
+                        if es_terminal:
+                            terminal = symbol
+                        else:
+                            # Buscar si está en el token_map y si su valor está en terminals
+                            encontrado = False
+                            if symbol in token_map:
+                                mapped = token_map[symbol]
+                                for k in range(len(terminals)):
+                                    if terminals[k] == mapped:
+                                        encontrado = True
+                                        terminal = mapped
+                                        break
+                            if not encontrado:
+                                continue
+                        # Si ya hay acción y es diferente, lo puedes loggear, pero igual sobrescribe
+                        if action_table[i][terminal] is not None and action_table[i][terminal] != ("r" + str(prod_idx)):
+                            # No uses print si vas a guardar logs en archivo, solo agrégalo donde corresponda
+                            pass
+                        action_table[i][terminal] = "r" + str(prod_idx)
 
-                        if action_table[i][terminal] is not None and action_table[i][terminal] != f"r{prod_idx}":
-                            print(f"Conflicto Reduce-Reduce o Shift-Reduce en estado {i}, símbolo {terminal}")
-                        action_table[i][terminal] = f"r{prod_idx}"
 
 
 
-        # Regla 3: GOTO
-        for nonterminal in nonterminals:
-            next_state_idx = lr0_transitions.get((i, nonterminal))
-            if next_state_idx is not None:
-                goto_table[i][nonterminal] = next_state_idx
+
+
+        # GOTO
+        for nt in nonterminals:
+            key = (i, nt)
+            if key in lr0_transitions:
+                next_state_idx = lr0_transitions[key]
+                if next_state_idx is not None:
+                    goto_table[i][nt] = next_state_idx
 
     return action_table, goto_table
 
 def save_slr_table(action_table, goto_table, filename="output/slr_table"):
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    
-    # Guardar ACTION table en JSON
-    with open(f"{filename}_action.json", 'w', encoding='utf-8') as f:
+    if not os.path.exists(os.path.dirname(filename)):
+        os.makedirs(os.path.dirname(filename))
+
+    with open(filename + "_action.json", 'w', encoding='utf-8') as f:
         json.dump(action_table, f, indent=4)
-    # Guardar GOTO table en JSON
-    with open(f"{filename}_goto.json", 'w', encoding='utf-8') as f:
+    with open(filename + "_goto.json", 'w', encoding='utf-8') as f:
         json.dump(goto_table, f, indent=4)
-    # Guardar ambas en un solo archivo pickle
-    with open(f"{filename}.pickle", 'wb') as f:
+    with open(filename + ".pickle", 'wb') as f:
         pickle.dump({'action': action_table, 'goto': goto_table}, f)
 
-
 def enumerate_productions(productions, start_symbol):
-    """
-    Devuelve una lista de tuplas (lhs, rhs) donde:
-      - lhs es el lado izquierdo (no terminal, str)
-      - rhs es la lista de símbolos del lado derecho (list of str)
-    El índice de cada tupla es su número de producción.
-    La primera producción es la aumentada: S' -> S
-    """
     prod_list = []
+    idx = 0
     for head in productions:
         for body in productions[head]:
-            prod_list.append((head, body))
+            prod_list.append((idx, head, body))
+            idx += 1
     return prod_list
+

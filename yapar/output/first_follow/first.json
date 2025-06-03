@@ -1,30 +1,30 @@
 {
   "general": [
-    "ID",
-    "LPAREN"
+    "LPAREN",
+    "ID"
   ],
   "expression": [
-    "ID",
-    "LPAREN"
+    "LPAREN",
+    "ID"
   ],
   "term": [
-    "ID",
-    "LPAREN"
+    "LPAREN",
+    "ID"
   ],
   "factor": [
-    "ID",
-    "LPAREN"
+    "LPAREN",
+    "ID"
   ],
   "S": [
-    "ID",
-    "LPAREN"
+    "LPAREN",
+    "ID"
   ],
   "S'": [
-    "ID",
-    "LPAREN"
+    "LPAREN",
+    "ID"
   ],
   "S''": [
-    "ID",
-    "LPAREN"
+    "LPAREN",
+    "ID"
   ]
 }

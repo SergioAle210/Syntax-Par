@@ -27,7 +27,7 @@
         "RPAREN": "r7",
         "ws": null,
         "SEMICOLON": "r7",
-        "$": "r7"
+        "$": null
     },
     "3": {
         "ID": "r9",
@@ -37,7 +37,7 @@
         "RPAREN": null,
         "ws": null,
         "SEMICOLON": "s10",
-        "$": "r9"
+        "$": null
     },
     "4": {
         "ID": null,
@@ -46,7 +46,7 @@
         "LPAREN": null,
         "RPAREN": null,
         "ws": null,
-        "SEMICOLON": "s11",
+        "SEMICOLON": null,
         "$": null
     },
     "5": {
@@ -57,7 +57,7 @@
         "RPAREN": "r3",
         "ws": null,
         "SEMICOLON": "r3",
-        "$": "r3"
+        "$": null
     },
     "6": {
         "ID": "r5",
@@ -67,7 +67,7 @@
         "RPAREN": "r5",
         "ws": null,
         "SEMICOLON": "r5",
-        "$": "r5"
+        "$": null
     },
     "7": {
         "ID": "s2",
@@ -117,7 +117,7 @@
         "RPAREN": null,
         "ws": null,
         "SEMICOLON": "r1",
-        "$": "r1"
+        "$": null
     },
     "12": {
         "ID": "s2",
@@ -147,7 +147,7 @@
         "RPAREN": null,
         "ws": null,
         "SEMICOLON": "s10",
-        "$": "r8"
+        "$": null
     },
     "15": {
         "ID": "r6",
@@ -157,7 +157,7 @@
         "RPAREN": "r6",
         "ws": null,
         "SEMICOLON": "r6",
-        "$": "r6"
+        "$": null
     },
     "16": {
         "ID": null,
@@ -177,7 +177,7 @@
         "RPAREN": "r2",
         "ws": null,
         "SEMICOLON": "r2",
-        "$": "r2"
+        "$": null
     },
     "18": {
         "ID": "r4",
@@ -187,6 +187,6 @@
         "RPAREN": "r4",
         "ws": null,
         "SEMICOLON": "r4",
-        "$": "r4"
+        "$": null
     }
 }

@@ -42,7 +42,7 @@
       "general",
       [
         "expression",
-        "SEMICOLON"
+        ";"
       ],
       0
     ],
@@ -186,7 +186,7 @@
       "general",
       [
         "expression",
-        "SEMICOLON"
+        ";"
       ],
       1
     ],
@@ -256,7 +256,7 @@
       "general",
       [
         "expression",
-        "SEMICOLON"
+        ";"
       ],
       0
     ],
@@ -402,7 +402,7 @@
       "general",
       [
         "expression",
-        "SEMICOLON"
+        ";"
       ],
       2
     ]
