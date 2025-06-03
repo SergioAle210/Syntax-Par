@@ -55,12 +55,11 @@ def compute_slr_table(
             # --- REDUCE ---
             elif dot_pos == len(rhs):
                 prod_idx = -1
-                # Buscar el índice de la producción exactamente igual a (lhs, rhs)
+
+                # ── 1. Buscar la producción correspondiente en enumerated_productions ──
                 for j in range(len(enumerated_productions)):
-                    prod = enumerated_productions[j]
-                    p_idx = prod[0]
-                    p_lhs = prod[1]
-                    p_rhs = prod[2]
+                    p_idx, p_lhs, p_rhs = enumerated_productions[j]
+
                     # Comparar lhs
                     lhs_igual = True
                     if len(p_lhs) != len(lhs):
@@ -70,6 +69,7 @@ def compute_slr_table(
                             if p_lhs[k] != lhs[k]:
                                 lhs_igual = False
                                 break
+
                     # Comparar rhs
                     rhs_igual = True
                     if len(p_rhs) != len(rhs):
@@ -79,50 +79,59 @@ def compute_slr_table(
                             if p_rhs[k] != rhs[k]:
                                 rhs_igual = False
                                 break
-                    # Si ambos coinciden, encontramos el índice
+
                     if lhs_igual and rhs_igual:
                         prod_idx = p_idx
                         break
-                if prod_idx == -1:
-                    continue
 
-                # Producción aumentada
+                if prod_idx == -1:
+                    continue  # No encontramos la producción; pasamos a la siguiente
+
+                # ── 2. Producción aumentada (aceptación) ──
                 if prod_idx == 0:
                     action_table[i]["$"] = "acc"
                 else:
-                    # Recorrer el conjunto FOLLOW
-                    follow_set = []
-                    for sym in follow_sets.get(lhs, set()):
-                        follow_set.append(sym)
+                    # ── 3. Para cada símbolo en FOLLOW(lhs) añadimos la reducción rX ──
+                    follow_set = list(follow_sets.get(lhs, set()))
+
                     for j in range(len(follow_set)):
                         symbol = follow_set[j]
-                        # Verificar si symbol está en terminals
-                        es_terminal = False
-                        for k in range(len(terminals)):
-                            if terminals[k] == symbol:
-                                es_terminal = True
-                                break
-                        if es_terminal:
-                            terminal = symbol
+
+                        # --- Caso especial: '$' debe considerarse terminal válido ---
+                        if symbol == "$":
+                            terminal = "$"
                         else:
-                            # Buscar si está en el token_map y si su valor está en terminals
-                            encontrado = False
-                            if symbol in token_map:
-                                mapped = token_map[symbol]
-                                for k in range(len(terminals)):
-                                    if terminals[k] == mapped:
-                                        encontrado = True
-                                        terminal = mapped
-                                        break
-                            if not encontrado:
-                                continue
-                        # Si ya hay acción y es diferente, lo puedes loggear, pero igual sobrescribe
-                        if action_table[i][terminal] is not None and action_table[i][
-                            terminal
-                        ] != ("r" + str(prod_idx)):
-                            # No uses print si vas a guardar logs en archivo, solo agrégalo donde corresponda
+                            # ¿Está el símbolo directamente en terminals?
+                            es_terminal = False
+                            for k in range(len(terminals)):
+                                if terminals[k] == symbol:
+                                    es_terminal = True
+                                    break
+
+                            if es_terminal:
+                                terminal = symbol
+                            else:
+                                # Intentar mapear usando token_map
+                                encontrado = False
+                                if symbol in token_map:
+                                    mapped = token_map[symbol]
+                                    for k in range(len(terminals)):
+                                        if terminals[k] == mapped:
+                                            encontrado = True
+                                            terminal = mapped
+                                            break
+                                if not encontrado:
+                                    continue  # No es terminal; seguir con el siguiente símbolo
+
+                        # --- 4. Registrar la acción de reducción r<prod_idx> ---
+                        nueva_accion = "r" + str(prod_idx)
+                        vieja_accion = action_table[i][terminal]
+
+                        if vieja_accion is not None and vieja_accion != nueva_accion:
+                            # Si quieres, registra el conflicto en tu log; aquí solo sobrescribimos
                             pass
-                        action_table[i][terminal] = "r" + str(prod_idx)
+
+                        action_table[i][terminal] = nueva_accion
 
         # GOTO
         for nt in nonterminals:
