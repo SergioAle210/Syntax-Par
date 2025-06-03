@@ -1,0 +1,7 @@
+FOLLOW(general) = ['$', 'ID', 'LPAREN', 'SEMICOLON']
+FOLLOW(expression) = ['$', ';', 'ID', 'LPAREN', 'PLUS', 'RPAREN', 'SEMICOLON']
+FOLLOW(term) = ['$', ';', 'ID', 'LPAREN', 'PLUS', 'RPAREN', 'SEMICOLON', 'TIMES']
+FOLLOW(factor) = ['$', ';', 'ID', 'LPAREN', 'PLUS', 'RPAREN', 'SEMICOLON', 'TIMES']
+FOLLOW(S) = ['$', 'ID', 'LPAREN']
+FOLLOW(S') = []
+FOLLOW(S'') = []

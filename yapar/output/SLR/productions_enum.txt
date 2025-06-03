@@ -1,0 +1,12 @@
+0: general → general SEMICOLON expression
+1: general → expression ;
+2: expression → expression PLUS term
+3: expression → term
+4: term → term TIMES factor
+5: term → factor
+6: factor → LPAREN expression RPAREN
+7: factor → ID
+8: S → S general
+9: S → general
+10: S' → S
+11: S'' → S'

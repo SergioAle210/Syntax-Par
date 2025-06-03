@@ -2,7 +2,18 @@ import os
 import json
 import pickle
 
-def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transitions, enumerated_productions, terminals, nonterminals, token_map):
+
+def compute_slr_table(
+    grammar,
+    first_sets,
+    follow_sets,
+    lr0_states,
+    lr0_transitions,
+    enumerated_productions,
+    terminals,
+    nonterminals,
+    token_map,
+):
     action_table = {}
     goto_table = {}
 
@@ -10,7 +21,7 @@ def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transiti
         action_table[i] = {}
         for t in terminals:
             action_table[i][t] = None
-        action_table[i]['$'] = None
+        action_table[i]["$"] = None
         goto_table[i] = {}
         for nt in nonterminals:
             goto_table[i][nt] = None
@@ -25,23 +36,21 @@ def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transiti
             # --- SHIFT ---
             if dot_pos < len(rhs):
                 symbol = rhs[dot_pos]
-                is_terminal = False
-                for t in terminals:
-                    if t == symbol:
-                        is_terminal = True
-                        break
-                print(f"[DEBUG SHIFT] Estado {i}, símbolo esperado tras punto: '{symbol}' | Terminales: {terminals}")
-                if is_terminal:
-                    next_state_idx = None
-                    key = (i, symbol)
-                    if key in lr0_transitions:
-                        next_state_idx = lr0_transitions[key]
-                    print(f"[DEBUG SHIFT] key={key}, next_state_idx={next_state_idx}")
+
+                # ─── traducir con token_map si hace falta ───
+                if symbol not in terminals and symbol in token_map:
+                    symbol_mapped = token_map[symbol]  # '+' → 'PLUS'
+                else:
+                    symbol_mapped = symbol
+
+                if symbol_mapped in terminals:
+                    next_state_idx = lr0_transitions.get((i, symbol), None)
                     if next_state_idx is not None:
-                        if action_table[i][symbol] is not None and action_table[i][symbol] != ("s" + str(next_state_idx)):
-                            print("Conflicto Shift-Shift o Shift-Reduce en estado", i, "símbolo", symbol)
-                        print(f"[DEBUG SHIFT] Acción agregada: estado {i}, símbolo '{symbol}' => SHIFT a estado {next_state_idx}")
-                        action_table[i][symbol] = "s" + str(next_state_idx)
+                        prev = action_table[i][symbol_mapped]
+                        new = "s" + str(next_state_idx)
+                        if prev and prev != new:
+                            print("Conflicto Shift en estado", i, "símbolo", symbol)
+                        action_table[i][symbol_mapped] = new
 
             # --- REDUCE ---
             elif dot_pos == len(rhs):
@@ -79,7 +88,7 @@ def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transiti
 
                 # Producción aumentada
                 if prod_idx == 0:
-                    action_table[i]['$'] = 'acc'
+                    action_table[i]["$"] = "acc"
                 else:
                     # Recorrer el conjunto FOLLOW
                     follow_set = []
@@ -108,15 +117,12 @@ def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transiti
                             if not encontrado:
                                 continue
                         # Si ya hay acción y es diferente, lo puedes loggear, pero igual sobrescribe
-                        if action_table[i][terminal] is not None and action_table[i][terminal] != ("r" + str(prod_idx)):
+                        if action_table[i][terminal] is not None and action_table[i][
+                            terminal
+                        ] != ("r" + str(prod_idx)):
                             # No uses print si vas a guardar logs en archivo, solo agrégalo donde corresponda
                             pass
                         action_table[i][terminal] = "r" + str(prod_idx)
-
-
-
-
-
 
         # GOTO
         for nt in nonterminals:
@@ -128,16 +134,18 @@ def compute_slr_table(grammar, first_sets, follow_sets, lr0_states, lr0_transiti
 
     return action_table, goto_table
 
+
 def save_slr_table(action_table, goto_table, filename="output/slr_table"):
     if not os.path.exists(os.path.dirname(filename)):
         os.makedirs(os.path.dirname(filename))
 
-    with open(filename + "_action.json", 'w', encoding='utf-8') as f:
+    with open(filename + "_action.json", "w", encoding="utf-8") as f:
         json.dump(action_table, f, indent=4)
-    with open(filename + "_goto.json", 'w', encoding='utf-8') as f:
+    with open(filename + "_goto.json", "w", encoding="utf-8") as f:
         json.dump(goto_table, f, indent=4)
-    with open(filename + ".pickle", 'wb') as f:
-        pickle.dump({'action': action_table, 'goto': goto_table}, f)
+    with open(filename + ".pickle", "wb") as f:
+        pickle.dump({"action": action_table, "goto": goto_table}, f)
+
 
 def enumerate_productions(productions, start_symbol):
     prod_list = []
@@ -147,4 +155,3 @@ def enumerate_productions(productions, start_symbol):
             prod_list.append((idx, head, body))
             idx += 1
     return prod_list
-

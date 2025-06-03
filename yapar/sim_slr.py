@@ -57,11 +57,11 @@ def simulate_slr_parser(
 
     # ─── Función interna para consumir el próximo token significativo ───
     def next_valid_token():
+        skip = {"ws", "WHITESPACE", "WS", "TAB", "ENTER"}
         while True:
             try:
                 tok, lex = next(tokens)
-                # Se ignora token "ws" (minúsculas) si aparece
-                if tok != "ws":
+                if tok not in skip:
                     return tok, lex
             except StopIteration:
                 return "$", ""

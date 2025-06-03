@@ -46,7 +46,7 @@
         "LPAREN": null,
         "RPAREN": null,
         "ws": null,
-        "SEMICOLON": null,
+        "SEMICOLON": "s11",
         "$": null
     },
     "5": {

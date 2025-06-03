@@ -1,0 +1,6 @@
+>>> TOKEN_MAP INFERIDO DINÁMICAMENTE: {'+': 'PLUS', '*': 'TIMES', '(': 'LPAREN', ')': 'RPAREN', 'id': 'ID', ';': 'SEMICOLON'}
+[DEBUG] Primer token: ID ('a')
+[ERROR] Error sintáctico en estado 11 con token '$'.
+
+Parser terminado → ERROR
+Output escrito en : output\parser_output.txt

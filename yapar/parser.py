@@ -188,8 +188,6 @@ def parse_yalp_file(filepath: str):
     return tokens, productions, start_symbol_aug, base_start
 
 
-
-
 def is_all_digits(cadena: str) -> bool:
     """Verifica si la cadena consiste solo de dígitos (sin usar funciones de librerías)."""
     if cadena == "":
@@ -199,6 +197,7 @@ def is_all_digits(cadena: str) -> bool:
             return False
     return True
 
+
 def convertir_a_entero(cadena: str) -> int:
     """Convierte manualmente una cadena de dígitos a entero (sin usar int())."""
     resultado = 0
@@ -206,44 +205,31 @@ def convertir_a_entero(cadena: str) -> int:
         resultado = resultado * 10 + (ord(c) - ord("0"))
     return resultado
 
-def infer_token_map_from_pickle(dfa_pickle_path: str, tokens_declarados: list[str]) -> dict[str, str]:
-    """
-    Infiera dinámicamente el mapeo símbolo → nombre_token desde el AFD y los tokens %declarados en .yalp.
-    Ahora acepta tanto nombres literales como valores ASCII.
-    """
-    import pickle
-    with open(dfa_pickle_path, "rb") as f:
+
+def infer_token_map_from_pickle(
+    pickle_path: str, tokens_decl: list[str]
+) -> dict[str, str]:
+    with open(pickle_path, "rb") as f:
         afd = pickle.load(f)
 
-    symbol_token_map = {}
-    usados = []  # Tokens ya asociados
+    symbol_token_map, usados = {}, set()
 
-    acciones = afd["token_actions"]
-    claves_estado = list(acciones.keys())
+    for estado in afd["token_actions"].values():
+        leaves = (
+            estado["merged"]
+            if isinstance(estado, dict) and "merged" in estado
+            else estado
+        )
+        for sym_code, token_name in leaves.values():
+            if token_name in usados:
+                continue
+            symbol = chr(int(sym_code)) if sym_code.isdigit() else sym_code
+            if token_name in tokens_decl:
+                symbol_token_map[symbol] = token_name
+                usados.add(token_name)
 
-    for clave_estado in claves_estado:
-        estado = acciones[clave_estado]
-        if "merged" in estado:
-            merged = estado["merged"]
-            for m in merged:
-                token_str = merged[m]
-                # Si es ASCII (solo dígitos)
-                if is_all_digits(token_str):
-                    ascii_val = convertir_a_entero(token_str)
-                    simbolo = chr(ascii_val)
-                else:
-                    simbolo = token_str  # nombre literal (ej: PLUS, MINUS, etc)
-                # Buscar el primer token disponible que no esté usado
-                for tk in tokens_declarados:
-                    if tk not in usados and (tk == simbolo or tk.upper() == simbolo.upper()):
-                        symbol_token_map[simbolo] = tk
-                        usados.append(tk)
-                        break
     print(">>> TOKEN_MAP INFERIDO DINÁMICAMENTE:", symbol_token_map)
     return symbol_token_map
-
-
-
 
 
 def save_json(data, filename):
@@ -285,126 +271,152 @@ def save_parser_output(actions, accepted, error_msg, input_tokens, output_file):
                 f.write(f"Detalles del error:\n{error_msg}\n")
 
 
-# --- MAIN INTEGRADO  ---
-def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
-    # Rutas de salida
-    lr0_dir = os.path.join(output_dir, "LR0")
-    ff_dir = os.path.join(output_dir, "first_follow")
-    slr_dir = os.path.join(output_dir, "SLR")
-    tokens, productions, augmented_start, start_symbol = parse_yalp_file(yalp_path)
-
-    token_map = infer_token_map_from_pickle(dfa_pickle_path, tokens)
-
-    # 2. Construir el automata LR(0)
-    grammar = Grammar(productions, augmented_start)
-    states, transitions, grammar = lr0_items(grammar)
-    save_pickle((states, transitions), f"{lr0_dir}/lr0_states_transitions.pickle")
-    visualize_lr0_automaton(
-        states, transitions, grammar, filename=f"{lr0_dir}/lr0_automaton"
-    )
-
-    # 3. Calcular FIRST y FOLLOW
-    first = compute_first(productions)
-    follow = compute_follow(productions, first, start_symbol, token_map, tokens)
+def save_txt(lines: list[str], filename: str) -> None:
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, "w", encoding="utf-8") as f:
+        for ln in lines:
+            f.write(ln + "\n")
 
 
-    # === DEBUG: IMPRIMIR FOLLOW SETS ===
-    print("\n=== FOLLOW SETS DEBUG ===")
-    for nt, follow_set in follow.items():
-        print(f"FOLLOW({nt}) = {follow_set}")
-
-    save_pickle((first, follow), f"{ff_dir}/first_follow.pickle")
-    save_json(first, f"{ff_dir}/first.json")
-    save_json(follow, f"{ff_dir}/follow.json")
-
-    # 4. Enumerar producciones
-    print("\n=== Producciones enumeradas ===")
-    productions_list = enumerate_productions(grammar.productions, grammar.start_symbol)
-
-    save_pickle(productions_list, f"{slr_dir}/productions_enum.pickle")
-    for prod_idx, lhs, rhs in productions_list:
-        print(f"{prod_idx}: {lhs} → {' '.join(rhs)}")
+def dump_follow_sets(follow: dict, filename: str) -> None:
+    líneas = [f"FOLLOW({nt}) = {sorted(vals)}" for nt, vals in follow.items()]
+    save_txt(líneas, filename)
 
 
-    # 5. Construir tabla SLR(1)
-    productions_enum = productions_list
-
-    action_table, goto_table = compute_slr_table(
-        grammar,
-        first,
-        follow,
-        states,
-        transitions,
-        productions_enum,
-        tokens,
-        list(productions.keys()),
-        token_map
-    )
-    save_slr_table(action_table, goto_table, filename=f"{slr_dir}/slr_table")
-
-    print("\n=== Tabla SLR ACTION ===")
-    for state, actions in action_table.items():
-        for token, action in actions.items():
-            if action is not None:
-                print(f"Estado {state}, token {token}: {action}")
-
-    print("\n=== Tabla SLR GOTO ===")
-    for state, gotos in goto_table.items():
-        for nt, next_state in gotos.items():
-            if next_state is not None:
-                print(f"Estado {state}, no-terminal {nt}: {next_state}")
-
-    print("\n=== FIRST SETS DEBUG ===")
-    for nt, first_set in first.items():
-        print(f"FIRST({nt}) = {first_set}")
-
-    with open(dfa_pickle_path, "rb") as f:
-        dfa = pickle.load(f)
-
-    with open(source_file_path, "r", encoding="utf-8") as fin:
-        input_text = fin.read()
-
-    # GENERADOR PRODUCTOR DE TOKENS
-    def token_stream_gen():
-        for token, lexema in lex(input_text, dfa):
-            if token not in ("WHITESPACE", "WS", "TAB", "ENTER"):
-                yield (token, lexema)
-
-    # --- PASA EL GENERADOR DIRECTAMENTE AL PARSER ---
-    accepted, actions, error_msg = simulate_slr_parser(
-        action_table, goto_table, productions_enum, token_stream_gen(), start_symbol
-    )
-
-    # Para mostrar los tokens consumidos (solo para el reporte, no para el parser)
-    tokens_for_parser = [
-        token for token, _ in lex(input_text, dfa)
-        if token not in ("WHITESPACE", "WS", "TAB", "ENTER")
-    ]
+def dump_action_goto(action, goto, filename_prefix: str) -> None:
+    # ACTION
+    líneas = []
+    for st, row in action.items():
+        for tok, act in row.items():
+            if act:
+                líneas.append(f"STATE {st:3}  TOKEN {tok:10}  →  {act}")
+    save_txt(líneas, filename_prefix + "_action.txt")
+    # GOTO
+    líneas = []
+    for st, row in goto.items():
+        for nt, nxt in row.items():
+            if nxt is not None:
+                líneas.append(f"STATE {st:3}  GOTO {nt:10}  →  {nxt}")
+    save_txt(líneas, filename_prefix + "_goto.txt")
 
 
-    parser_outfile = os.path.join(output_dir, "parser_output.txt")
-    save_parser_output(actions, accepted, error_msg, tokens_for_parser, parser_outfile)
-    print("TOKENS PARA EL PARSER:")
-    for t, lexema in lex(input_text, dfa):
-        print(f"Token: {t}, Lexema: '{lexema}'")
+def main(
+    yalp_path: str,
+    source_file_path: str,
+    dfa_pickle_path: str,
+    output_dir: str = "output",
+) -> None:
 
-    print("Parser terminado →", "ACCEPTED" if accepted else "ERROR")
-    print(f"Output escrito en: {parser_outfile}")
+    # ─── 0. Capturar toda la salida de depuración ───────────────────────────
+    os.makedirs(output_dir, exist_ok=True)
+    log_path = os.path.join(output_dir, "debug_log.txt")
+    original_stdout = sys.stdout
+    log_file = open(log_path, "w", encoding="utf-8")
+    sys.stdout = log_file  # todo print() ➜ debug_log.txt
+
+    try:
+        # ─── 1. Rutas base ──────────────────────────────────────────────────
+        lr0_dir = os.path.join(output_dir, "LR0")
+        ff_dir = os.path.join(output_dir, "first_follow")
+        slr_dir = os.path.join(output_dir, "SLR")
+
+        # ─── 2. Parsear el .yalp y AFD → token_map ──────────────────────────
+        tokens, productions, augmented_start, start_symbol = parse_yalp_file(yalp_path)
+        token_map = infer_token_map_from_pickle(dfa_pickle_path, tokens)
+
+        # ─── 3. Automata LR(0) ──────────────────────────────────────────────
+        grammar = Grammar(productions, augmented_start)
+        states, transitions, _ = lr0_items(grammar)
+        save_pickle((states, transitions), f"{lr0_dir}/lr0_states_transitions.pickle")
+        visualize_lr0_automaton(
+            states, transitions, grammar, filename=f"{lr0_dir}/lr0_automaton"
+        )
+
+        # ─── 4. FIRST / FOLLOW ──────────────────────────────────────────────
+        first = compute_first(productions)
+        follow = compute_follow(productions, first, start_symbol, token_map, tokens)
+
+        save_pickle((first, follow), f"{ff_dir}/first_follow.pickle")
+        save_json(first, f"{ff_dir}/first.json")
+        save_json(follow, f"{ff_dir}/follow.json")
+        dump_follow_sets(follow, f"{ff_dir}/follow.txt")  # TXT ordenado
+
+        # ─── 5. Enumerar producciones ───────────────────────────────────────
+        productions_list = enumerate_productions(
+            grammar.productions, grammar.start_symbol
+        )
+        save_pickle(productions_list, f"{slr_dir}/productions_enum.pickle")
+        save_txt(
+            [f"{idx}: {lhs} → {' '.join(rhs)}" for idx, lhs, rhs in productions_list],
+            f"{slr_dir}/productions_enum.txt",
+        )
+
+        # ─── 6. Tabla SLR(1) ────────────────────────────────────────────────
+        action_table, goto_table = compute_slr_table(
+            grammar,
+            first,
+            follow,
+            states,
+            transitions,
+            productions_list,
+            tokens,
+            list(productions.keys()),
+            token_map,
+        )
+
+        save_slr_table(action_table, goto_table, filename=f"{slr_dir}/slr_table")
+        dump_action_goto(action_table, goto_table, f"{slr_dir}/slr_table")
+
+        # ─── 7. Preparar generador de tokens ────────────────────────────────
+        with open(dfa_pickle_path, "rb") as f:
+            dfa = pickle.load(f)
+
+        with open(source_file_path, "r", encoding="utf-8") as fin:
+            input_text = fin.read()
+
+        def token_stream_gen():
+            skip = {"WHITESPACE", "WS", "ws", "TAB", "ENTER"}
+            for (sym, token_name), lexeme in lex(input_text, dfa):
+                if token_name in skip:
+                    continue
+                yield (token_name, lexeme)  # lo que el parser espera
+
+        # ─── 8. Simular el parser ───────────────────────────────────────
+        accepted, actions, error_msg = simulate_slr_parser(
+            action_table, goto_table, productions_list, token_stream_gen(), start_symbol
+        )
+
+        # Lista de tokens legibles para el reporte
+        tokens_for_parser = [
+            token_name
+            for (_, token_name), _ in lex(input_text, dfa)
+            if token_name.upper() not in {"WHITESPACE", "WS", "TAB", "ENTER"}
+        ]
+
+        parser_outfile = os.path.join(output_dir, "parser_output.txt")
+        save_parser_output(
+            actions, accepted, error_msg, tokens_for_parser, parser_outfile
+        )
+
+        # ─── 9. Resumen final (va al log) ───────────────────────────────────
+        print("\nParser terminado →", "ACCEPTED" if accepted else "ERROR")
+        print("Output escrito en :", parser_outfile)
+
+    finally:
+        # ─── 10. Restaurar stdout y cerrar el log ───────────────────────────
+        sys.stdout = original_stdout
+        log_file.close()
+        print(f"[INFO] Ejecución completada. Log detallado en {log_path}")
 
 
-# --- ENTRYPOINT ---
+# --- ENTRYPOINT -------------------------------------------------------------
 if __name__ == "__main__":
     if len(sys.argv) < 4:
         print("Uso: python parser.py <ruta_a_yalp> <archivo_fuente> <dfa_pickle>")
-        print(
-            "Ejemplo:\n  "
-            "python parser.py ../yalpfiles/slr-test.yalp "
-            "../test/test_num.txt "
-            "../lexers/lexer-test.pickle"
-        )
         sys.exit(1)
 
     yalp_path = sys.argv[1]
     source_file_path = sys.argv[2]
     dfa_pickle_path = sys.argv[3]
+
     main(yalp_path, source_file_path, dfa_pickle_path)
