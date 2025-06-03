@@ -4,3 +4,5 @@ random_data
 output_lexer
 output_lexers
 .vscode
+/lex/grafos
+/yapar/output
