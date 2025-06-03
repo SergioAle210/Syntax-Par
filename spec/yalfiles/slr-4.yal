@@ -25,6 +25,5 @@ rule tokens =
   | '/'       { return DIV }
   | '('       { return LPAREN }
   | ')'       { return RPAREN }
-  | '.'       { return POINT }
 
 (* Introducir cualquier trailer aqui *)
