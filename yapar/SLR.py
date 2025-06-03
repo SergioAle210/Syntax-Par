@@ -156,11 +156,25 @@ def save_slr_table(action_table, goto_table, filename="output/slr_table"):
         pickle.dump({"action": action_table, "goto": goto_table}, f)
 
 
-def enumerate_productions(productions, start_symbol):
+def enumerate_productions(productions: dict, start_symbol: str):
+    """
+    Devuelve la lista [(idx, lhs, rhs)…] asegurando que la producción
+    aumentada (start_symbol) quede con índice 0.
+    """
     prod_list = []
     idx = 0
+
+    # 1. producción aumentada primero
+    for body in productions[start_symbol]:
+        prod_list.append((idx, start_symbol, body))
+        idx += 1
+
+    # 2. el resto, en el orden original
     for head in productions:
+        if head == start_symbol:
+            continue
         for body in productions[head]:
             prod_list.append((idx, head, body))
             idx += 1
+
     return prod_list
