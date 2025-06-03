@@ -11,7 +11,6 @@ class Grammar:
         self.start_symbol = start_symbol
         self.start_symbol = self._augment_start_symbol(start_symbol, productions)
 
-        # Calcula no terminales y terminales
         self.nonterminals = []
         for nt in productions:
             if nt not in self.nonterminals:
@@ -32,7 +31,7 @@ class Grammar:
 
 
 def item(lhs, rhs, dot):
-    # rhs es tuple
+  
     return (lhs, tuple(rhs), dot)
 
 
@@ -69,7 +68,7 @@ def closure(items, grammar):
         dot = closure_set[idx][2]
         if dot < len(rhs):
             B = rhs[dot]
-            # ¿Es un no terminal?
+            
             is_nt = False
             for k in grammar.nonterminals:
                 if k == B:
@@ -164,7 +163,6 @@ def visualize_lr0_automaton(
         state = states[idx]
         label = "I" + str(idx) + ":\n"
         for prod in state:
-            # Construir string manualmente
             left = prod[0] + " → "
             before_dot = ""
             for i in range(prod[2]):
@@ -183,14 +181,12 @@ def visualize_lr0_automaton(
         dst_idx = transitions[key]
         dot.edge(str(src_idx), str(dst_idx), label=str(symbol))
     dot.render(filename, view=False, cleanup=True)
-    # Write states and transitions to a text file
     with open(filename + ".txt", "w", encoding="utf-8") as f:
         f.write("LR(0) Automaton States:\n")
         for idx in range(len(states)):
             state = states[idx]
             f.write("\nState I" + str(idx) + ":\n")
             for prod in state:
-                # Construir string manualmente
                 line = "  " + prod[0] + " → "
                 before_dot = ""
                 for i in range(prod[2]):

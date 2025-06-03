@@ -50,7 +50,7 @@ def simulate_slr_parser(
         Descripción del fallo si ocurre
     """
 
-    # Pila LR: [estado0, simbolo1, estado1, simbolo2, estado2, ...]
+    # Pila LR: 
     stack = [0]
     actions_log = []
     tokens = iter(token_stream)
@@ -83,7 +83,6 @@ def simulate_slr_parser(
                 ("reduce", state, f"{lhs} → {' '.join(rhs) if rhs else 'λ'}")
             )
 
-            # Pop 2*|rhs| elementos (símbolo + estado) de la pila
             for _ in range(len(rhs) * 2):
                 stack.pop()
 
@@ -95,7 +94,7 @@ def simulate_slr_parser(
             state = goto_state
             action = action_table.get(state, {}).get(current_token)
 
-        # ACEPTACIÓN manual cuando lookahead == '$'
+        
         if lookahead_token == "$":
             for _, lhs, rhs in productions_enum:
                 if str_endswith(lhs, "'") and rhs == [start_symbol]:
@@ -109,17 +108,14 @@ def simulate_slr_parser(
             actions_log.append(("error", state, current_token, mensaje))
             print("[ERROR]", mensaje)
 
-            # Conjunto de sincronización (ampliar según gramática)
             sync_tokens = {"SEMICOLON", "$", "ID", "LPAREN"}
 
-            # Descartar tokens hasta encontrar uno de sincronización
             while lookahead_token not in sync_tokens:
                 lookahead_token, lookahead_lexeme = next_valid_token()
                 print(
                     f"[RECOVERY] Descartando → {lookahead_token} ('{lookahead_lexeme}')"
                 )
 
-            # Intentar buscar estado en la pila que acepte este token
             recovered = False
             for i in range(len(stack) - 1, -1, -2):
                 st = stack[i]
@@ -133,17 +129,16 @@ def simulate_slr_parser(
                 actions_log.append(("fatal", state, current_token, "No recuperable"))
                 return False, actions_log, "Error fatal: no se pudo recuperar."
 
-            # No hacemos shift/reduce todavía; volvemos al while principal
             continue
 
-        # ACEPTACIÓN normal
+        # ACEPTACIÓN 
         if action == "acc":
             actions_log.append(("accept", state, current_token))
             return True, actions_log, None
 
         # SHIFT
         if str_startswith(action, "s"):
-            next_state = int(action[1:])  # "s12" → 12
+            next_state = int(action[1:])  
             actions_log.append(("shift", state, current_token, next_state))
 
             stack.append(current_token)

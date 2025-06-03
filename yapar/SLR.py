@@ -37,9 +37,8 @@ def compute_slr_table(
             if dot_pos < len(rhs):
                 symbol = rhs[dot_pos]
 
-                # traducir con token_map si hace falta
                 if symbol not in terminals and symbol in token_map:
-                    symbol_mapped = token_map[symbol]  # '+' → 'PLUS'
+                    symbol_mapped = token_map[symbol]  
                 else:
                     symbol_mapped = symbol
 
@@ -56,11 +55,11 @@ def compute_slr_table(
             elif dot_pos == len(rhs):
                 prod_idx = -1
 
-                # 1. Buscar la producción correspondiente en enumerated_productions
+                
                 for j in range(len(enumerated_productions)):
                     p_idx, p_lhs, p_rhs = enumerated_productions[j]
 
-                    # Comparar lhs
+                    
                     lhs_igual = True
                     if len(p_lhs) != len(lhs):
                         lhs_igual = False
@@ -70,7 +69,7 @@ def compute_slr_table(
                                 lhs_igual = False
                                 break
 
-                    # Comparar rhs
+                    
                     rhs_igual = True
                     if len(p_rhs) != len(rhs):
                         rhs_igual = False
@@ -85,23 +84,23 @@ def compute_slr_table(
                         break
 
                 if prod_idx == -1:
-                    continue  # No encontramos la producción; pasamos a la siguiente
+                    continue  
 
-                # 2. Producción aumentada (aceptación)
+                # 2. Producción aumentada 
                 if prod_idx == 0:
                     action_table[i]["$"] = "acc"
                 else:
-                    # 3. Para cada símbolo en FOLLOW(lhs) añadimos la reducción rX
+                    
                     follow_set = list(follow_sets.get(lhs, set()))
 
                     for j in range(len(follow_set)):
                         symbol = follow_set[j]
 
-                        #  Caso especial: '$' debe considerarse terminal válido
+                        
                         if symbol == "$":
                             terminal = "$"
                         else:
-                            # ¿Está el símbolo directamente en terminals?
+                            
                             es_terminal = False
                             for k in range(len(terminals)):
                                 if terminals[k] == symbol:
@@ -111,7 +110,7 @@ def compute_slr_table(
                             if es_terminal:
                                 terminal = symbol
                             else:
-                                # Intentar mapear usando token_map
+                               
                                 encontrado = False
                                 if symbol in token_map:
                                     mapped = token_map[symbol]
@@ -121,14 +120,14 @@ def compute_slr_table(
                                             terminal = mapped
                                             break
                                 if not encontrado:
-                                    continue  # No es terminal; seguir con el siguiente símbolo
+                                    continue  
 
-                        # 4. Registrar la acción de reducción r<prod_idx>
+                      
                         nueva_accion = "r" + str(prod_idx)
                         vieja_accion = action_table[i][terminal]
 
                         if vieja_accion is not None and vieja_accion != nueva_accion:
-                            # Si quieres, registra el conflicto en tu log; aquí solo sobrescribimos
+                          
                             pass
 
                         action_table[i][terminal] = nueva_accion
@@ -164,12 +163,10 @@ def enumerate_productions(productions: dict, start_symbol: str):
     prod_list = []
     idx = 0
 
-    # 1. producción aumentada primero
     for body in productions[start_symbol]:
         prod_list.append((idx, start_symbol, body))
         idx += 1
 
-    # 2. el resto, en el orden original
     for head in productions:
         if head == start_symbol:
             continue

@@ -50,7 +50,7 @@ def compute_follow(g, first, start):
         changed = False
         for A, prods in g.items():
             for α in prods:
-                trailer = follow[A].copy()  # lo que viene DESPUÉS de la posición
+                trailer = follow[A].copy()  
                 for X in reversed(α):
                     if X not in g:  # terminal
                         trailer = {X}

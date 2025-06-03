@@ -7,7 +7,7 @@ from SLR import enumerate_productions, save_slr_table, compute_slr_table
 from sim_slr import simulate_slr_parser
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../lex")))
-from lexer import lex  # noqa: E402 (import tardío intencional)
+from lexer import lex  
 
 
 def str_startswith(cadena: str, prefijo: str) -> bool:
@@ -54,10 +54,9 @@ def split_once(cadena: str, sep: str) -> tuple[str, str]:
     while i < len(cadena) and cadena[i] != sep:
         antes += cadena[i]
         i += 1
-    # No se encontró el separador
+
     if i == len(cadena):
         return antes, ""
-    # Saltar el separador
     despues = cadena[i + 1 :]
     return antes, despues
 
@@ -90,7 +89,7 @@ def parse_yalp_file(filepath: str):
         raw_line = lines[idx]
         line = trim(raw_line)
 
-        # Verifica si inicia con %token
+ 
         if str_startswith(line, "%token"):
             partes = split_by_whitespace(line)
             i = 1
@@ -99,7 +98,6 @@ def parse_yalp_file(filepath: str):
                 i += 1
             continue
 
-        # Comentarios, líneas vacías, o IGNORE
         if line == "":
             continue
         if str_startswith(line, "/*"):
@@ -107,7 +105,6 @@ def parse_yalp_file(filepath: str):
         if str_startswith(line, "IGNORE"):
             continue
 
-        # Producción con ':'
         i = 0
         tiene_dos_puntos = False
         while i < len(line):
@@ -140,7 +137,6 @@ def parse_yalp_file(filepath: str):
                     j += 1
             continue
 
-        # Alternativa con |
         if str_startswith(line, "|"):
             alt = ""
             j = 1
@@ -153,7 +149,6 @@ def parse_yalp_file(filepath: str):
                 alternatives.append(alt_tokens)
             continue
 
-        # Fin de producción con ;
         if str_startswith(line, ";"):
             if current_lhs is not None and len(alternatives) > 0:
                 productions[current_lhs] = alternatives
@@ -161,17 +156,14 @@ def parse_yalp_file(filepath: str):
             alternatives = []
             continue
 
-        # Otra alternativa válida
         if current_lhs is not None and line != "":
             alt_tokens = split_by_whitespace(line)
             if len(alt_tokens) > 0:
                 alternatives.append(alt_tokens)
 
-    # Agregar la última producción si quedó pendiente
     if current_lhs is not None and len(alternatives) > 0:
         productions[current_lhs] = alternatives
 
-    # Inyectar producción inicial extendida S' → S
     if start_symbol in ("general", "p"):
         productions["S"] = [["S", start_symbol], [start_symbol]]
         base_start = "S"
