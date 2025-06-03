@@ -3,6 +3,7 @@ import pickle
 import itertools
 from graphviz import Digraph
 import os
+import tok
 
 from regexpToAFD import (
     toPostFix,
@@ -24,6 +25,7 @@ from yalex_utils import (
     simplify_expression,
     attach_markers_to_final_regexp,
     process_regexp,
+    compute_symbol_code,
 )
 
 
@@ -128,108 +130,97 @@ def visualize_syntax_tree(root, route, file_format="png"):
 
 
 if __name__ == "__main__":
-    # 1. Parsear el archivo YAL (usando nuestra versión manual en yalex_utils)
-
+    # 1. Leer y parsear el .yal
     route = "slr-1"
-    name_yalfile = route + ".yal"
-    filepath = os.path.join("../spec/yalfiles", name_yalfile)
+    yal_path = os.path.join("../spec/yalfiles", f"{route}.yal")
+    result = parse_yalex(yal_path)
 
-    result = parse_yalex(filepath)
+    # 2. Separar reglas / acciones y obtener símbolo literal
+    regex_alt, action_alt = [], []
+    for rule, act in result["rules"]:
+        regex_alt.append(rule)
+        action_alt.append(act)
 
-    # 2. Extraer las reglas de tokens y acciones asociadas
-    token_rules = result["rules"]
-    regex_alternatives = [rule for rule, act in token_rules]
-    action_alternatives = [act for rule, act in token_rules]
+    # 3-9. Pre-procesamiento de la ER combinada
+    combined = "(" + manual_join(regex_alt, ")|(") + ")"
+    expanded = expand_regex(combined, result["definitions"])
+    brackets = expand_bracket_ranges(expanded)
+    processed = process_regexp(brackets)
+    escaped = escape_token_literals(processed)
+    plus_conv = convert_plus_operator(escaped)
+    opt_conv = convert_optional_operator(plus_conv)
+    simplified = simplify_expression(opt_conv)
 
-    # Construir la expresión combinada sin usar .join:
-    # en lugar de: "(" + ")|(".join(regex_alternatives) + ")"
-    combined_expr = "(" + manual_join(regex_alternatives, ")|(") + ")"
-    print("Expresión combinada:")
-    print(combined_expr)
+    # print("\nSimbolos:")
+    # print(regex_alt)
+    # print("\nAcciones:")
+    # print(action_alt)
 
-    # 3. Expandir definiciones
-    expr_expandida = expand_regex(combined_expr, result["definitions"])
-    print("\nExpresión expandida:")
-    print(expr_expandida)
-
-    # 4. Expandir rangos en corchetes
-    expr_con_brackets = expand_bracket_ranges(expr_expandida)
-
-    # 5. Procesar la expresión para convertir literales a ASCII
-    expr_procesada = process_regexp(expr_con_brackets)
-    print("\nExpresión procesada (con literales convertidas a ASCII):")
-    print(expr_procesada)
-
-    # 6. Escapar literales que son metacaracteres
-    expr_escapada = escape_token_literals(expr_procesada)
-
-    # 7. Convertir operador +
-    expr_convertida = convert_plus_operator(expr_escapada)
-
-    # 8. Convertir operador ?
-    expr_optional = convert_optional_operator(expr_convertida)
-
-    # 9. Simplificar la expresión regular
-    expr_simplificada = simplify_expression(expr_optional)
-
-    # 10. Asignar marcadores a las acciones asociadas a los tokens
-    final_expr, marker_mapping = attach_markers_to_final_regexp(
-        expr_simplificada, action_alternatives
+    # 10. Adjuntar marcadores y mapear (symCode / ws / id , TOKEN)
+    final_expr, marker_map_full = attach_markers_to_final_regexp(
+        simplified, action_alt, regex_alt
     )
-
 
     print("\nExpresión final:")
     print(final_expr)
 
     # 11. Convertir la expresión regular a postfix
     postfix = toPostFix(final_expr)
-    print("\nPostfix generado:")
-    print(postfix)
-    print("\nMapping de marcadores (acciones):")
-    print(marker_mapping)
+    # print("\nPostfix generado:")
+    # print(postfix)
 
     # 12. Construir el árbol de sintaxis a partir del postfix
-    syntax_tree, position_symbol_map = build_syntax_tree(postfix)
+    syntax_tree, pos_sym_map = build_syntax_tree(postfix)
 
     # Visualizar el árbol de expresión y guardarlo en la misma carpeta que el AFD
     visualize_syntax_tree(syntax_tree, route, file_format="pdf")
 
-    # 13. Construir el AFD a partir del árbol de sintaxis (usando marker_mapping)
-    states, transitions, accepting_states, state_token_mapping = construct_afd(
-        syntax_tree, position_symbol_map, marker_mapping
+    # 13. Construcción y minimización del AFD
+    marker_to_action = {m: tkn for m, (_, tkn) in marker_map_full.items()}
+    states, trans, acc, st_tok = construct_afd(
+        syntax_tree, pos_sym_map, marker_to_action
     )
-
-    # Minimizar y visualizar el AFD
-    (
-        new_states,
-        new_transitions,
-        new_accepting_states,
-        new_initial_state,
-        new_token_actions,
-    ) = minimize_afd(states, transitions, accepting_states, state_token_mapping)
-    visualize_afd(states, transitions, accepting_states, route)
-    visualize_minimized_afd(
-        new_states,
-        new_transitions,
-        new_accepting_states,
-        new_initial_state,
-        route,
+    new_states, new_trans, new_acc, new_init, new_tok = minimize_afd(
+        states, trans, acc, st_tok
     )
+    visualize_afd(states, trans, acc, route)
+    visualize_minimized_afd(new_states, new_trans, new_acc, new_init, route)
 
     print("Tokens viejos generados")
-    for state, token in state_token_mapping.items():
+    for state, token in st_tok.items():
         print(f"{state} -> {token}")
     print("Tokens generados:")
-    for state, token in new_token_actions.items():
+    for state, token in new_tok.items():
         print(f"{state} -> {token}")
 
-    # Diccionario final del AFD minimizado
+    # 14. Mostrar
+    print("\nMapping de marcadores:")
+    for m, v in marker_map_full.items():
+        print(f"{m}: {v}")
+
+    # 15. token_to_symbol → dicta (códigoASCII / ws / id)
+    token_to_symbol = {}
+    for sym_code, tok_name in marker_map_full.values():
+        if tok_name not in token_to_symbol:
+            token_to_symbol[tok_name] = sym_code
+
+    # 16. Conversión recursiva de new_tok a tuplas
+    def convert(obj):
+        if isinstance(obj, str):
+            return (token_to_symbol.get(obj, ""), obj)
+        if isinstance(obj, dict):
+            return {k: convert(v) for k, v in obj.items()}
+        raise TypeError(f"Tipo inesperado: {type(obj)}")
+
+    token_actions_final = {st: convert(tk) for st, tk in new_tok.items()}
+
+    # 17. Diccionario final y exportación
     afd_minimized = {
         "states": new_states,
-        "transitions": new_transitions,
-        "accepting_states": list(new_accepting_states),
-        "initial_state": new_initial_state,
-        "token_actions": new_token_actions,  # Mapping minimizado (con "merged" y "orig")
+        "transitions": new_trans,
+        "accepting_states": list(new_acc),
+        "initial_state": new_init,
+        "token_actions": token_actions_final,
     }
 
     if not os.path.exists("../lexers"):

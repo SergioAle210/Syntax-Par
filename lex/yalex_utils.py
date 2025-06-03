@@ -88,7 +88,7 @@ def remove_comments_yalex(text: str) -> str:
     return result
 
 
-def extract_header_and_trailer(text: str) -> (str, str, str):
+def extract_header_and_trailer(text: str) -> (str, str, str):  # type: ignore
     """
     Extrae el bloque {header} al inicio y, opcionalmente, el bloque {trailer} al final.
     Se interpreta de la siguiente manera:
@@ -138,7 +138,7 @@ def extract_header_and_trailer(text: str) -> (str, str, str):
     return header, trailer, remaining
 
 
-def extract_definitions(text: str) -> (dict, str):
+def extract_definitions(text: str) -> (dict, str):  # type: ignore
     """
     Extrae las definiciones de la forma 'let ident = regexp' de forma línea por línea
     (usando nuestra función custom_split_lines) y retorna un diccionario con las definiciones
@@ -180,7 +180,7 @@ def extract_definitions(text: str) -> (dict, str):
     return definitions, new_text
 
 
-def extract_rule(text: str) -> (str, str):
+def extract_rule(text: str) -> (str, str):  # type: ignore
     """
     Extrae la sección 'rule entrypoint [...] =' de forma manual.
     Retorna el nombre del entrypoint y el cuerpo de la regla.
@@ -667,7 +667,7 @@ def convert_plus_operator(expr: str) -> str:
     manteniendo los '+' escapados como literales.
     """
 
-    def get_operand(expr: str, pos: int) -> (str, int):
+    def get_operand(expr: str, pos: int) -> (str, int):  # type: ignore
         if pos <= 0:
             return "", 0
         if expr[pos - 1] == ")":
@@ -900,72 +900,119 @@ def simplify_expression(expr: str) -> str:
     return result
 
 
-def attach_markers_to_final_regexp(
-    expr: str, actions: list, start_id=1000
-) -> (str, dict):
+def compute_symbol_code(literal_sym: str, token_name: str) -> str:
     """
-    A la expresión 'expr' (alternativas separadas por '|' a nivel superior) le adjunta un marcador único
-    a cada alternativa y genera un diccionario que mapea cada marcador a la acción correspondiente.
+    Si hay símbolo literal ⇒ devuelve str(ord(símbolo)).
+    Si no hay símbolo:
+        • WHITESPACE → 'ws'
+        • ID         → 'id'
+        • en otro caso se devuelve ''.
+    """
+    if literal_sym:
+        return str(ord(literal_sym))
+
+    # convertir token_name a minúsculas sin usar .lower()
+    lower = ""
+    for ch in token_name:
+        if "A" <= ch <= "Z":
+            lower += chr(ord(ch) + 32)
+        else:
+            lower += ch
+
+    if lower == "whitespace":
+        return "ws"
+    if lower == "id":
+        return "id"
+    if lower == "number":
+        return "number"
+    return ""
+
+
+def attach_markers_to_final_regexp(
+    expr: str,
+    actions: list,
+    symbols: list,
+    start_id: int = 1000,
+):  # -> (str, dict)
+    """
+    Adjunta un marcador único a cada alternativa de la expresión regular `expr`
+    y genera un diccionario que mapea cada marcador a la tupla
+        (símbolo_literal, nombre_token).
+
+    • `actions[i]`  → nombre del token (p. ej. 'PLUS')
+    • `symbols[i]` → símbolo literal asociado (p. ej. '+') o '' si no aplica
     """
     parts = split_top_level(expr)
     new_parts = []
     marker_mapping = {}
     current_id = start_id
+
     for i in range(len(parts)):
+        # ─────— saneo de la sub-expresión ─────—
         stripped = custom_trim(parts[i])
-        contains_pipe = False
+
+        # envolver con paréntesis si contiene |
+        has_pipe = False
         for ch in stripped:
             if ch == "|":
-                contains_pipe = True
+                has_pipe = True
                 break
-        if contains_pipe and not (
+        if has_pipe and not (
             len(stripped) > 0
             and stripped[0] == "("
             and stripped[len(stripped) - 1] == ")"
         ):
             stripped = "(" + stripped + ")"
-        new_part = stripped + " " + str(current_id)
-        new_parts.append(new_part)
-        # Trim manual de la acción:
-        action = ""
-        if i < len(actions):
-            j = 0
-            while j < len(actions[i]) and actions[i][j] in " \t\n\r":
-                j += 1
-            k = len(actions[i]) - 1
-            while k >= 0 and actions[i][k] in " \t\n\r":
-                k -= 1
-            if j <= k:
-                idx = j
-                while idx <= k:
-                    action += actions[i][idx]
-                    idx += 1
-            else:
-                action = ""
-        # Remover prefijo "return" (sin usar .lower ni .startswith, se hace manualmente)
-        lower_action = ""
-        for ch in action:
+
+        # añadir el marcador numérico
+        new_parts.append(stripped + " " + str(current_id))
+
+        # ─────— preparar acción y símbolo ─────—
+        raw_action = actions[i] if i < len(actions) else ""
+        # trim manual
+        j = 0
+        while j < len(raw_action) and raw_action[j] in " \t\n\r":
+            j += 1
+        k = len(raw_action) - 1
+        while k >= 0 and raw_action[k] in " \t\n\r":
+            k -= 1
+        clean_action = ""
+        idx = j
+        while idx <= k:
+            clean_action += raw_action[idx]
+            idx += 1
+
+        # quitar prefijo "return" (sin startswith)
+        lowered = ""
+        for ch in clean_action:
             if "A" <= ch <= "Z":
-                lower_action += chr(ord(ch) + 32)
+                lowered += chr(ord(ch) + 32)
             else:
-                lower_action += ch
-        if len(lower_action) >= 6:
-            is_return = True
-            ret = "return"
-            for idx in range(6):
-                if lower_action[idx] != ret[idx]:
-                    is_return = False
+                lowered += ch
+        if len(lowered) >= 6:
+            is_ret = True
+            word = "return"
+            for p in range(6):
+                if lowered[p] != word[p]:
+                    is_ret = False
                     break
-            if is_return:
-                # Remover los 6 primeros caracteres (se hace manualmente)
-                action = ""
-                for idx in range(6, len(action)):
-                    action += action[idx]
-            if action == "number":
-                action = "ID"
-        marker_mapping[current_id] = action
+            if is_ret:
+                tmp = ""
+                for p in range(6, len(clean_action)):
+                    tmp += clean_action[p]
+                clean_action = tmp
+
+        # normalizar caso especial
+        if clean_action == "number":
+            clean_action = "ID"
+
+        literal_sym = symbols[i] if i < len(symbols) else ""
+
+        # **** AQUÍ guardamos TUPLA (símbolo, token) ****
+        marker_mapping[current_id] = (literal_sym, clean_action)
         current_id += 1
-        
+
+    # reconstruir la expresión con marcadores
     new_expr = ""
     for idx, part in enumerate(new_parts):
         if idx > 0:
