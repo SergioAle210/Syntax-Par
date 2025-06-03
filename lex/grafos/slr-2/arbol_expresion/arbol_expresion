@@ -1,0 +1,1032 @@
+// Árbol de Expresión
+digraph {
+	rankdir=TB
+	dpi=300 ratio=fill size="10,7"
+	1 [label="Valor: |"]
+	2 [label="Valor: |"]
+	3 [label="Valor: |"]
+	4 [label="Valor: |"]
+	5 [label="Valor: |"]
+	6 [label="Valor: |"]
+	7 [label="Valor: |"]
+	8 [label="Valor: |"]
+	9 [label="Valor: |"]
+	10 [label="Valor: ."]
+	11 [label="Valor: ."]
+	12 [label="Valor: |"]
+	13 [label="Valor: |"]
+	14 [label="Valor: 32
+Pos: 1"]
+	13 -> 14
+	15 [label="Valor: 9
+Pos: 2"]
+	13 -> 15
+	12 -> 13
+	16 [label="Valor: 10
+Pos: 3"]
+	12 -> 16
+	11 -> 12
+	17 [label="Valor: *"]
+	18 [label="Valor: |"]
+	19 [label="Valor: |"]
+	20 [label="Valor: 32
+Pos: 4"]
+	19 -> 20
+	21 [label="Valor: 9
+Pos: 5"]
+	19 -> 21
+	18 -> 19
+	22 [label="Valor: 10
+Pos: 6"]
+	18 -> 22
+	17 -> 18
+	11 -> 17
+	10 -> 11
+	23 [label="Valor: 1000
+Pos: 7"]
+	10 -> 23
+	9 -> 10
+	24 [label="Valor: ."]
+	25 [label="Valor: ."]
+	26 [label="Valor: |"]
+	27 [label="Valor: |"]
+	28 [label="Valor: |"]
+	29 [label="Valor: |"]
+	30 [label="Valor: |"]
+	31 [label="Valor: |"]
+	32 [label="Valor: |"]
+	33 [label="Valor: |"]
+	34 [label="Valor: |"]
+	35 [label="Valor: |"]
+	36 [label="Valor: |"]
+	37 [label="Valor: |"]
+	38 [label="Valor: |"]
+	39 [label="Valor: |"]
+	40 [label="Valor: |"]
+	41 [label="Valor: |"]
+	42 [label="Valor: |"]
+	43 [label="Valor: |"]
+	44 [label="Valor: |"]
+	45 [label="Valor: |"]
+	46 [label="Valor: |"]
+	47 [label="Valor: |"]
+	48 [label="Valor: |"]
+	49 [label="Valor: |"]
+	50 [label="Valor: |"]
+	51 [label="Valor: |"]
+	52 [label="Valor: |"]
+	53 [label="Valor: |"]
+	54 [label="Valor: |"]
+	55 [label="Valor: |"]
+	56 [label="Valor: |"]
+	57 [label="Valor: |"]
+	58 [label="Valor: |"]
+	59 [label="Valor: |"]
+	60 [label="Valor: |"]
+	61 [label="Valor: |"]
+	62 [label="Valor: |"]
+	63 [label="Valor: |"]
+	64 [label="Valor: |"]
+	65 [label="Valor: |"]
+	66 [label="Valor: |"]
+	67 [label="Valor: |"]
+	68 [label="Valor: |"]
+	69 [label="Valor: |"]
+	70 [label="Valor: |"]
+	71 [label="Valor: |"]
+	72 [label="Valor: |"]
+	73 [label="Valor: |"]
+	74 [label="Valor: |"]
+	75 [label="Valor: |"]
+	76 [label="Valor: |"]
+	77 [label="Valor: 65
+Pos: 8"]
+	76 -> 77
+	78 [label="Valor: 66
+Pos: 9"]
+	76 -> 78
+	75 -> 76
+	79 [label="Valor: 67
+Pos: 10"]
+	75 -> 79
+	74 -> 75
+	80 [label="Valor: 68
+Pos: 11"]
+	74 -> 80
+	73 -> 74
+	81 [label="Valor: 69
+Pos: 12"]
+	73 -> 81
+	72 -> 73
+	82 [label="Valor: 70
+Pos: 13"]
+	72 -> 82
+	71 -> 72
+	83 [label="Valor: 71
+Pos: 14"]
+	71 -> 83
+	70 -> 71
+	84 [label="Valor: 72
+Pos: 15"]
+	70 -> 84
+	69 -> 70
+	85 [label="Valor: 73
+Pos: 16"]
+	69 -> 85
+	68 -> 69
+	86 [label="Valor: 74
+Pos: 17"]
+	68 -> 86
+	67 -> 68
+	87 [label="Valor: 75
+Pos: 18"]
+	67 -> 87
+	66 -> 67
+	88 [label="Valor: 76
+Pos: 19"]
+	66 -> 88
+	65 -> 66
+	89 [label="Valor: 77
+Pos: 20"]
+	65 -> 89
+	64 -> 65
+	90 [label="Valor: 78
+Pos: 21"]
+	64 -> 90
+	63 -> 64
+	91 [label="Valor: 79
+Pos: 22"]
+	63 -> 91
+	62 -> 63
+	92 [label="Valor: 80
+Pos: 23"]
+	62 -> 92
+	61 -> 62
+	93 [label="Valor: 81
+Pos: 24"]
+	61 -> 93
+	60 -> 61
+	94 [label="Valor: 82
+Pos: 25"]
+	60 -> 94
+	59 -> 60
+	95 [label="Valor: 83
+Pos: 26"]
+	59 -> 95
+	58 -> 59
+	96 [label="Valor: 84
+Pos: 27"]
+	58 -> 96
+	57 -> 58
+	97 [label="Valor: 85
+Pos: 28"]
+	57 -> 97
+	56 -> 57
+	98 [label="Valor: 86
+Pos: 29"]
+	56 -> 98
+	55 -> 56
+	99 [label="Valor: 87
+Pos: 30"]
+	55 -> 99
+	54 -> 55
+	100 [label="Valor: 88
+Pos: 31"]
+	54 -> 100
+	53 -> 54
+	101 [label="Valor: 89
+Pos: 32"]
+	53 -> 101
+	52 -> 53
+	102 [label="Valor: 90
+Pos: 33"]
+	52 -> 102
+	51 -> 52
+	103 [label="Valor: 97
+Pos: 34"]
+	51 -> 103
+	50 -> 51
+	104 [label="Valor: 98
+Pos: 35"]
+	50 -> 104
+	49 -> 50
+	105 [label="Valor: 99
+Pos: 36"]
+	49 -> 105
+	48 -> 49
+	106 [label="Valor: 100
+Pos: 37"]
+	48 -> 106
+	47 -> 48
+	107 [label="Valor: 101
+Pos: 38"]
+	47 -> 107
+	46 -> 47
+	108 [label="Valor: 102
+Pos: 39"]
+	46 -> 108
+	45 -> 46
+	109 [label="Valor: 103
+Pos: 40"]
+	45 -> 109
+	44 -> 45
+	110 [label="Valor: 104
+Pos: 41"]
+	44 -> 110
+	43 -> 44
+	111 [label="Valor: 105
+Pos: 42"]
+	43 -> 111
+	42 -> 43
+	112 [label="Valor: 106
+Pos: 43"]
+	42 -> 112
+	41 -> 42
+	113 [label="Valor: 107
+Pos: 44"]
+	41 -> 113
+	40 -> 41
+	114 [label="Valor: 108
+Pos: 45"]
+	40 -> 114
+	39 -> 40
+	115 [label="Valor: 109
+Pos: 46"]
+	39 -> 115
+	38 -> 39
+	116 [label="Valor: 110
+Pos: 47"]
+	38 -> 116
+	37 -> 38
+	117 [label="Valor: 111
+Pos: 48"]
+	37 -> 117
+	36 -> 37
+	118 [label="Valor: 112
+Pos: 49"]
+	36 -> 118
+	35 -> 36
+	119 [label="Valor: 113
+Pos: 50"]
+	35 -> 119
+	34 -> 35
+	120 [label="Valor: 114
+Pos: 51"]
+	34 -> 120
+	33 -> 34
+	121 [label="Valor: 115
+Pos: 52"]
+	33 -> 121
+	32 -> 33
+	122 [label="Valor: 116
+Pos: 53"]
+	32 -> 122
+	31 -> 32
+	123 [label="Valor: 117
+Pos: 54"]
+	31 -> 123
+	30 -> 31
+	124 [label="Valor: 118
+Pos: 55"]
+	30 -> 124
+	29 -> 30
+	125 [label="Valor: 119
+Pos: 56"]
+	29 -> 125
+	28 -> 29
+	126 [label="Valor: 120
+Pos: 57"]
+	28 -> 126
+	27 -> 28
+	127 [label="Valor: 121
+Pos: 58"]
+	27 -> 127
+	26 -> 27
+	128 [label="Valor: 122
+Pos: 59"]
+	26 -> 128
+	25 -> 26
+	129 [label="Valor: *"]
+	130 [label="Valor: |"]
+	131 [label="Valor: |"]
+	132 [label="Valor: |"]
+	133 [label="Valor: |"]
+	134 [label="Valor: |"]
+	135 [label="Valor: |"]
+	136 [label="Valor: |"]
+	137 [label="Valor: |"]
+	138 [label="Valor: |"]
+	139 [label="Valor: |"]
+	140 [label="Valor: |"]
+	141 [label="Valor: |"]
+	142 [label="Valor: |"]
+	143 [label="Valor: |"]
+	144 [label="Valor: |"]
+	145 [label="Valor: |"]
+	146 [label="Valor: |"]
+	147 [label="Valor: |"]
+	148 [label="Valor: |"]
+	149 [label="Valor: |"]
+	150 [label="Valor: |"]
+	151 [label="Valor: |"]
+	152 [label="Valor: |"]
+	153 [label="Valor: |"]
+	154 [label="Valor: |"]
+	155 [label="Valor: |"]
+	156 [label="Valor: |"]
+	157 [label="Valor: |"]
+	158 [label="Valor: |"]
+	159 [label="Valor: |"]
+	160 [label="Valor: |"]
+	161 [label="Valor: |"]
+	162 [label="Valor: |"]
+	163 [label="Valor: |"]
+	164 [label="Valor: |"]
+	165 [label="Valor: |"]
+	166 [label="Valor: |"]
+	167 [label="Valor: |"]
+	168 [label="Valor: |"]
+	169 [label="Valor: |"]
+	170 [label="Valor: |"]
+	171 [label="Valor: |"]
+	172 [label="Valor: |"]
+	173 [label="Valor: |"]
+	174 [label="Valor: |"]
+	175 [label="Valor: |"]
+	176 [label="Valor: |"]
+	177 [label="Valor: |"]
+	178 [label="Valor: |"]
+	179 [label="Valor: |"]
+	180 [label="Valor: |"]
+	181 [label="Valor: |"]
+	182 [label="Valor: 65
+Pos: 60"]
+	181 -> 182
+	183 [label="Valor: 66
+Pos: 61"]
+	181 -> 183
+	180 -> 181
+	184 [label="Valor: 67
+Pos: 62"]
+	180 -> 184
+	179 -> 180
+	185 [label="Valor: 68
+Pos: 63"]
+	179 -> 185
+	178 -> 179
+	186 [label="Valor: 69
+Pos: 64"]
+	178 -> 186
+	177 -> 178
+	187 [label="Valor: 70
+Pos: 65"]
+	177 -> 187
+	176 -> 177
+	188 [label="Valor: 71
+Pos: 66"]
+	176 -> 188
+	175 -> 176
+	189 [label="Valor: 72
+Pos: 67"]
+	175 -> 189
+	174 -> 175
+	190 [label="Valor: 73
+Pos: 68"]
+	174 -> 190
+	173 -> 174
+	191 [label="Valor: 74
+Pos: 69"]
+	173 -> 191
+	172 -> 173
+	192 [label="Valor: 75
+Pos: 70"]
+	172 -> 192
+	171 -> 172
+	193 [label="Valor: 76
+Pos: 71"]
+	171 -> 193
+	170 -> 171
+	194 [label="Valor: 77
+Pos: 72"]
+	170 -> 194
+	169 -> 170
+	195 [label="Valor: 78
+Pos: 73"]
+	169 -> 195
+	168 -> 169
+	196 [label="Valor: 79
+Pos: 74"]
+	168 -> 196
+	167 -> 168
+	197 [label="Valor: 80
+Pos: 75"]
+	167 -> 197
+	166 -> 167
+	198 [label="Valor: 81
+Pos: 76"]
+	166 -> 198
+	165 -> 166
+	199 [label="Valor: 82
+Pos: 77"]
+	165 -> 199
+	164 -> 165
+	200 [label="Valor: 83
+Pos: 78"]
+	164 -> 200
+	163 -> 164
+	201 [label="Valor: 84
+Pos: 79"]
+	163 -> 201
+	162 -> 163
+	202 [label="Valor: 85
+Pos: 80"]
+	162 -> 202
+	161 -> 162
+	203 [label="Valor: 86
+Pos: 81"]
+	161 -> 203
+	160 -> 161
+	204 [label="Valor: 87
+Pos: 82"]
+	160 -> 204
+	159 -> 160
+	205 [label="Valor: 88
+Pos: 83"]
+	159 -> 205
+	158 -> 159
+	206 [label="Valor: 89
+Pos: 84"]
+	158 -> 206
+	157 -> 158
+	207 [label="Valor: 90
+Pos: 85"]
+	157 -> 207
+	156 -> 157
+	208 [label="Valor: 97
+Pos: 86"]
+	156 -> 208
+	155 -> 156
+	209 [label="Valor: 98
+Pos: 87"]
+	155 -> 209
+	154 -> 155
+	210 [label="Valor: 99
+Pos: 88"]
+	154 -> 210
+	153 -> 154
+	211 [label="Valor: 100
+Pos: 89"]
+	153 -> 211
+	152 -> 153
+	212 [label="Valor: 101
+Pos: 90"]
+	152 -> 212
+	151 -> 152
+	213 [label="Valor: 102
+Pos: 91"]
+	151 -> 213
+	150 -> 151
+	214 [label="Valor: 103
+Pos: 92"]
+	150 -> 214
+	149 -> 150
+	215 [label="Valor: 104
+Pos: 93"]
+	149 -> 215
+	148 -> 149
+	216 [label="Valor: 105
+Pos: 94"]
+	148 -> 216
+	147 -> 148
+	217 [label="Valor: 106
+Pos: 95"]
+	147 -> 217
+	146 -> 147
+	218 [label="Valor: 107
+Pos: 96"]
+	146 -> 218
+	145 -> 146
+	219 [label="Valor: 108
+Pos: 97"]
+	145 -> 219
+	144 -> 145
+	220 [label="Valor: 109
+Pos: 98"]
+	144 -> 220
+	143 -> 144
+	221 [label="Valor: 110
+Pos: 99"]
+	143 -> 221
+	142 -> 143
+	222 [label="Valor: 111
+Pos: 100"]
+	142 -> 222
+	141 -> 142
+	223 [label="Valor: 112
+Pos: 101"]
+	141 -> 223
+	140 -> 141
+	224 [label="Valor: 113
+Pos: 102"]
+	140 -> 224
+	139 -> 140
+	225 [label="Valor: 114
+Pos: 103"]
+	139 -> 225
+	138 -> 139
+	226 [label="Valor: 115
+Pos: 104"]
+	138 -> 226
+	137 -> 138
+	227 [label="Valor: 116
+Pos: 105"]
+	137 -> 227
+	136 -> 137
+	228 [label="Valor: 117
+Pos: 106"]
+	136 -> 228
+	135 -> 136
+	229 [label="Valor: 118
+Pos: 107"]
+	135 -> 229
+	134 -> 135
+	230 [label="Valor: 119
+Pos: 108"]
+	134 -> 230
+	133 -> 134
+	231 [label="Valor: 120
+Pos: 109"]
+	133 -> 231
+	132 -> 133
+	232 [label="Valor: 121
+Pos: 110"]
+	132 -> 232
+	131 -> 132
+	233 [label="Valor: 122
+Pos: 111"]
+	131 -> 233
+	130 -> 131
+	234 [label="Valor: |"]
+	235 [label="Valor: |"]
+	236 [label="Valor: |"]
+	237 [label="Valor: |"]
+	238 [label="Valor: |"]
+	239 [label="Valor: |"]
+	240 [label="Valor: |"]
+	241 [label="Valor: |"]
+	242 [label="Valor: |"]
+	243 [label="Valor: 48
+Pos: 112"]
+	242 -> 243
+	244 [label="Valor: 49
+Pos: 113"]
+	242 -> 244
+	241 -> 242
+	245 [label="Valor: 50
+Pos: 114"]
+	241 -> 245
+	240 -> 241
+	246 [label="Valor: 51
+Pos: 115"]
+	240 -> 246
+	239 -> 240
+	247 [label="Valor: 52
+Pos: 116"]
+	239 -> 247
+	238 -> 239
+	248 [label="Valor: 53
+Pos: 117"]
+	238 -> 248
+	237 -> 238
+	249 [label="Valor: 54
+Pos: 118"]
+	237 -> 249
+	236 -> 237
+	250 [label="Valor: 55
+Pos: 119"]
+	236 -> 250
+	235 -> 236
+	251 [label="Valor: 56
+Pos: 120"]
+	235 -> 251
+	234 -> 235
+	252 [label="Valor: 57
+Pos: 121"]
+	234 -> 252
+	130 -> 234
+	129 -> 130
+	25 -> 129
+	24 -> 25
+	253 [label="Valor: 1001
+Pos: 122"]
+	24 -> 253
+	9 -> 24
+	8 -> 9
+	254 [label="Valor: ."]
+	255 [label="Valor: ."]
+	256 [label="Valor: ."]
+	257 [label="Valor: ."]
+	258 [label="Valor: |"]
+	259 [label="Valor: |"]
+	260 [label="Valor: |"]
+	261 [label="Valor: |"]
+	262 [label="Valor: |"]
+	263 [label="Valor: |"]
+	264 [label="Valor: |"]
+	265 [label="Valor: |"]
+	266 [label="Valor: |"]
+	267 [label="Valor: 48
+Pos: 123"]
+	266 -> 267
+	268 [label="Valor: 49
+Pos: 124"]
+	266 -> 268
+	265 -> 266
+	269 [label="Valor: 50
+Pos: 125"]
+	265 -> 269
+	264 -> 265
+	270 [label="Valor: 51
+Pos: 126"]
+	264 -> 270
+	263 -> 264
+	271 [label="Valor: 52
+Pos: 127"]
+	263 -> 271
+	262 -> 263
+	272 [label="Valor: 53
+Pos: 128"]
+	262 -> 272
+	261 -> 262
+	273 [label="Valor: 54
+Pos: 129"]
+	261 -> 273
+	260 -> 261
+	274 [label="Valor: 55
+Pos: 130"]
+	260 -> 274
+	259 -> 260
+	275 [label="Valor: 56
+Pos: 131"]
+	259 -> 275
+	258 -> 259
+	276 [label="Valor: 57
+Pos: 132"]
+	258 -> 276
+	257 -> 258
+	277 [label="Valor: *"]
+	278 [label="Valor: |"]
+	279 [label="Valor: |"]
+	280 [label="Valor: |"]
+	281 [label="Valor: |"]
+	282 [label="Valor: |"]
+	283 [label="Valor: |"]
+	284 [label="Valor: |"]
+	285 [label="Valor: |"]
+	286 [label="Valor: |"]
+	287 [label="Valor: 48
+Pos: 133"]
+	286 -> 287
+	288 [label="Valor: 49
+Pos: 134"]
+	286 -> 288
+	285 -> 286
+	289 [label="Valor: 50
+Pos: 135"]
+	285 -> 289
+	284 -> 285
+	290 [label="Valor: 51
+Pos: 136"]
+	284 -> 290
+	283 -> 284
+	291 [label="Valor: 52
+Pos: 137"]
+	283 -> 291
+	282 -> 283
+	292 [label="Valor: 53
+Pos: 138"]
+	282 -> 292
+	281 -> 282
+	293 [label="Valor: 54
+Pos: 139"]
+	281 -> 293
+	280 -> 281
+	294 [label="Valor: 55
+Pos: 140"]
+	280 -> 294
+	279 -> 280
+	295 [label="Valor: 56
+Pos: 141"]
+	279 -> 295
+	278 -> 279
+	296 [label="Valor: 57
+Pos: 142"]
+	278 -> 296
+	277 -> 278
+	257 -> 277
+	256 -> 257
+	297 [label="Valor: |"]
+	298 [label="Valor: ."]
+	299 [label="Valor: 46
+Pos: 143"]
+	298 -> 299
+	300 [label="Valor: ."]
+	301 [label="Valor: |"]
+	302 [label="Valor: |"]
+	303 [label="Valor: |"]
+	304 [label="Valor: |"]
+	305 [label="Valor: |"]
+	306 [label="Valor: |"]
+	307 [label="Valor: |"]
+	308 [label="Valor: |"]
+	309 [label="Valor: |"]
+	310 [label="Valor: 48
+Pos: 144"]
+	309 -> 310
+	311 [label="Valor: 49
+Pos: 145"]
+	309 -> 311
+	308 -> 309
+	312 [label="Valor: 50
+Pos: 146"]
+	308 -> 312
+	307 -> 308
+	313 [label="Valor: 51
+Pos: 147"]
+	307 -> 313
+	306 -> 307
+	314 [label="Valor: 52
+Pos: 148"]
+	306 -> 314
+	305 -> 306
+	315 [label="Valor: 53
+Pos: 149"]
+	305 -> 315
+	304 -> 305
+	316 [label="Valor: 54
+Pos: 150"]
+	304 -> 316
+	303 -> 304
+	317 [label="Valor: 55
+Pos: 151"]
+	303 -> 317
+	302 -> 303
+	318 [label="Valor: 56
+Pos: 152"]
+	302 -> 318
+	301 -> 302
+	319 [label="Valor: 57
+Pos: 153"]
+	301 -> 319
+	300 -> 301
+	320 [label="Valor: *"]
+	321 [label="Valor: |"]
+	322 [label="Valor: |"]
+	323 [label="Valor: |"]
+	324 [label="Valor: |"]
+	325 [label="Valor: |"]
+	326 [label="Valor: |"]
+	327 [label="Valor: |"]
+	328 [label="Valor: |"]
+	329 [label="Valor: |"]
+	330 [label="Valor: 48
+Pos: 154"]
+	329 -> 330
+	331 [label="Valor: 49
+Pos: 155"]
+	329 -> 331
+	328 -> 329
+	332 [label="Valor: 50
+Pos: 156"]
+	328 -> 332
+	327 -> 328
+	333 [label="Valor: 51
+Pos: 157"]
+	327 -> 333
+	326 -> 327
+	334 [label="Valor: 52
+Pos: 158"]
+	326 -> 334
+	325 -> 326
+	335 [label="Valor: 53
+Pos: 159"]
+	325 -> 335
+	324 -> 325
+	336 [label="Valor: 54
+Pos: 160"]
+	324 -> 336
+	323 -> 324
+	337 [label="Valor: 55
+Pos: 161"]
+	323 -> 337
+	322 -> 323
+	338 [label="Valor: 56
+Pos: 162"]
+	322 -> 338
+	321 -> 322
+	339 [label="Valor: 57
+Pos: 163"]
+	321 -> 339
+	320 -> 321
+	300 -> 320
+	298 -> 300
+	297 -> 298
+	340 [label="Valor: λ
+Pos: 164"]
+	297 -> 340
+	256 -> 297
+	255 -> 256
+	341 [label="Valor: |"]
+	342 [label="Valor: ."]
+	343 [label="Valor: ."]
+	344 [label="Valor: 69
+Pos: 165"]
+	343 -> 344
+	345 [label="Valor: |"]
+	346 [label="Valor: |"]
+	347 [label="Valor: 43
+Pos: 166"]
+	346 -> 347
+	348 [label="Valor: 45
+Pos: 167"]
+	346 -> 348
+	345 -> 346
+	349 [label="Valor: λ
+Pos: 168"]
+	345 -> 349
+	343 -> 345
+	342 -> 343
+	350 [label="Valor: ."]
+	351 [label="Valor: |"]
+	352 [label="Valor: |"]
+	353 [label="Valor: |"]
+	354 [label="Valor: |"]
+	355 [label="Valor: |"]
+	356 [label="Valor: |"]
+	357 [label="Valor: |"]
+	358 [label="Valor: |"]
+	359 [label="Valor: |"]
+	360 [label="Valor: 48
+Pos: 169"]
+	359 -> 360
+	361 [label="Valor: 49
+Pos: 170"]
+	359 -> 361
+	358 -> 359
+	362 [label="Valor: 50
+Pos: 171"]
+	358 -> 362
+	357 -> 358
+	363 [label="Valor: 51
+Pos: 172"]
+	357 -> 363
+	356 -> 357
+	364 [label="Valor: 52
+Pos: 173"]
+	356 -> 364
+	355 -> 356
+	365 [label="Valor: 53
+Pos: 174"]
+	355 -> 365
+	354 -> 355
+	366 [label="Valor: 54
+Pos: 175"]
+	354 -> 366
+	353 -> 354
+	367 [label="Valor: 55
+Pos: 176"]
+	353 -> 367
+	352 -> 353
+	368 [label="Valor: 56
+Pos: 177"]
+	352 -> 368
+	351 -> 352
+	369 [label="Valor: 57
+Pos: 178"]
+	351 -> 369
+	350 -> 351
+	370 [label="Valor: *"]
+	371 [label="Valor: |"]
+	372 [label="Valor: |"]
+	373 [label="Valor: |"]
+	374 [label="Valor: |"]
+	375 [label="Valor: |"]
+	376 [label="Valor: |"]
+	377 [label="Valor: |"]
+	378 [label="Valor: |"]
+	379 [label="Valor: |"]
+	380 [label="Valor: 48
+Pos: 179"]
+	379 -> 380
+	381 [label="Valor: 49
+Pos: 180"]
+	379 -> 381
+	378 -> 379
+	382 [label="Valor: 50
+Pos: 181"]
+	378 -> 382
+	377 -> 378
+	383 [label="Valor: 51
+Pos: 182"]
+	377 -> 383
+	376 -> 377
+	384 [label="Valor: 52
+Pos: 183"]
+	376 -> 384
+	375 -> 376
+	385 [label="Valor: 53
+Pos: 184"]
+	375 -> 385
+	374 -> 375
+	386 [label="Valor: 54
+Pos: 185"]
+	374 -> 386
+	373 -> 374
+	387 [label="Valor: 55
+Pos: 186"]
+	373 -> 387
+	372 -> 373
+	388 [label="Valor: 56
+Pos: 187"]
+	372 -> 388
+	371 -> 372
+	389 [label="Valor: 57
+Pos: 188"]
+	371 -> 389
+	370 -> 371
+	350 -> 370
+	342 -> 350
+	341 -> 342
+	390 [label="Valor: λ
+Pos: 189"]
+	341 -> 390
+	255 -> 341
+	254 -> 255
+	391 [label="Valor: 1002
+Pos: 190"]
+	254 -> 391
+	8 -> 254
+	7 -> 8
+	392 [label="Valor: ."]
+	393 [label="Valor: 43
+Pos: 191"]
+	392 -> 393
+	394 [label="Valor: 1003
+Pos: 192"]
+	392 -> 394
+	7 -> 392
+	6 -> 7
+	395 [label="Valor: ."]
+	396 [label="Valor: 45
+Pos: 193"]
+	395 -> 396
+	397 [label="Valor: 1004
+Pos: 194"]
+	395 -> 397
+	6 -> 395
+	5 -> 6
+	398 [label="Valor: ."]
+	399 [label="Valor: 42
+Pos: 195"]
+	398 -> 399
+	400 [label="Valor: 1005
+Pos: 196"]
+	398 -> 400
+	5 -> 398
+	4 -> 5
+	401 [label="Valor: ."]
+	402 [label="Valor: 47
+Pos: 197"]
+	401 -> 402
+	403 [label="Valor: 1006
+Pos: 198"]
+	401 -> 403
+	4 -> 401
+	3 -> 4
+	404 [label="Valor: ."]
+	405 [label="Valor: 40
+Pos: 199"]
+	404 -> 405
+	406 [label="Valor: 1007
+Pos: 200"]
+	404 -> 406
+	3 -> 404
+	2 -> 3
+	407 [label="Valor: ."]
+	408 [label="Valor: 41
+Pos: 201"]
+	407 -> 408
+	409 [label="Valor: 1008
+Pos: 202"]
+	407 -> 409
+	2 -> 407
+	1 -> 2
+	410 [label="Valor: ."]
+	411 [label="Valor: 59
+Pos: 203"]
+	410 -> 411
+	412 [label="Valor: 1009
+Pos: 204"]
+	410 -> 412
+	1 -> 410
+}

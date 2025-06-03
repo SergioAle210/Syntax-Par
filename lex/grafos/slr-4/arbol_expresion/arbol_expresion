@@ -1,0 +1,2184 @@
+// Árbol de Expresión
+digraph {
+	rankdir=TB
+	dpi=300 ratio=fill size="10,7"
+	1 [label="Valor: |"]
+	2 [label="Valor: |"]
+	3 [label="Valor: |"]
+	4 [label="Valor: |"]
+	5 [label="Valor: |"]
+	6 [label="Valor: |"]
+	7 [label="Valor: |"]
+	8 [label="Valor: |"]
+	9 [label="Valor: |"]
+	10 [label="Valor: |"]
+	11 [label="Valor: |"]
+	12 [label="Valor: |"]
+	13 [label="Valor: ."]
+	14 [label="Valor: ."]
+	15 [label="Valor: |"]
+	16 [label="Valor: |"]
+	17 [label="Valor: 32
+Pos: 1"]
+	16 -> 17
+	18 [label="Valor: 9
+Pos: 2"]
+	16 -> 18
+	15 -> 16
+	19 [label="Valor: 10
+Pos: 3"]
+	15 -> 19
+	14 -> 15
+	20 [label="Valor: *"]
+	21 [label="Valor: |"]
+	22 [label="Valor: |"]
+	23 [label="Valor: 32
+Pos: 4"]
+	22 -> 23
+	24 [label="Valor: 9
+Pos: 5"]
+	22 -> 24
+	21 -> 22
+	25 [label="Valor: 10
+Pos: 6"]
+	21 -> 25
+	20 -> 21
+	14 -> 20
+	13 -> 14
+	26 [label="Valor: 1000
+Pos: 7"]
+	13 -> 26
+	12 -> 13
+	27 [label="Valor: ."]
+	28 [label="Valor: ."]
+	29 [label="Valor: |"]
+	30 [label="Valor: |"]
+	31 [label="Valor: |"]
+	32 [label="Valor: |"]
+	33 [label="Valor: |"]
+	34 [label="Valor: |"]
+	35 [label="Valor: |"]
+	36 [label="Valor: |"]
+	37 [label="Valor: |"]
+	38 [label="Valor: |"]
+	39 [label="Valor: |"]
+	40 [label="Valor: |"]
+	41 [label="Valor: |"]
+	42 [label="Valor: |"]
+	43 [label="Valor: |"]
+	44 [label="Valor: |"]
+	45 [label="Valor: |"]
+	46 [label="Valor: |"]
+	47 [label="Valor: |"]
+	48 [label="Valor: |"]
+	49 [label="Valor: |"]
+	50 [label="Valor: |"]
+	51 [label="Valor: |"]
+	52 [label="Valor: |"]
+	53 [label="Valor: |"]
+	54 [label="Valor: |"]
+	55 [label="Valor: |"]
+	56 [label="Valor: |"]
+	57 [label="Valor: |"]
+	58 [label="Valor: |"]
+	59 [label="Valor: |"]
+	60 [label="Valor: |"]
+	61 [label="Valor: |"]
+	62 [label="Valor: |"]
+	63 [label="Valor: |"]
+	64 [label="Valor: |"]
+	65 [label="Valor: |"]
+	66 [label="Valor: |"]
+	67 [label="Valor: |"]
+	68 [label="Valor: |"]
+	69 [label="Valor: |"]
+	70 [label="Valor: |"]
+	71 [label="Valor: |"]
+	72 [label="Valor: |"]
+	73 [label="Valor: |"]
+	74 [label="Valor: |"]
+	75 [label="Valor: |"]
+	76 [label="Valor: |"]
+	77 [label="Valor: |"]
+	78 [label="Valor: |"]
+	79 [label="Valor: |"]
+	80 [label="Valor: 65
+Pos: 8"]
+	79 -> 80
+	81 [label="Valor: 66
+Pos: 9"]
+	79 -> 81
+	78 -> 79
+	82 [label="Valor: 67
+Pos: 10"]
+	78 -> 82
+	77 -> 78
+	83 [label="Valor: 68
+Pos: 11"]
+	77 -> 83
+	76 -> 77
+	84 [label="Valor: 69
+Pos: 12"]
+	76 -> 84
+	75 -> 76
+	85 [label="Valor: 70
+Pos: 13"]
+	75 -> 85
+	74 -> 75
+	86 [label="Valor: 71
+Pos: 14"]
+	74 -> 86
+	73 -> 74
+	87 [label="Valor: 72
+Pos: 15"]
+	73 -> 87
+	72 -> 73
+	88 [label="Valor: 73
+Pos: 16"]
+	72 -> 88
+	71 -> 72
+	89 [label="Valor: 74
+Pos: 17"]
+	71 -> 89
+	70 -> 71
+	90 [label="Valor: 75
+Pos: 18"]
+	70 -> 90
+	69 -> 70
+	91 [label="Valor: 76
+Pos: 19"]
+	69 -> 91
+	68 -> 69
+	92 [label="Valor: 77
+Pos: 20"]
+	68 -> 92
+	67 -> 68
+	93 [label="Valor: 78
+Pos: 21"]
+	67 -> 93
+	66 -> 67
+	94 [label="Valor: 79
+Pos: 22"]
+	66 -> 94
+	65 -> 66
+	95 [label="Valor: 80
+Pos: 23"]
+	65 -> 95
+	64 -> 65
+	96 [label="Valor: 81
+Pos: 24"]
+	64 -> 96
+	63 -> 64
+	97 [label="Valor: 82
+Pos: 25"]
+	63 -> 97
+	62 -> 63
+	98 [label="Valor: 83
+Pos: 26"]
+	62 -> 98
+	61 -> 62
+	99 [label="Valor: 84
+Pos: 27"]
+	61 -> 99
+	60 -> 61
+	100 [label="Valor: 85
+Pos: 28"]
+	60 -> 100
+	59 -> 60
+	101 [label="Valor: 86
+Pos: 29"]
+	59 -> 101
+	58 -> 59
+	102 [label="Valor: 87
+Pos: 30"]
+	58 -> 102
+	57 -> 58
+	103 [label="Valor: 88
+Pos: 31"]
+	57 -> 103
+	56 -> 57
+	104 [label="Valor: 89
+Pos: 32"]
+	56 -> 104
+	55 -> 56
+	105 [label="Valor: 90
+Pos: 33"]
+	55 -> 105
+	54 -> 55
+	106 [label="Valor: 97
+Pos: 34"]
+	54 -> 106
+	53 -> 54
+	107 [label="Valor: 98
+Pos: 35"]
+	53 -> 107
+	52 -> 53
+	108 [label="Valor: 99
+Pos: 36"]
+	52 -> 108
+	51 -> 52
+	109 [label="Valor: 100
+Pos: 37"]
+	51 -> 109
+	50 -> 51
+	110 [label="Valor: 101
+Pos: 38"]
+	50 -> 110
+	49 -> 50
+	111 [label="Valor: 102
+Pos: 39"]
+	49 -> 111
+	48 -> 49
+	112 [label="Valor: 103
+Pos: 40"]
+	48 -> 112
+	47 -> 48
+	113 [label="Valor: 104
+Pos: 41"]
+	47 -> 113
+	46 -> 47
+	114 [label="Valor: 105
+Pos: 42"]
+	46 -> 114
+	45 -> 46
+	115 [label="Valor: 106
+Pos: 43"]
+	45 -> 115
+	44 -> 45
+	116 [label="Valor: 107
+Pos: 44"]
+	44 -> 116
+	43 -> 44
+	117 [label="Valor: 108
+Pos: 45"]
+	43 -> 117
+	42 -> 43
+	118 [label="Valor: 109
+Pos: 46"]
+	42 -> 118
+	41 -> 42
+	119 [label="Valor: 110
+Pos: 47"]
+	41 -> 119
+	40 -> 41
+	120 [label="Valor: 111
+Pos: 48"]
+	40 -> 120
+	39 -> 40
+	121 [label="Valor: 112
+Pos: 49"]
+	39 -> 121
+	38 -> 39
+	122 [label="Valor: 113
+Pos: 50"]
+	38 -> 122
+	37 -> 38
+	123 [label="Valor: 114
+Pos: 51"]
+	37 -> 123
+	36 -> 37
+	124 [label="Valor: 115
+Pos: 52"]
+	36 -> 124
+	35 -> 36
+	125 [label="Valor: 116
+Pos: 53"]
+	35 -> 125
+	34 -> 35
+	126 [label="Valor: 117
+Pos: 54"]
+	34 -> 126
+	33 -> 34
+	127 [label="Valor: 118
+Pos: 55"]
+	33 -> 127
+	32 -> 33
+	128 [label="Valor: 119
+Pos: 56"]
+	32 -> 128
+	31 -> 32
+	129 [label="Valor: 120
+Pos: 57"]
+	31 -> 129
+	30 -> 31
+	130 [label="Valor: 121
+Pos: 58"]
+	30 -> 130
+	29 -> 30
+	131 [label="Valor: 122
+Pos: 59"]
+	29 -> 131
+	28 -> 29
+	132 [label="Valor: *"]
+	133 [label="Valor: |"]
+	134 [label="Valor: |"]
+	135 [label="Valor: |"]
+	136 [label="Valor: |"]
+	137 [label="Valor: |"]
+	138 [label="Valor: |"]
+	139 [label="Valor: |"]
+	140 [label="Valor: |"]
+	141 [label="Valor: |"]
+	142 [label="Valor: |"]
+	143 [label="Valor: |"]
+	144 [label="Valor: |"]
+	145 [label="Valor: |"]
+	146 [label="Valor: |"]
+	147 [label="Valor: |"]
+	148 [label="Valor: |"]
+	149 [label="Valor: |"]
+	150 [label="Valor: |"]
+	151 [label="Valor: |"]
+	152 [label="Valor: |"]
+	153 [label="Valor: |"]
+	154 [label="Valor: |"]
+	155 [label="Valor: |"]
+	156 [label="Valor: |"]
+	157 [label="Valor: |"]
+	158 [label="Valor: |"]
+	159 [label="Valor: |"]
+	160 [label="Valor: |"]
+	161 [label="Valor: |"]
+	162 [label="Valor: |"]
+	163 [label="Valor: |"]
+	164 [label="Valor: |"]
+	165 [label="Valor: |"]
+	166 [label="Valor: |"]
+	167 [label="Valor: |"]
+	168 [label="Valor: |"]
+	169 [label="Valor: |"]
+	170 [label="Valor: |"]
+	171 [label="Valor: |"]
+	172 [label="Valor: |"]
+	173 [label="Valor: |"]
+	174 [label="Valor: |"]
+	175 [label="Valor: |"]
+	176 [label="Valor: |"]
+	177 [label="Valor: |"]
+	178 [label="Valor: |"]
+	179 [label="Valor: |"]
+	180 [label="Valor: |"]
+	181 [label="Valor: |"]
+	182 [label="Valor: |"]
+	183 [label="Valor: |"]
+	184 [label="Valor: |"]
+	185 [label="Valor: |"]
+	186 [label="Valor: 65
+Pos: 60"]
+	185 -> 186
+	187 [label="Valor: 66
+Pos: 61"]
+	185 -> 187
+	184 -> 185
+	188 [label="Valor: 67
+Pos: 62"]
+	184 -> 188
+	183 -> 184
+	189 [label="Valor: 68
+Pos: 63"]
+	183 -> 189
+	182 -> 183
+	190 [label="Valor: 69
+Pos: 64"]
+	182 -> 190
+	181 -> 182
+	191 [label="Valor: 70
+Pos: 65"]
+	181 -> 191
+	180 -> 181
+	192 [label="Valor: 71
+Pos: 66"]
+	180 -> 192
+	179 -> 180
+	193 [label="Valor: 72
+Pos: 67"]
+	179 -> 193
+	178 -> 179
+	194 [label="Valor: 73
+Pos: 68"]
+	178 -> 194
+	177 -> 178
+	195 [label="Valor: 74
+Pos: 69"]
+	177 -> 195
+	176 -> 177
+	196 [label="Valor: 75
+Pos: 70"]
+	176 -> 196
+	175 -> 176
+	197 [label="Valor: 76
+Pos: 71"]
+	175 -> 197
+	174 -> 175
+	198 [label="Valor: 77
+Pos: 72"]
+	174 -> 198
+	173 -> 174
+	199 [label="Valor: 78
+Pos: 73"]
+	173 -> 199
+	172 -> 173
+	200 [label="Valor: 79
+Pos: 74"]
+	172 -> 200
+	171 -> 172
+	201 [label="Valor: 80
+Pos: 75"]
+	171 -> 201
+	170 -> 171
+	202 [label="Valor: 81
+Pos: 76"]
+	170 -> 202
+	169 -> 170
+	203 [label="Valor: 82
+Pos: 77"]
+	169 -> 203
+	168 -> 169
+	204 [label="Valor: 83
+Pos: 78"]
+	168 -> 204
+	167 -> 168
+	205 [label="Valor: 84
+Pos: 79"]
+	167 -> 205
+	166 -> 167
+	206 [label="Valor: 85
+Pos: 80"]
+	166 -> 206
+	165 -> 166
+	207 [label="Valor: 86
+Pos: 81"]
+	165 -> 207
+	164 -> 165
+	208 [label="Valor: 87
+Pos: 82"]
+	164 -> 208
+	163 -> 164
+	209 [label="Valor: 88
+Pos: 83"]
+	163 -> 209
+	162 -> 163
+	210 [label="Valor: 89
+Pos: 84"]
+	162 -> 210
+	161 -> 162
+	211 [label="Valor: 90
+Pos: 85"]
+	161 -> 211
+	160 -> 161
+	212 [label="Valor: 97
+Pos: 86"]
+	160 -> 212
+	159 -> 160
+	213 [label="Valor: 98
+Pos: 87"]
+	159 -> 213
+	158 -> 159
+	214 [label="Valor: 99
+Pos: 88"]
+	158 -> 214
+	157 -> 158
+	215 [label="Valor: 100
+Pos: 89"]
+	157 -> 215
+	156 -> 157
+	216 [label="Valor: 101
+Pos: 90"]
+	156 -> 216
+	155 -> 156
+	217 [label="Valor: 102
+Pos: 91"]
+	155 -> 217
+	154 -> 155
+	218 [label="Valor: 103
+Pos: 92"]
+	154 -> 218
+	153 -> 154
+	219 [label="Valor: 104
+Pos: 93"]
+	153 -> 219
+	152 -> 153
+	220 [label="Valor: 105
+Pos: 94"]
+	152 -> 220
+	151 -> 152
+	221 [label="Valor: 106
+Pos: 95"]
+	151 -> 221
+	150 -> 151
+	222 [label="Valor: 107
+Pos: 96"]
+	150 -> 222
+	149 -> 150
+	223 [label="Valor: 108
+Pos: 97"]
+	149 -> 223
+	148 -> 149
+	224 [label="Valor: 109
+Pos: 98"]
+	148 -> 224
+	147 -> 148
+	225 [label="Valor: 110
+Pos: 99"]
+	147 -> 225
+	146 -> 147
+	226 [label="Valor: 111
+Pos: 100"]
+	146 -> 226
+	145 -> 146
+	227 [label="Valor: 112
+Pos: 101"]
+	145 -> 227
+	144 -> 145
+	228 [label="Valor: 113
+Pos: 102"]
+	144 -> 228
+	143 -> 144
+	229 [label="Valor: 114
+Pos: 103"]
+	143 -> 229
+	142 -> 143
+	230 [label="Valor: 115
+Pos: 104"]
+	142 -> 230
+	141 -> 142
+	231 [label="Valor: 116
+Pos: 105"]
+	141 -> 231
+	140 -> 141
+	232 [label="Valor: 117
+Pos: 106"]
+	140 -> 232
+	139 -> 140
+	233 [label="Valor: 118
+Pos: 107"]
+	139 -> 233
+	138 -> 139
+	234 [label="Valor: 119
+Pos: 108"]
+	138 -> 234
+	137 -> 138
+	235 [label="Valor: 120
+Pos: 109"]
+	137 -> 235
+	136 -> 137
+	236 [label="Valor: 121
+Pos: 110"]
+	136 -> 236
+	135 -> 136
+	237 [label="Valor: 122
+Pos: 111"]
+	135 -> 237
+	134 -> 135
+	238 [label="Valor: *"]
+	239 [label="Valor: |"]
+	240 [label="Valor: |"]
+	241 [label="Valor: |"]
+	242 [label="Valor: |"]
+	243 [label="Valor: |"]
+	244 [label="Valor: |"]
+	245 [label="Valor: |"]
+	246 [label="Valor: |"]
+	247 [label="Valor: |"]
+	248 [label="Valor: |"]
+	249 [label="Valor: |"]
+	250 [label="Valor: |"]
+	251 [label="Valor: |"]
+	252 [label="Valor: |"]
+	253 [label="Valor: |"]
+	254 [label="Valor: |"]
+	255 [label="Valor: |"]
+	256 [label="Valor: |"]
+	257 [label="Valor: |"]
+	258 [label="Valor: |"]
+	259 [label="Valor: |"]
+	260 [label="Valor: |"]
+	261 [label="Valor: |"]
+	262 [label="Valor: |"]
+	263 [label="Valor: |"]
+	264 [label="Valor: |"]
+	265 [label="Valor: |"]
+	266 [label="Valor: |"]
+	267 [label="Valor: |"]
+	268 [label="Valor: |"]
+	269 [label="Valor: |"]
+	270 [label="Valor: |"]
+	271 [label="Valor: |"]
+	272 [label="Valor: |"]
+	273 [label="Valor: |"]
+	274 [label="Valor: |"]
+	275 [label="Valor: |"]
+	276 [label="Valor: |"]
+	277 [label="Valor: |"]
+	278 [label="Valor: |"]
+	279 [label="Valor: |"]
+	280 [label="Valor: |"]
+	281 [label="Valor: |"]
+	282 [label="Valor: |"]
+	283 [label="Valor: |"]
+	284 [label="Valor: |"]
+	285 [label="Valor: |"]
+	286 [label="Valor: |"]
+	287 [label="Valor: |"]
+	288 [label="Valor: |"]
+	289 [label="Valor: |"]
+	290 [label="Valor: |"]
+	291 [label="Valor: |"]
+	292 [label="Valor: |"]
+	293 [label="Valor: |"]
+	294 [label="Valor: |"]
+	295 [label="Valor: |"]
+	296 [label="Valor: |"]
+	297 [label="Valor: |"]
+	298 [label="Valor: |"]
+	299 [label="Valor: |"]
+	300 [label="Valor: |"]
+	301 [label="Valor: |"]
+	302 [label="Valor: |"]
+	303 [label="Valor: |"]
+	304 [label="Valor: |"]
+	305 [label="Valor: |"]
+	306 [label="Valor: |"]
+	307 [label="Valor: |"]
+	308 [label="Valor: |"]
+	309 [label="Valor: |"]
+	310 [label="Valor: |"]
+	311 [label="Valor: |"]
+	312 [label="Valor: |"]
+	313 [label="Valor: |"]
+	314 [label="Valor: |"]
+	315 [label="Valor: |"]
+	316 [label="Valor: |"]
+	317 [label="Valor: |"]
+	318 [label="Valor: |"]
+	319 [label="Valor: |"]
+	320 [label="Valor: |"]
+	321 [label="Valor: |"]
+	322 [label="Valor: |"]
+	323 [label="Valor: |"]
+	324 [label="Valor: |"]
+	325 [label="Valor: |"]
+	326 [label="Valor: |"]
+	327 [label="Valor: |"]
+	328 [label="Valor: |"]
+	329 [label="Valor: |"]
+	330 [label="Valor: |"]
+	331 [label="Valor: |"]
+	332 [label="Valor: |"]
+	333 [label="Valor: |"]
+	334 [label="Valor: |"]
+	335 [label="Valor: |"]
+	336 [label="Valor: |"]
+	337 [label="Valor: |"]
+	338 [label="Valor: |"]
+	339 [label="Valor: |"]
+	340 [label="Valor: |"]
+	341 [label="Valor: |"]
+	342 [label="Valor: |"]
+	343 [label="Valor: |"]
+	344 [label="Valor: |"]
+	345 [label="Valor: |"]
+	346 [label="Valor: |"]
+	347 [label="Valor: |"]
+	348 [label="Valor: |"]
+	349 [label="Valor: |"]
+	350 [label="Valor: |"]
+	351 [label="Valor: |"]
+	352 [label="Valor: |"]
+	353 [label="Valor: |"]
+	354 [label="Valor: |"]
+	355 [label="Valor: |"]
+	356 [label="Valor: |"]
+	357 [label="Valor: |"]
+	358 [label="Valor: |"]
+	359 [label="Valor: |"]
+	360 [label="Valor: |"]
+	361 [label="Valor: |"]
+	362 [label="Valor: |"]
+	363 [label="Valor: |"]
+	364 [label="Valor: |"]
+	365 [label="Valor: |"]
+	366 [label="Valor: |"]
+	367 [label="Valor: |"]
+	368 [label="Valor: |"]
+	369 [label="Valor: |"]
+	370 [label="Valor: |"]
+	371 [label="Valor: |"]
+	372 [label="Valor: |"]
+	373 [label="Valor: |"]
+	374 [label="Valor: |"]
+	375 [label="Valor: |"]
+	376 [label="Valor: |"]
+	377 [label="Valor: |"]
+	378 [label="Valor: |"]
+	379 [label="Valor: |"]
+	380 [label="Valor: |"]
+	381 [label="Valor: |"]
+	382 [label="Valor: |"]
+	383 [label="Valor: |"]
+	384 [label="Valor: |"]
+	385 [label="Valor: |"]
+	386 [label="Valor: |"]
+	387 [label="Valor: |"]
+	388 [label="Valor: |"]
+	389 [label="Valor: |"]
+	390 [label="Valor: |"]
+	391 [label="Valor: |"]
+	392 [label="Valor: |"]
+	393 [label="Valor: |"]
+	394 [label="Valor: |"]
+	395 [label="Valor: |"]
+	396 [label="Valor: |"]
+	397 [label="Valor: |"]
+	398 [label="Valor: |"]
+	399 [label="Valor: |"]
+	400 [label="Valor: |"]
+	401 [label="Valor: |"]
+	402 [label="Valor: |"]
+	403 [label="Valor: |"]
+	404 [label="Valor: |"]
+	405 [label="Valor: |"]
+	406 [label="Valor: |"]
+	407 [label="Valor: |"]
+	408 [label="Valor: |"]
+	409 [label="Valor: |"]
+	410 [label="Valor: |"]
+	411 [label="Valor: |"]
+	412 [label="Valor: |"]
+	413 [label="Valor: |"]
+	414 [label="Valor: |"]
+	415 [label="Valor: |"]
+	416 [label="Valor: |"]
+	417 [label="Valor: |"]
+	418 [label="Valor: |"]
+	419 [label="Valor: |"]
+	420 [label="Valor: |"]
+	421 [label="Valor: |"]
+	422 [label="Valor: |"]
+	423 [label="Valor: |"]
+	424 [label="Valor: |"]
+	425 [label="Valor: |"]
+	426 [label="Valor: |"]
+	427 [label="Valor: |"]
+	428 [label="Valor: |"]
+	429 [label="Valor: |"]
+	430 [label="Valor: |"]
+	431 [label="Valor: |"]
+	432 [label="Valor: |"]
+	433 [label="Valor: |"]
+	434 [label="Valor: |"]
+	435 [label="Valor: |"]
+	436 [label="Valor: |"]
+	437 [label="Valor: |"]
+	438 [label="Valor: |"]
+	439 [label="Valor: |"]
+	440 [label="Valor: |"]
+	441 [label="Valor: |"]
+	442 [label="Valor: |"]
+	443 [label="Valor: |"]
+	444 [label="Valor: |"]
+	445 [label="Valor: |"]
+	446 [label="Valor: |"]
+	447 [label="Valor: |"]
+	448 [label="Valor: |"]
+	449 [label="Valor: |"]
+	450 [label="Valor: |"]
+	451 [label="Valor: |"]
+	452 [label="Valor: |"]
+	453 [label="Valor: |"]
+	454 [label="Valor: |"]
+	455 [label="Valor: |"]
+	456 [label="Valor: |"]
+	457 [label="Valor: |"]
+	458 [label="Valor: |"]
+	459 [label="Valor: |"]
+	460 [label="Valor: |"]
+	461 [label="Valor: 33
+Pos: 112"]
+	460 -> 461
+	462 [label="Valor: 34
+Pos: 113"]
+	460 -> 462
+	459 -> 460
+	463 [label="Valor: 35
+Pos: 114"]
+	459 -> 463
+	458 -> 459
+	464 [label="Valor: 36
+Pos: 115"]
+	458 -> 464
+	457 -> 458
+	465 [label="Valor: 37
+Pos: 116"]
+	457 -> 465
+	456 -> 457
+	466 [label="Valor: 38
+Pos: 117"]
+	456 -> 466
+	455 -> 456
+	467 [label="Valor: 39
+Pos: 118"]
+	455 -> 467
+	454 -> 455
+	468 [label="Valor: 40
+Pos: 119"]
+	454 -> 468
+	453 -> 454
+	469 [label="Valor: 41
+Pos: 120"]
+	453 -> 469
+	452 -> 453
+	470 [label="Valor: 42
+Pos: 121"]
+	452 -> 470
+	451 -> 452
+	471 [label="Valor: 43
+Pos: 122"]
+	451 -> 471
+	450 -> 451
+	472 [label="Valor: 44
+Pos: 123"]
+	450 -> 472
+	449 -> 450
+	473 [label="Valor: 45
+Pos: 124"]
+	449 -> 473
+	448 -> 449
+	474 [label="Valor: 46
+Pos: 125"]
+	448 -> 474
+	447 -> 448
+	475 [label="Valor: 47
+Pos: 126"]
+	447 -> 475
+	446 -> 447
+	476 [label="Valor: 48
+Pos: 127"]
+	446 -> 476
+	445 -> 446
+	477 [label="Valor: 49
+Pos: 128"]
+	445 -> 477
+	444 -> 445
+	478 [label="Valor: 50
+Pos: 129"]
+	444 -> 478
+	443 -> 444
+	479 [label="Valor: 51
+Pos: 130"]
+	443 -> 479
+	442 -> 443
+	480 [label="Valor: 52
+Pos: 131"]
+	442 -> 480
+	441 -> 442
+	481 [label="Valor: 53
+Pos: 132"]
+	441 -> 481
+	440 -> 441
+	482 [label="Valor: 54
+Pos: 133"]
+	440 -> 482
+	439 -> 440
+	483 [label="Valor: 55
+Pos: 134"]
+	439 -> 483
+	438 -> 439
+	484 [label="Valor: 56
+Pos: 135"]
+	438 -> 484
+	437 -> 438
+	485 [label="Valor: 57
+Pos: 136"]
+	437 -> 485
+	436 -> 437
+	486 [label="Valor: 58
+Pos: 137"]
+	436 -> 486
+	435 -> 436
+	487 [label="Valor: 59
+Pos: 138"]
+	435 -> 487
+	434 -> 435
+	488 [label="Valor: 60
+Pos: 139"]
+	434 -> 488
+	433 -> 434
+	489 [label="Valor: 61
+Pos: 140"]
+	433 -> 489
+	432 -> 433
+	490 [label="Valor: 62
+Pos: 141"]
+	432 -> 490
+	431 -> 432
+	491 [label="Valor: 63
+Pos: 142"]
+	431 -> 491
+	430 -> 431
+	492 [label="Valor: 64
+Pos: 143"]
+	430 -> 492
+	429 -> 430
+	493 [label="Valor: 65
+Pos: 144"]
+	429 -> 493
+	428 -> 429
+	494 [label="Valor: 66
+Pos: 145"]
+	428 -> 494
+	427 -> 428
+	495 [label="Valor: 67
+Pos: 146"]
+	427 -> 495
+	426 -> 427
+	496 [label="Valor: 68
+Pos: 147"]
+	426 -> 496
+	425 -> 426
+	497 [label="Valor: 69
+Pos: 148"]
+	425 -> 497
+	424 -> 425
+	498 [label="Valor: 70
+Pos: 149"]
+	424 -> 498
+	423 -> 424
+	499 [label="Valor: 71
+Pos: 150"]
+	423 -> 499
+	422 -> 423
+	500 [label="Valor: 72
+Pos: 151"]
+	422 -> 500
+	421 -> 422
+	501 [label="Valor: 73
+Pos: 152"]
+	421 -> 501
+	420 -> 421
+	502 [label="Valor: 74
+Pos: 153"]
+	420 -> 502
+	419 -> 420
+	503 [label="Valor: 75
+Pos: 154"]
+	419 -> 503
+	418 -> 419
+	504 [label="Valor: 76
+Pos: 155"]
+	418 -> 504
+	417 -> 418
+	505 [label="Valor: 77
+Pos: 156"]
+	417 -> 505
+	416 -> 417
+	506 [label="Valor: 78
+Pos: 157"]
+	416 -> 506
+	415 -> 416
+	507 [label="Valor: 79
+Pos: 158"]
+	415 -> 507
+	414 -> 415
+	508 [label="Valor: 80
+Pos: 159"]
+	414 -> 508
+	413 -> 414
+	509 [label="Valor: 81
+Pos: 160"]
+	413 -> 509
+	412 -> 413
+	510 [label="Valor: 82
+Pos: 161"]
+	412 -> 510
+	411 -> 412
+	511 [label="Valor: 83
+Pos: 162"]
+	411 -> 511
+	410 -> 411
+	512 [label="Valor: 84
+Pos: 163"]
+	410 -> 512
+	409 -> 410
+	513 [label="Valor: 85
+Pos: 164"]
+	409 -> 513
+	408 -> 409
+	514 [label="Valor: 86
+Pos: 165"]
+	408 -> 514
+	407 -> 408
+	515 [label="Valor: 87
+Pos: 166"]
+	407 -> 515
+	406 -> 407
+	516 [label="Valor: 88
+Pos: 167"]
+	406 -> 516
+	405 -> 406
+	517 [label="Valor: 89
+Pos: 168"]
+	405 -> 517
+	404 -> 405
+	518 [label="Valor: 90
+Pos: 169"]
+	404 -> 518
+	403 -> 404
+	519 [label="Valor: 91
+Pos: 170"]
+	403 -> 519
+	402 -> 403
+	520 [label="Valor: 92
+Pos: 171"]
+	402 -> 520
+	401 -> 402
+	521 [label="Valor: 93
+Pos: 172"]
+	401 -> 521
+	400 -> 401
+	522 [label="Valor: 94
+Pos: 173"]
+	400 -> 522
+	399 -> 400
+	523 [label="Valor: 95
+Pos: 174"]
+	399 -> 523
+	398 -> 399
+	524 [label="Valor: 96
+Pos: 175"]
+	398 -> 524
+	397 -> 398
+	525 [label="Valor: 97
+Pos: 176"]
+	397 -> 525
+	396 -> 397
+	526 [label="Valor: 98
+Pos: 177"]
+	396 -> 526
+	395 -> 396
+	527 [label="Valor: 99
+Pos: 178"]
+	395 -> 527
+	394 -> 395
+	528 [label="Valor: 100
+Pos: 179"]
+	394 -> 528
+	393 -> 394
+	529 [label="Valor: 101
+Pos: 180"]
+	393 -> 529
+	392 -> 393
+	530 [label="Valor: 102
+Pos: 181"]
+	392 -> 530
+	391 -> 392
+	531 [label="Valor: 103
+Pos: 182"]
+	391 -> 531
+	390 -> 391
+	532 [label="Valor: 104
+Pos: 183"]
+	390 -> 532
+	389 -> 390
+	533 [label="Valor: 105
+Pos: 184"]
+	389 -> 533
+	388 -> 389
+	534 [label="Valor: 106
+Pos: 185"]
+	388 -> 534
+	387 -> 388
+	535 [label="Valor: 107
+Pos: 186"]
+	387 -> 535
+	386 -> 387
+	536 [label="Valor: 108
+Pos: 187"]
+	386 -> 536
+	385 -> 386
+	537 [label="Valor: 109
+Pos: 188"]
+	385 -> 537
+	384 -> 385
+	538 [label="Valor: 110
+Pos: 189"]
+	384 -> 538
+	383 -> 384
+	539 [label="Valor: 111
+Pos: 190"]
+	383 -> 539
+	382 -> 383
+	540 [label="Valor: 112
+Pos: 191"]
+	382 -> 540
+	381 -> 382
+	541 [label="Valor: 113
+Pos: 192"]
+	381 -> 541
+	380 -> 381
+	542 [label="Valor: 114
+Pos: 193"]
+	380 -> 542
+	379 -> 380
+	543 [label="Valor: 115
+Pos: 194"]
+	379 -> 543
+	378 -> 379
+	544 [label="Valor: 116
+Pos: 195"]
+	378 -> 544
+	377 -> 378
+	545 [label="Valor: 117
+Pos: 196"]
+	377 -> 545
+	376 -> 377
+	546 [label="Valor: 118
+Pos: 197"]
+	376 -> 546
+	375 -> 376
+	547 [label="Valor: 119
+Pos: 198"]
+	375 -> 547
+	374 -> 375
+	548 [label="Valor: 120
+Pos: 199"]
+	374 -> 548
+	373 -> 374
+	549 [label="Valor: 121
+Pos: 200"]
+	373 -> 549
+	372 -> 373
+	550 [label="Valor: 122
+Pos: 201"]
+	372 -> 550
+	371 -> 372
+	551 [label="Valor: 123
+Pos: 202"]
+	371 -> 551
+	370 -> 371
+	552 [label="Valor: 124
+Pos: 203"]
+	370 -> 552
+	369 -> 370
+	553 [label="Valor: 125
+Pos: 204"]
+	369 -> 553
+	368 -> 369
+	554 [label="Valor: 126
+Pos: 205"]
+	368 -> 554
+	367 -> 368
+	555 [label="Valor: 127
+Pos: 206"]
+	367 -> 555
+	366 -> 367
+	556 [label="Valor: 128
+Pos: 207"]
+	366 -> 556
+	365 -> 366
+	557 [label="Valor: 129
+Pos: 208"]
+	365 -> 557
+	364 -> 365
+	558 [label="Valor: 130
+Pos: 209"]
+	364 -> 558
+	363 -> 364
+	559 [label="Valor: 131
+Pos: 210"]
+	363 -> 559
+	362 -> 363
+	560 [label="Valor: 132
+Pos: 211"]
+	362 -> 560
+	361 -> 362
+	561 [label="Valor: 133
+Pos: 212"]
+	361 -> 561
+	360 -> 361
+	562 [label="Valor: 134
+Pos: 213"]
+	360 -> 562
+	359 -> 360
+	563 [label="Valor: 135
+Pos: 214"]
+	359 -> 563
+	358 -> 359
+	564 [label="Valor: 136
+Pos: 215"]
+	358 -> 564
+	357 -> 358
+	565 [label="Valor: 137
+Pos: 216"]
+	357 -> 565
+	356 -> 357
+	566 [label="Valor: 138
+Pos: 217"]
+	356 -> 566
+	355 -> 356
+	567 [label="Valor: 139
+Pos: 218"]
+	355 -> 567
+	354 -> 355
+	568 [label="Valor: 140
+Pos: 219"]
+	354 -> 568
+	353 -> 354
+	569 [label="Valor: 141
+Pos: 220"]
+	353 -> 569
+	352 -> 353
+	570 [label="Valor: 142
+Pos: 221"]
+	352 -> 570
+	351 -> 352
+	571 [label="Valor: 143
+Pos: 222"]
+	351 -> 571
+	350 -> 351
+	572 [label="Valor: 144
+Pos: 223"]
+	350 -> 572
+	349 -> 350
+	573 [label="Valor: 145
+Pos: 224"]
+	349 -> 573
+	348 -> 349
+	574 [label="Valor: 146
+Pos: 225"]
+	348 -> 574
+	347 -> 348
+	575 [label="Valor: 147
+Pos: 226"]
+	347 -> 575
+	346 -> 347
+	576 [label="Valor: 148
+Pos: 227"]
+	346 -> 576
+	345 -> 346
+	577 [label="Valor: 149
+Pos: 228"]
+	345 -> 577
+	344 -> 345
+	578 [label="Valor: 150
+Pos: 229"]
+	344 -> 578
+	343 -> 344
+	579 [label="Valor: 151
+Pos: 230"]
+	343 -> 579
+	342 -> 343
+	580 [label="Valor: 152
+Pos: 231"]
+	342 -> 580
+	341 -> 342
+	581 [label="Valor: 153
+Pos: 232"]
+	341 -> 581
+	340 -> 341
+	582 [label="Valor: 154
+Pos: 233"]
+	340 -> 582
+	339 -> 340
+	583 [label="Valor: 155
+Pos: 234"]
+	339 -> 583
+	338 -> 339
+	584 [label="Valor: 156
+Pos: 235"]
+	338 -> 584
+	337 -> 338
+	585 [label="Valor: 157
+Pos: 236"]
+	337 -> 585
+	336 -> 337
+	586 [label="Valor: 158
+Pos: 237"]
+	336 -> 586
+	335 -> 336
+	587 [label="Valor: 159
+Pos: 238"]
+	335 -> 587
+	334 -> 335
+	588 [label="Valor: 160
+Pos: 239"]
+	334 -> 588
+	333 -> 334
+	589 [label="Valor: 161
+Pos: 240"]
+	333 -> 589
+	332 -> 333
+	590 [label="Valor: 162
+Pos: 241"]
+	332 -> 590
+	331 -> 332
+	591 [label="Valor: 163
+Pos: 242"]
+	331 -> 591
+	330 -> 331
+	592 [label="Valor: 164
+Pos: 243"]
+	330 -> 592
+	329 -> 330
+	593 [label="Valor: 165
+Pos: 244"]
+	329 -> 593
+	328 -> 329
+	594 [label="Valor: 166
+Pos: 245"]
+	328 -> 594
+	327 -> 328
+	595 [label="Valor: 167
+Pos: 246"]
+	327 -> 595
+	326 -> 327
+	596 [label="Valor: 168
+Pos: 247"]
+	326 -> 596
+	325 -> 326
+	597 [label="Valor: 169
+Pos: 248"]
+	325 -> 597
+	324 -> 325
+	598 [label="Valor: 170
+Pos: 249"]
+	324 -> 598
+	323 -> 324
+	599 [label="Valor: 171
+Pos: 250"]
+	323 -> 599
+	322 -> 323
+	600 [label="Valor: 172
+Pos: 251"]
+	322 -> 600
+	321 -> 322
+	601 [label="Valor: 173
+Pos: 252"]
+	321 -> 601
+	320 -> 321
+	602 [label="Valor: 174
+Pos: 253"]
+	320 -> 602
+	319 -> 320
+	603 [label="Valor: 175
+Pos: 254"]
+	319 -> 603
+	318 -> 319
+	604 [label="Valor: 176
+Pos: 255"]
+	318 -> 604
+	317 -> 318
+	605 [label="Valor: 177
+Pos: 256"]
+	317 -> 605
+	316 -> 317
+	606 [label="Valor: 178
+Pos: 257"]
+	316 -> 606
+	315 -> 316
+	607 [label="Valor: 179
+Pos: 258"]
+	315 -> 607
+	314 -> 315
+	608 [label="Valor: 180
+Pos: 259"]
+	314 -> 608
+	313 -> 314
+	609 [label="Valor: 181
+Pos: 260"]
+	313 -> 609
+	312 -> 313
+	610 [label="Valor: 182
+Pos: 261"]
+	312 -> 610
+	311 -> 312
+	611 [label="Valor: 183
+Pos: 262"]
+	311 -> 611
+	310 -> 311
+	612 [label="Valor: 184
+Pos: 263"]
+	310 -> 612
+	309 -> 310
+	613 [label="Valor: 185
+Pos: 264"]
+	309 -> 613
+	308 -> 309
+	614 [label="Valor: 186
+Pos: 265"]
+	308 -> 614
+	307 -> 308
+	615 [label="Valor: 187
+Pos: 266"]
+	307 -> 615
+	306 -> 307
+	616 [label="Valor: 188
+Pos: 267"]
+	306 -> 616
+	305 -> 306
+	617 [label="Valor: 189
+Pos: 268"]
+	305 -> 617
+	304 -> 305
+	618 [label="Valor: 190
+Pos: 269"]
+	304 -> 618
+	303 -> 304
+	619 [label="Valor: 191
+Pos: 270"]
+	303 -> 619
+	302 -> 303
+	620 [label="Valor: 192
+Pos: 271"]
+	302 -> 620
+	301 -> 302
+	621 [label="Valor: 193
+Pos: 272"]
+	301 -> 621
+	300 -> 301
+	622 [label="Valor: 194
+Pos: 273"]
+	300 -> 622
+	299 -> 300
+	623 [label="Valor: 195
+Pos: 274"]
+	299 -> 623
+	298 -> 299
+	624 [label="Valor: 196
+Pos: 275"]
+	298 -> 624
+	297 -> 298
+	625 [label="Valor: 197
+Pos: 276"]
+	297 -> 625
+	296 -> 297
+	626 [label="Valor: 198
+Pos: 277"]
+	296 -> 626
+	295 -> 296
+	627 [label="Valor: 199
+Pos: 278"]
+	295 -> 627
+	294 -> 295
+	628 [label="Valor: 200
+Pos: 279"]
+	294 -> 628
+	293 -> 294
+	629 [label="Valor: 201
+Pos: 280"]
+	293 -> 629
+	292 -> 293
+	630 [label="Valor: 202
+Pos: 281"]
+	292 -> 630
+	291 -> 292
+	631 [label="Valor: 203
+Pos: 282"]
+	291 -> 631
+	290 -> 291
+	632 [label="Valor: 204
+Pos: 283"]
+	290 -> 632
+	289 -> 290
+	633 [label="Valor: 205
+Pos: 284"]
+	289 -> 633
+	288 -> 289
+	634 [label="Valor: 206
+Pos: 285"]
+	288 -> 634
+	287 -> 288
+	635 [label="Valor: 207
+Pos: 286"]
+	287 -> 635
+	286 -> 287
+	636 [label="Valor: 208
+Pos: 287"]
+	286 -> 636
+	285 -> 286
+	637 [label="Valor: 209
+Pos: 288"]
+	285 -> 637
+	284 -> 285
+	638 [label="Valor: 210
+Pos: 289"]
+	284 -> 638
+	283 -> 284
+	639 [label="Valor: 211
+Pos: 290"]
+	283 -> 639
+	282 -> 283
+	640 [label="Valor: 212
+Pos: 291"]
+	282 -> 640
+	281 -> 282
+	641 [label="Valor: 213
+Pos: 292"]
+	281 -> 641
+	280 -> 281
+	642 [label="Valor: 214
+Pos: 293"]
+	280 -> 642
+	279 -> 280
+	643 [label="Valor: 215
+Pos: 294"]
+	279 -> 643
+	278 -> 279
+	644 [label="Valor: 216
+Pos: 295"]
+	278 -> 644
+	277 -> 278
+	645 [label="Valor: 217
+Pos: 296"]
+	277 -> 645
+	276 -> 277
+	646 [label="Valor: 218
+Pos: 297"]
+	276 -> 646
+	275 -> 276
+	647 [label="Valor: 219
+Pos: 298"]
+	275 -> 647
+	274 -> 275
+	648 [label="Valor: 220
+Pos: 299"]
+	274 -> 648
+	273 -> 274
+	649 [label="Valor: 221
+Pos: 300"]
+	273 -> 649
+	272 -> 273
+	650 [label="Valor: 222
+Pos: 301"]
+	272 -> 650
+	271 -> 272
+	651 [label="Valor: 223
+Pos: 302"]
+	271 -> 651
+	270 -> 271
+	652 [label="Valor: 224
+Pos: 303"]
+	270 -> 652
+	269 -> 270
+	653 [label="Valor: 225
+Pos: 304"]
+	269 -> 653
+	268 -> 269
+	654 [label="Valor: 226
+Pos: 305"]
+	268 -> 654
+	267 -> 268
+	655 [label="Valor: 227
+Pos: 306"]
+	267 -> 655
+	266 -> 267
+	656 [label="Valor: 228
+Pos: 307"]
+	266 -> 656
+	265 -> 266
+	657 [label="Valor: 229
+Pos: 308"]
+	265 -> 657
+	264 -> 265
+	658 [label="Valor: 230
+Pos: 309"]
+	264 -> 658
+	263 -> 264
+	659 [label="Valor: 231
+Pos: 310"]
+	263 -> 659
+	262 -> 263
+	660 [label="Valor: 232
+Pos: 311"]
+	262 -> 660
+	261 -> 262
+	661 [label="Valor: 233
+Pos: 312"]
+	261 -> 661
+	260 -> 261
+	662 [label="Valor: 234
+Pos: 313"]
+	260 -> 662
+	259 -> 260
+	663 [label="Valor: 235
+Pos: 314"]
+	259 -> 663
+	258 -> 259
+	664 [label="Valor: 236
+Pos: 315"]
+	258 -> 664
+	257 -> 258
+	665 [label="Valor: 237
+Pos: 316"]
+	257 -> 665
+	256 -> 257
+	666 [label="Valor: 238
+Pos: 317"]
+	256 -> 666
+	255 -> 256
+	667 [label="Valor: 239
+Pos: 318"]
+	255 -> 667
+	254 -> 255
+	668 [label="Valor: 240
+Pos: 319"]
+	254 -> 668
+	253 -> 254
+	669 [label="Valor: 241
+Pos: 320"]
+	253 -> 669
+	252 -> 253
+	670 [label="Valor: 242
+Pos: 321"]
+	252 -> 670
+	251 -> 252
+	671 [label="Valor: 243
+Pos: 322"]
+	251 -> 671
+	250 -> 251
+	672 [label="Valor: 244
+Pos: 323"]
+	250 -> 672
+	249 -> 250
+	673 [label="Valor: 245
+Pos: 324"]
+	249 -> 673
+	248 -> 249
+	674 [label="Valor: 246
+Pos: 325"]
+	248 -> 674
+	247 -> 248
+	675 [label="Valor: 247
+Pos: 326"]
+	247 -> 675
+	246 -> 247
+	676 [label="Valor: 248
+Pos: 327"]
+	246 -> 676
+	245 -> 246
+	677 [label="Valor: 249
+Pos: 328"]
+	245 -> 677
+	244 -> 245
+	678 [label="Valor: 250
+Pos: 329"]
+	244 -> 678
+	243 -> 244
+	679 [label="Valor: 251
+Pos: 330"]
+	243 -> 679
+	242 -> 243
+	680 [label="Valor: 252
+Pos: 331"]
+	242 -> 680
+	241 -> 242
+	681 [label="Valor: 253
+Pos: 332"]
+	241 -> 681
+	240 -> 241
+	682 [label="Valor: 254
+Pos: 333"]
+	240 -> 682
+	239 -> 240
+	683 [label="Valor: 255
+Pos: 334"]
+	239 -> 683
+	238 -> 239
+	134 -> 238
+	133 -> 134
+	684 [label="Valor: |"]
+	685 [label="Valor: |"]
+	686 [label="Valor: |"]
+	687 [label="Valor: |"]
+	688 [label="Valor: |"]
+	689 [label="Valor: |"]
+	690 [label="Valor: |"]
+	691 [label="Valor: |"]
+	692 [label="Valor: |"]
+	693 [label="Valor: 48
+Pos: 335"]
+	692 -> 693
+	694 [label="Valor: 49
+Pos: 336"]
+	692 -> 694
+	691 -> 692
+	695 [label="Valor: 50
+Pos: 337"]
+	691 -> 695
+	690 -> 691
+	696 [label="Valor: 51
+Pos: 338"]
+	690 -> 696
+	689 -> 690
+	697 [label="Valor: 52
+Pos: 339"]
+	689 -> 697
+	688 -> 689
+	698 [label="Valor: 53
+Pos: 340"]
+	688 -> 698
+	687 -> 688
+	699 [label="Valor: 54
+Pos: 341"]
+	687 -> 699
+	686 -> 687
+	700 [label="Valor: 55
+Pos: 342"]
+	686 -> 700
+	685 -> 686
+	701 [label="Valor: 56
+Pos: 343"]
+	685 -> 701
+	684 -> 685
+	702 [label="Valor: 57
+Pos: 344"]
+	684 -> 702
+	133 -> 684
+	132 -> 133
+	28 -> 132
+	27 -> 28
+	703 [label="Valor: 1001
+Pos: 345"]
+	27 -> 703
+	12 -> 27
+	11 -> 12
+	704 [label="Valor: ."]
+	705 [label="Valor: ."]
+	706 [label="Valor: ."]
+	707 [label="Valor: ."]
+	708 [label="Valor: |"]
+	709 [label="Valor: |"]
+	710 [label="Valor: |"]
+	711 [label="Valor: |"]
+	712 [label="Valor: |"]
+	713 [label="Valor: |"]
+	714 [label="Valor: |"]
+	715 [label="Valor: |"]
+	716 [label="Valor: |"]
+	717 [label="Valor: 48
+Pos: 346"]
+	716 -> 717
+	718 [label="Valor: 49
+Pos: 347"]
+	716 -> 718
+	715 -> 716
+	719 [label="Valor: 50
+Pos: 348"]
+	715 -> 719
+	714 -> 715
+	720 [label="Valor: 51
+Pos: 349"]
+	714 -> 720
+	713 -> 714
+	721 [label="Valor: 52
+Pos: 350"]
+	713 -> 721
+	712 -> 713
+	722 [label="Valor: 53
+Pos: 351"]
+	712 -> 722
+	711 -> 712
+	723 [label="Valor: 54
+Pos: 352"]
+	711 -> 723
+	710 -> 711
+	724 [label="Valor: 55
+Pos: 353"]
+	710 -> 724
+	709 -> 710
+	725 [label="Valor: 56
+Pos: 354"]
+	709 -> 725
+	708 -> 709
+	726 [label="Valor: 57
+Pos: 355"]
+	708 -> 726
+	707 -> 708
+	727 [label="Valor: *"]
+	728 [label="Valor: |"]
+	729 [label="Valor: |"]
+	730 [label="Valor: |"]
+	731 [label="Valor: |"]
+	732 [label="Valor: |"]
+	733 [label="Valor: |"]
+	734 [label="Valor: |"]
+	735 [label="Valor: |"]
+	736 [label="Valor: |"]
+	737 [label="Valor: 48
+Pos: 356"]
+	736 -> 737
+	738 [label="Valor: 49
+Pos: 357"]
+	736 -> 738
+	735 -> 736
+	739 [label="Valor: 50
+Pos: 358"]
+	735 -> 739
+	734 -> 735
+	740 [label="Valor: 51
+Pos: 359"]
+	734 -> 740
+	733 -> 734
+	741 [label="Valor: 52
+Pos: 360"]
+	733 -> 741
+	732 -> 733
+	742 [label="Valor: 53
+Pos: 361"]
+	732 -> 742
+	731 -> 732
+	743 [label="Valor: 54
+Pos: 362"]
+	731 -> 743
+	730 -> 731
+	744 [label="Valor: 55
+Pos: 363"]
+	730 -> 744
+	729 -> 730
+	745 [label="Valor: 56
+Pos: 364"]
+	729 -> 745
+	728 -> 729
+	746 [label="Valor: 57
+Pos: 365"]
+	728 -> 746
+	727 -> 728
+	707 -> 727
+	706 -> 707
+	747 [label="Valor: |"]
+	748 [label="Valor: ."]
+	749 [label="Valor: 46
+Pos: 366"]
+	748 -> 749
+	750 [label="Valor: ."]
+	751 [label="Valor: |"]
+	752 [label="Valor: |"]
+	753 [label="Valor: |"]
+	754 [label="Valor: |"]
+	755 [label="Valor: |"]
+	756 [label="Valor: |"]
+	757 [label="Valor: |"]
+	758 [label="Valor: |"]
+	759 [label="Valor: |"]
+	760 [label="Valor: 48
+Pos: 367"]
+	759 -> 760
+	761 [label="Valor: 49
+Pos: 368"]
+	759 -> 761
+	758 -> 759
+	762 [label="Valor: 50
+Pos: 369"]
+	758 -> 762
+	757 -> 758
+	763 [label="Valor: 51
+Pos: 370"]
+	757 -> 763
+	756 -> 757
+	764 [label="Valor: 52
+Pos: 371"]
+	756 -> 764
+	755 -> 756
+	765 [label="Valor: 53
+Pos: 372"]
+	755 -> 765
+	754 -> 755
+	766 [label="Valor: 54
+Pos: 373"]
+	754 -> 766
+	753 -> 754
+	767 [label="Valor: 55
+Pos: 374"]
+	753 -> 767
+	752 -> 753
+	768 [label="Valor: 56
+Pos: 375"]
+	752 -> 768
+	751 -> 752
+	769 [label="Valor: 57
+Pos: 376"]
+	751 -> 769
+	750 -> 751
+	770 [label="Valor: *"]
+	771 [label="Valor: |"]
+	772 [label="Valor: |"]
+	773 [label="Valor: |"]
+	774 [label="Valor: |"]
+	775 [label="Valor: |"]
+	776 [label="Valor: |"]
+	777 [label="Valor: |"]
+	778 [label="Valor: |"]
+	779 [label="Valor: |"]
+	780 [label="Valor: 48
+Pos: 377"]
+	779 -> 780
+	781 [label="Valor: 49
+Pos: 378"]
+	779 -> 781
+	778 -> 779
+	782 [label="Valor: 50
+Pos: 379"]
+	778 -> 782
+	777 -> 778
+	783 [label="Valor: 51
+Pos: 380"]
+	777 -> 783
+	776 -> 777
+	784 [label="Valor: 52
+Pos: 381"]
+	776 -> 784
+	775 -> 776
+	785 [label="Valor: 53
+Pos: 382"]
+	775 -> 785
+	774 -> 775
+	786 [label="Valor: 54
+Pos: 383"]
+	774 -> 786
+	773 -> 774
+	787 [label="Valor: 55
+Pos: 384"]
+	773 -> 787
+	772 -> 773
+	788 [label="Valor: 56
+Pos: 385"]
+	772 -> 788
+	771 -> 772
+	789 [label="Valor: 57
+Pos: 386"]
+	771 -> 789
+	770 -> 771
+	750 -> 770
+	748 -> 750
+	747 -> 748
+	790 [label="Valor: λ
+Pos: 387"]
+	747 -> 790
+	706 -> 747
+	705 -> 706
+	791 [label="Valor: |"]
+	792 [label="Valor: ."]
+	793 [label="Valor: ."]
+	794 [label="Valor: 69
+Pos: 388"]
+	793 -> 794
+	795 [label="Valor: |"]
+	796 [label="Valor: |"]
+	797 [label="Valor: 43
+Pos: 389"]
+	796 -> 797
+	798 [label="Valor: 45
+Pos: 390"]
+	796 -> 798
+	795 -> 796
+	799 [label="Valor: λ
+Pos: 391"]
+	795 -> 799
+	793 -> 795
+	792 -> 793
+	800 [label="Valor: ."]
+	801 [label="Valor: |"]
+	802 [label="Valor: |"]
+	803 [label="Valor: |"]
+	804 [label="Valor: |"]
+	805 [label="Valor: |"]
+	806 [label="Valor: |"]
+	807 [label="Valor: |"]
+	808 [label="Valor: |"]
+	809 [label="Valor: |"]
+	810 [label="Valor: 48
+Pos: 392"]
+	809 -> 810
+	811 [label="Valor: 49
+Pos: 393"]
+	809 -> 811
+	808 -> 809
+	812 [label="Valor: 50
+Pos: 394"]
+	808 -> 812
+	807 -> 808
+	813 [label="Valor: 51
+Pos: 395"]
+	807 -> 813
+	806 -> 807
+	814 [label="Valor: 52
+Pos: 396"]
+	806 -> 814
+	805 -> 806
+	815 [label="Valor: 53
+Pos: 397"]
+	805 -> 815
+	804 -> 805
+	816 [label="Valor: 54
+Pos: 398"]
+	804 -> 816
+	803 -> 804
+	817 [label="Valor: 55
+Pos: 399"]
+	803 -> 817
+	802 -> 803
+	818 [label="Valor: 56
+Pos: 400"]
+	802 -> 818
+	801 -> 802
+	819 [label="Valor: 57
+Pos: 401"]
+	801 -> 819
+	800 -> 801
+	820 [label="Valor: *"]
+	821 [label="Valor: |"]
+	822 [label="Valor: |"]
+	823 [label="Valor: |"]
+	824 [label="Valor: |"]
+	825 [label="Valor: |"]
+	826 [label="Valor: |"]
+	827 [label="Valor: |"]
+	828 [label="Valor: |"]
+	829 [label="Valor: |"]
+	830 [label="Valor: 48
+Pos: 402"]
+	829 -> 830
+	831 [label="Valor: 49
+Pos: 403"]
+	829 -> 831
+	828 -> 829
+	832 [label="Valor: 50
+Pos: 404"]
+	828 -> 832
+	827 -> 828
+	833 [label="Valor: 51
+Pos: 405"]
+	827 -> 833
+	826 -> 827
+	834 [label="Valor: 52
+Pos: 406"]
+	826 -> 834
+	825 -> 826
+	835 [label="Valor: 53
+Pos: 407"]
+	825 -> 835
+	824 -> 825
+	836 [label="Valor: 54
+Pos: 408"]
+	824 -> 836
+	823 -> 824
+	837 [label="Valor: 55
+Pos: 409"]
+	823 -> 837
+	822 -> 823
+	838 [label="Valor: 56
+Pos: 410"]
+	822 -> 838
+	821 -> 822
+	839 [label="Valor: 57
+Pos: 411"]
+	821 -> 839
+	820 -> 821
+	800 -> 820
+	792 -> 800
+	791 -> 792
+	840 [label="Valor: λ
+Pos: 412"]
+	791 -> 840
+	705 -> 791
+	704 -> 705
+	841 [label="Valor: 1002
+Pos: 413"]
+	704 -> 841
+	11 -> 704
+	10 -> 11
+	842 [label="Valor: ."]
+	843 [label="Valor: 59
+Pos: 414"]
+	842 -> 843
+	844 [label="Valor: 1003
+Pos: 415"]
+	842 -> 844
+	10 -> 842
+	9 -> 10
+	845 [label="Valor: ."]
+	846 [label="Valor: ."]
+	847 [label="Valor: 58
+Pos: 416"]
+	846 -> 847
+	848 [label="Valor: 61
+Pos: 417"]
+	846 -> 848
+	845 -> 846
+	849 [label="Valor: 1004
+Pos: 418"]
+	845 -> 849
+	9 -> 845
+	8 -> 9
+	850 [label="Valor: ."]
+	851 [label="Valor: 60
+Pos: 419"]
+	850 -> 851
+	852 [label="Valor: 1005
+Pos: 420"]
+	850 -> 852
+	8 -> 850
+	7 -> 8
+	853 [label="Valor: ."]
+	854 [label="Valor: 61
+Pos: 421"]
+	853 -> 854
+	855 [label="Valor: 1006
+Pos: 422"]
+	853 -> 855
+	7 -> 853
+	6 -> 7
+	856 [label="Valor: ."]
+	857 [label="Valor: 43
+Pos: 423"]
+	856 -> 857
+	858 [label="Valor: 1007
+Pos: 424"]
+	856 -> 858
+	6 -> 856
+	5 -> 6
+	859 [label="Valor: ."]
+	860 [label="Valor: 45
+Pos: 425"]
+	859 -> 860
+	861 [label="Valor: 1008
+Pos: 426"]
+	859 -> 861
+	5 -> 859
+	4 -> 5
+	862 [label="Valor: ."]
+	863 [label="Valor: 42
+Pos: 427"]
+	862 -> 863
+	864 [label="Valor: 1009
+Pos: 428"]
+	862 -> 864
+	4 -> 862
+	3 -> 4
+	865 [label="Valor: ."]
+	866 [label="Valor: 47
+Pos: 429"]
+	865 -> 866
+	867 [label="Valor: 1010
+Pos: 430"]
+	865 -> 867
+	3 -> 865
+	2 -> 3
+	868 [label="Valor: ."]
+	869 [label="Valor: 40
+Pos: 431"]
+	868 -> 869
+	870 [label="Valor: 1011
+Pos: 432"]
+	868 -> 870
+	2 -> 868
+	1 -> 2
+	871 [label="Valor: ."]
+	872 [label="Valor: 41
+Pos: 433"]
+	871 -> 872
+	873 [label="Valor: 1012
+Pos: 434"]
+	871 -> 873
+	1 -> 871
+}

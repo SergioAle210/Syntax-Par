@@ -131,7 +131,7 @@ def visualize_syntax_tree(root, route, file_format="png"):
 
 if __name__ == "__main__":
     # 1. Leer y parsear el .yal
-    route = "slr-1"
+    route = "slr-4"
     yal_path = os.path.join("../spec/yalfiles", f"{route}.yal")
     result = parse_yalex(yal_path)
 
@@ -228,10 +228,10 @@ if __name__ == "__main__":
 
     # Exportar a JSON para lexing (solo para visualizar)
     json_afd = make_json_serializable(afd_minimized)
-    with open("../lexers/lexer-1.json", "w") as f:
+    with open("../lexers/lexer-4.json", "w") as f:
         json.dump(json_afd, f, indent=4)
     print("\nDatos del AFD minimizado exportados a lexer.json.")
 
-    with open("../lexers/lexer-1.pickle", "wb") as f:
+    with open("../lexers/lexer-4.pickle", "wb") as f:
         pickle.dump(afd_minimized, f)
     print("\nDatos del AFD minimizado exportados a lexer.pickle.")
