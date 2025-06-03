@@ -271,7 +271,7 @@ def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
 
     # --- PASA EL GENERADOR DIRECTAMENTE AL PARSER ---
     accepted, actions, error_msg = simulate_slr_parser(
-        action_table, goto_table, productions_enum, token_stream_gen()
+        action_table, goto_table, productions_enum, token_stream_gen(), start_symbol
     )
 
     # Para mostrar los tokens consumidos (solo para el reporte, no para el parser)

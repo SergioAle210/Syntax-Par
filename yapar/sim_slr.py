@@ -1,8 +1,9 @@
-def simulate_slr_parser(action_table, goto_table, productions_enum, token_stream):
+def simulate_slr_parser(action_table, goto_table, productions_enum, token_stream, start_symbol):
     """
     Simula el análisis SLR/LR con la tabla construida usando un generador de tokens.
     Recibe:
       - token_stream: generador o iterador de (token, lexema)
+      - start_symbol: símbolo inicial original
     Retorna:
       - accepted (True/False)
       - lista de acciones realizadas
@@ -11,7 +12,7 @@ def simulate_slr_parser(action_table, goto_table, productions_enum, token_stream
     stack = [0]
     actions = []
     tokens = iter(token_stream)
-    
+
     def next_valid_token():
         while True:
             try:
@@ -48,26 +49,26 @@ def simulate_slr_parser(action_table, goto_table, productions_enum, token_stream
                 return False, actions, f"Error: GOTO no definido para ({prev_state}, {lhs})"
             goto_state = goto_table[prev_state][lhs]
             stack.append(goto_state)
-            state = goto_state  # IMPORTANTE: usamos el GOTO para el nuevo estado
+            state = goto_state
             print("  Stack después del push:", stack)
-            
+
             for i, v in enumerate(stack):
                 if i % 2 == 0 and not isinstance(v, int):
                     print(f"[INVARIANT ERROR] Posición {i} debería ser estado, pero es {v}")
                 if i % 2 == 1 and isinstance(v, int):
                     print(f"[INVARIANT ERROR] Posición {i} debería ser símbolo, pero es {v}")
 
-            state = goto_state
             action = action_table.get(state, {}).get(current_token, None)
-        # Aceptación manual si se reduce al símbolo inicial aumentado con token $
-# --- Aceptación manual basada en símbolo inicial aumentado ---
-        if lookahead_token == '$' and len(stack) >= 3:
-            last_symbol = stack[-3]  # símbolo no terminal antes del último estado
-            if isinstance(last_symbol, str) and last_symbol.endswith("''"):
-                actions.append(("accept", stack[-1], current_token))
-                print("[DEBUG] Aceptación manual detectada al llegar a símbolo inicial aumentado doble con '$'")
-                return True, actions, None
 
+        # --- Aceptación manual si llegamos al símbolo inicial aumentado ---
+        # --- Aceptación manual robusta ---
+        if lookahead_token == '$':
+            for (idx, lhs, rhs) in productions_enum:
+                if lhs.endswith("'") and rhs == [start_symbol]:
+                    # Caso típico: stack es [0, 'S', 7]
+                    if stack == [0, rhs[0], goto_table[0][rhs[0]]]:
+                        actions.append(("accept", stack[-1], '$'))
+                        return True, actions, None
 
 
         if action is None:

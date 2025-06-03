@@ -74,10 +74,7 @@ Cadena de entrada (tokens): ID PLUS ID SEMICOLON ws ID TIMES ID SEMICOLON ws ID 
 70: ('shift', 4, 'SEMICOLON', 11)
 71: ('reduce', 11, 'general → expression SEMICOLON')
 72: ('reduce', 14, 'S → S general')
-73: ('error', 7, '$', "Error sintáctico en estado 7 con token '$'. Intentando recuperación...")
-74: ('fatal', 7, '$', 'No se pudo recuperar el análisis')
+73: ('accept', 7, '$')
 
 === Resultado final ===
-ERROR
-Detalles del error:
-Error fatal: No se pudo recuperar del error sintáctico
+ACCEPT
