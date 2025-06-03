@@ -1,169 +1,137 @@
 import pickle
 import os
-from regexpToAFD import manual_join
 
 
-# Funciones auxiliares (puedes importarlas desde yalex_utils si ya las tienes definidas)
+# ────── helpers reutilizados ──────
+def manual_join(strings: list, sep: str) -> str:
+    res = ""
+    for i in range(len(strings)):
+        if i:
+            res += sep
+        res += strings[i]
+    return res
+
+
 def custom_trim(s: str) -> str:
-    start = 0
-    while start < len(s) and s[start] in " \t\n\r":
-        start += 1
-    end = len(s) - 1
-    while end >= start and s[end] in " \t\n\r":
-        end -= 1
-    result = ""
-    if start <= end:
-        for i in range(start, end + 1):
-            result += s[i]
-    return result
+    i, j = 0, len(s) - 1
+    while i <= j and s[i] in " \t\n\r":
+        i += 1
+    while j >= i and s[j] in " \t\n\r":
+        j -= 1
+    out = ""
+    while i <= j:
+        out += s[i]
+        i += 1
+    return out
 
 
-def custom_is_digit(c: str) -> bool:
-    o = ord(c)
-    return 48 <= o <= 57
-
-
-def custom_all_digits(s: str) -> bool:
-    for ch in s:
-        if not custom_is_digit(ch):
-            return False
-    return True
-
-
-def custom_to_int(s: str) -> int:
-    value = 0
-    for ch in s:
-        value = value * 10 + (ord(ch) - 48)
-    return value
-
-
-def ascii_numbers_to_chars(s: str) -> str:
+# ────── conversión de "59" → ";" ──────
+def code_to_char(code: str) -> str:
     """
-    Si s está compuesta solo de dígitos y espacios, convierte cada número a su carácter ASCII.
-    Caso contrario, retorna s sin cambios.
+    • '59'   → ';'
+    • 'ws'   → 'ws'
+    • 'id'   → 'id'
+    • ''     → ''
     """
-    if s.replace(" ", "").isdigit():
-        # Separa la cadena en números (usamos split para separar, ya que el requerimiento es sustituir join)
-        parts = s.split()
-        # Convertir cada número a su carácter correspondiente
-        chars = []
-        for num in parts:
-            chars.append(chr(int(num)))
-        # Unir los caracteres sin separador usando manual_join
-        return manual_join(chars, "")
-    return s
+    if code.isdigit():
+        try:
+            return chr(int(code))
+        except ValueError:
+            pass
+    return code
 
 
-# Excepción para errores léxicos
+# ────── excepción propia ──────
 class LexicalError(Exception):
     pass
 
-def lex(input_text: str, dfa: dict):
+
+# ────── motor léxico ──────
+def lex(text: str, dfa: dict):
     """
-    Función léxica que convierte una cadena de entrada en una secuencia de tokens usando un AFD.
-    Devuelve tuplas (token_type, lexeme), donde token_type es el nombre simbólico (ej. 'PLUS').
+    Genera tuplas ((símbolo_convertido, TOKEN), lexema)
+    por ejemplo: ((';', 'SEMICOLON'), ';')
     """
-    i = 0
-    n = len(input_text)
-    token_actions = dfa.get("token_actions", {})
+    i, n = 0, len(text)
+    trans = dfa["transitions"]
+    acc = set(dfa["accepting_states"])
+    token_actions = dfa["token_actions"]
+    initial = dfa["initial_state"]
 
     while i < n:
-        current_state = dfa["initial_state"]
+        state = initial
         j = i
-        last_accepting_state = None
-        last_accepting_index = i - 1
+        last_state = None
+        last_j = i - 1
 
+        # ── recorrer el AFD ──
         while j < n:
-            symbol = str(ord(input_text[j]))
-            key = (current_state, symbol)
-            if key in dfa["transitions"]:
-                current_state = dfa["transitions"][key]
-                if current_state in dfa["accepting_states"]:
-                    last_accepting_state = current_state
-                    last_accepting_index = j
+            sym = str(ord(text[j]))
+            key = (state, sym)
+            if key in trans:
+                state = trans[key]
+                if state in acc:
+                    last_state = state
+                    last_j = j
                 j += 1
             else:
                 break
 
-        if last_accepting_state is None:
-            yield ("Error léxico", input_text[i])
+        # ── si no cayó en aceptación ──
+        if last_state is None:
+            yield (("ERROR", "LEXICAL"), text[i])
             i += 1
             continue
 
-        lexeme = input_text[i : last_accepting_index + 1]
-        mapping = token_actions.get(last_accepting_state, {})
-        token_type = "ID"  # valor por defecto
+        lexeme = text[i : last_j + 1]
+        mapping = token_actions.get(last_state, {})
 
-        if "merged" in mapping:
-            merged_mapping = mapping["merged"]
-            numeric_keys = []
-            for k in merged_mapping.keys():
-                if isinstance(k, int):
-                    numeric_keys.append(k)
-                elif isinstance(k, str) and k.isdigit():
-                    numeric_keys.append(int(k))
-            if numeric_keys:
-                min_key = min(numeric_keys)
-                token_type = merged_mapping.get(min_key, merged_mapping.get(str(min_key), "ID"))
-            else:
-                token_type = list(merged_mapping.values())[0]
+        # ── resolver la tupla (symCode, TOKEN) con prioridad a menor marcador ──
+        def pick(mapping_dict):
+            # mapping_dict: id → (symCode, TOKEN)
+            int_keys = [int(k) for k in mapping_dict.keys()]
+            min_id = min(int_keys)
+            tup = mapping_dict.get(min_id) or mapping_dict.get(str(min_id))
+            return tup
+
+        if isinstance(mapping, dict) and "merged" in mapping:
+            tup = pick(mapping["merged"])
         else:
-            numeric_keys = []
-            for k in mapping.keys():
-                if isinstance(k, int):
-                    numeric_keys.append(k)
-                elif isinstance(k, str) and k.isdigit():
-                    numeric_keys.append(int(k))
-            if numeric_keys:
-                min_key = min(numeric_keys)
-                token_type = mapping.get(min_key, mapping.get(str(min_key), "ID"))
-            else:
-                token_type = "ID"
+            tup = pick(mapping)
 
-        # Asegurar que cualquier token codificado como ASCII se traduzca
-        token_type = ascii_numbers_to_chars(token_type)
+        # fallback seguro
+        if tup is None:
+            tup = ("", "ID")
 
-        yield (token_type, lexeme)
-        i = last_accepting_index + 1
+        sym_code, token_name = tup
+        symbol_conv = code_to_char(sym_code)
+
+        yield ((symbol_conv, token_name), lexeme)
+        i = last_j + 1
 
 
-
-
-
+# ────── pequeño CLI / prueba ──────
 def main():
-    # Cargar el AFD minimizado desde lexer.pickle usando pickle
-    with open("../lexers/lexer-test.pickle", "rb") as f:
+    # carga del AFD minimizado
+    with open("../lexers/lexer-1.pickle", "rb") as f:
         dfa = pickle.load(f)
 
+    # texto de entrada
     try:
-        with open("../tests/test_num.txt", "r", encoding="utf-8") as f:
-            # with open("input.txt", "r", encoding="utf-8") as f:
-            # En lugar de usar .strip(), usamos custom_trim
+        with open("../tests/test.txt", encoding="utf-8") as f:
             input_text = custom_trim(f.read())
     except FileNotFoundError:
-        input_text = "abc+def*(ghi)+ahdffd32*(abc+def)*abd"
-        with open("input.txt", "w", encoding="utf-8") as f:
-            f.write(input_text)
+        input_text = "a + b * (c);"
 
-    # print("Texto de entrada:")
-    # print(input_text)
+    # carpeta de salida
+    out_dir = "../output_lexers/slr-1"
+    os.makedirs(out_dir, exist_ok=True)
+    out_path = os.path.join(out_dir, "lexer_output_test1.txt")
 
-    path = "../output_lexers/slr-"
-
-    if not os.path.exists(path):
-        os.makedirs(path, exist_ok=True)
-
-    lexer_out_path = path + "/lexer_output_test1.txt"
-
-    try:
-        token_list = lex(input_text, dfa)
-        # En lugar de imprimir en consola, escribimos la salida en un archivo.
-        with open(lexer_out_path, "w", encoding="utf-8") as out:
-            for token in token_list:
-                out.write("Token: " + token[0] + ", Lexema: '" + token[1] + "'\n")
-    except LexicalError as e:
-        with open(lexer_out_path, "w", encoding="utf-8") as out:
-            out.write(str(e))
+    # ejecutar lexer y guardar resultado
+    with open(out_path, "w", encoding="utf-8") as out:
+        for token, lexeme in lex(input_text, dfa):
+            out.write(f"Token: {token}, Lexema: '{lexeme}'\n")
 
 
 if __name__ == "__main__":
