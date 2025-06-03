@@ -15,7 +15,7 @@
 %token SEMICOLON 
 IGNORE WHITESPACE
 
-general : general SEMICOLON expresion | expresion ; 
+general : general SEMICOLON expression | expression ; 
 
 expression:
     expression PLUS term
