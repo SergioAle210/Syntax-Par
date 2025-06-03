@@ -1,44 +1,111 @@
 {
-  "general": [
+  "p": [
     "$",
-    "LPAREN",
-    "ID",
-    "SEMICOLON"
+    "ID"
   ],
-  "expression": [
+  "t": [
     "$",
-    "LPAREN",
-    "ID",
+    "ID"
+  ],
+  "q": [
+    "$",
+    "ID"
+  ],
+  "m": [
     "SEMICOLON",
-    "PLUS",
-    "RPAREN",
-    ";"
-  ],
-  "term": [
     "$",
+    "ID"
+  ],
+  "a": [
+    "SEMICOLON",
+    "$",
+    "ID"
+  ],
+  "e": [
+    "SEMICOLON",
+    "$",
+    "RPAREN",
+    "ID"
+  ],
+  "z": [
+    "SEMICOLON",
+    "$",
+    "RPAREN",
+    "ID"
+  ],
+  "x": [
+    "SEMICOLON",
+    "EQ",
+    "RPAREN",
+    "$",
+    "LT",
+    "ID"
+  ],
+  "w": [
+    "SEMICOLON",
+    "EQ",
+    "RPAREN",
+    "$",
+    "LT",
+    "ID"
+  ],
+  "y": [
+    "PLUS",
+    "SEMICOLON",
+    "EQ",
+    "RPAREN",
+    "$",
+    "LT",
+    "ID",
+    "MINUS"
+  ],
+  "r": [
+    "PLUS",
+    "SEMICOLON",
+    "EQ",
+    "RPAREN",
+    "$",
+    "LT",
+    "ID",
+    "MINUS"
+  ],
+  "v": [
+    "PLUS",
+    "SEMICOLON",
+    "EQ",
+    "RPAREN",
+    "$",
+    "LT",
+    "ID",
+    "MINUS"
+  ],
+  "j": [
+    "DIV",
+    "PLUS",
     "TIMES",
-    "LPAREN",
-    "ID",
+    "EQ",
     "SEMICOLON",
-    "PLUS",
     "RPAREN",
-    ";"
-  ],
-  "factor": [
     "$",
-    "TIMES",
-    "LPAREN",
+    "LT",
     "ID",
-    "SEMICOLON",
+    "MINUS"
+  ],
+  "f": [
+    "DIV",
     "PLUS",
+    "TIMES",
+    "EQ",
+    "SEMICOLON",
     "RPAREN",
-    ";"
+    "$",
+    "LT",
+    "ID",
+    "MINUS"
   ],
   "S": [
-    "$",
-    "LPAREN",
     "ID"
   ],
   "S'": [],
-  "S''": []
+  "p'": []
 }

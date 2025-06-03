@@ -1,30 +1,66 @@
 {
-  "general": [
-    "LPAREN",
+  "p": [
     "ID"
   ],
-  "expression": [
-    "ID",
-    "LPAREN"
-  ],
-  "term": [
-    "LPAREN",
+  "t": [
     "ID"
   ],
-  "factor": [
+  "q": [
+    "SEMICOLON"
+  ],
+  "m": [
+    "ID"
+  ],
+  "a": [
+    "ID"
+  ],
+  "e": [
     "ID",
-    "LPAREN"
+    "LPAREN",
+    "NUMBER"
+  ],
+  "z": [
+    "EQ",
+    "LT"
+  ],
+  "x": [
+    "ID",
+    "LPAREN",
+    "NUMBER"
+  ],
+  "w": [
+    "PLUS",
+    "MINUS"
+  ],
+  "y": [
+    "PLUS",
+    "MINUS"
+  ],
+  "r": [
+    "ID",
+    "LPAREN",
+    "NUMBER"
+  ],
+  "v": [
+    "TIMES",
+    "DIV"
+  ],
+  "j": [
+    "TIMES",
+    "DIV"
+  ],
+  "f": [
+    "ID",
+    "LPAREN",
+    "NUMBER"
   ],
   "S": [
-    "ID",
-    "LPAREN"
-  ],
-  "S'": [
-    "LPAREN",
     "ID"
   ],
-  "S''": [
-    "ID",
-    "LPAREN"
+  "S'": [
+    "ID"
+  ],
+  "p'": [
+    "ID"
   ]
 }
