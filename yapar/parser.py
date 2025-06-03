@@ -307,14 +307,6 @@ def main(yalp_path, source_file_path, dfa_pickle_path, output_dir="output"):
     first = compute_first(productions)
     follow = compute_follow(productions, first, start_symbol, token_map, tokens)
 
-    # HACK: fuerza el SEMICOLON en FOLLOW(expression) si aparece en general
-    if 'general' in productions:
-        for prod in productions['general']:
-            for i, sym in enumerate(prod):
-                if sym == 'expression':
-                    # Busca si luego de expression viene SEMICOLON
-                    if i + 1 < len(prod) and prod[i + 1] == 'SEMICOLON':
-                        follow['expression'].add('SEMICOLON')
 
     # === DEBUG: IMPRIMIR FOLLOW SETS ===
     print("\n=== FOLLOW SETS DEBUG ===")

@@ -63,38 +63,63 @@ def compute_first(grammar):
 # Función para calcular el conjunto FOLLOW de cada no terminal.
 # FOLLOW(A) es el conjunto de símbolos terminales que pueden aparecer inmediatamente a la derecha de A en alguna derivación.
 def compute_follow(grammar, first, start_symbol, token_map, tokens):
-    follow = {nt: set() for nt in grammar}
-    follow[start_symbol].add("$")  # EOF al símbolo inicial
+    # Inicializar el diccionario de conjuntos FOLLOW
+    follow = {}
+    for nt in grammar:
+        follow[nt] = set()
+    # EOF al símbolo inicial
+    follow[start_symbol].add("$")
 
     changed = True
     while changed:
         changed = False
-        for lhs, productions in grammar.items():
-            for production in productions:
-                for i, B in enumerate(production):
-                    if B not in grammar:
-                        continue
-                    beta = production[i+1:]
-                    first_beta = set()
-                    for symbol in beta:
-                        if symbol not in grammar:
-                            # SOLO nombre de token: o por token_map, o si ya está en tokens declarados
-                            if symbol in token_map:
-                                first_beta.add(token_map[symbol])
-                            elif symbol in tokens:
-                                first_beta.add(symbol)
-                            # Si no, ignoramos (no agregamos el literal nunca)
-                            break
+        # Para cada lado izquierdo (LHS) y su lista de producciones
+        for lhs in grammar:
+            productions = grammar[lhs]
+            # Para cada producción (RHS)
+            for prod in productions:
+                n = len(prod)
+                for i in range(n):
+                    B = prod[i]
+                    # Solo si B es no terminal
+                    if B in grammar:
+                        # Construir beta (los símbolos después de B)
+                        beta = []
+                        j = i + 1
+                        while j < n:
+                            beta.append(prod[j])
+                            j += 1
+                        # Calcular FIRST(beta)
+                        first_beta = set()
+                        if len(beta) == 0:
+                            # Si beta es vacío, usar FOLLOW(lhs)
+                            for sym in follow[lhs]:
+                                first_beta.add(sym)
                         else:
-                            first_beta.update(first[symbol] - {"λ"})
-                            if "λ" in first[symbol]:
-                                continue
-                            else:
-                                break
-                    else:
-                        first_beta.update(follow[lhs])
-                    before = len(follow[B])
-                    follow[B].update(first_beta)
-                    if len(follow[B]) > before:
-                        changed = True
+                            # Lógica para calcular FIRST(beta)
+                            vacio = True
+                            for s in beta:
+                                if s in grammar:
+                                    for fs in first[s]:
+                                        if fs != "λ":
+                                            first_beta.add(fs)
+                                    if "λ" in first[s]:
+                                        continue
+                                    else:
+                                        vacio = False
+                                        break
+                                else:
+                                    # Terminal
+                                    first_beta.add(s)
+                                    vacio = False
+                                    break
+                            if vacio:
+                                for sym in follow[lhs]:
+                                    first_beta.add(sym)
+                        # Agregar a FOLLOW(B) todos los símbolos de first_beta
+                        before = len(follow[B])
+                        for x in first_beta:
+                            follow[B].add(x)
+                        if len(follow[B]) > before:
+                            changed = True
     return follow
