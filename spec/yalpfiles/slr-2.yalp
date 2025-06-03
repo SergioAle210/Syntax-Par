@@ -11,10 +11,11 @@
 %token DIV
 %token NUMBER
 %token LPAREN RPAREN
+%token ws
 %token SEMICOLON 
-IGNORE WS, TAB, ENTER
+IGNORE ws
 
-general : general SEMICOLON expression | expression ; 
+general : general SEMICOLON expresion | expresion ; 
 
 expression:
     expression PLUS term

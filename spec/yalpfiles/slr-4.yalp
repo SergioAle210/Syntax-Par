@@ -39,10 +39,8 @@
 %token DIV
 %token PLUS
 %token TIMES
-%token SEMICOLON 
-IGNORE WS, TAB, ENTER
-
-general : general SEMICOLON expression | expression ;
+%token ws
+IGNORE ws
 
 p:
     t
@@ -68,6 +66,7 @@ e:
 z:
     LT x
   | EQ x
+;
 x:
     r w
   | r

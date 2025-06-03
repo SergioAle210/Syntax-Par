@@ -7,10 +7,11 @@
 %token PLUS
 %token TIMES
 %token LPAREN RPAREN
+%token ws
 %token SEMICOLON 
-IGNORE WS, TAB, ENTER
+IGNORE ws
 
-general : general SEMICOLON expression | expression ;
+general : general SEMICOLON expresion | expresion ; 
 
 expression:
     term PLUS expression
