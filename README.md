@@ -92,7 +92,7 @@ rule tokens =
   | ')'       { return RPAREN }
 
 
----
+```
 
 ## Ejecución del proyecto
 
