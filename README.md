@@ -1,26 +1,4 @@
-# YALex
 
-**YALex (Yet Another Lex)** es un generador de analizadores léxicos inspirado en Lex y en la herramienta ocamllex para OCaml. Su principal objetivo es generar, a partir de una definición de expresiones regulares escrita en un archivo con extensión `.yal`, un analizador léxico que pueda integrarse fácilmente con un parser (por ejemplo, YAPar) para construir módulos completos de análisis sintáctico o de traducción.
-
----
-
-## Descripción
-
-YALex permite definir la especificación léxica en un archivo `.yal` que puede contener:
-
-- **Sección de Header (opcional):** Código que se copia al inicio del archivo generado.
-- **Definiciones:** Declaraciones de expresiones regulares frecuentes usando la sintaxis `let ident = regexp`.
-- **Regla de Entrada:** Se define una función (entrypoint) mediante la instrucción `rule`, la cual especifica los patrones (expresiones regulares) y las acciones asociadas que se deben ejecutar al reconocer un token.
-- **Sección de Trailer (opcional):** Código que se adjunta al final del archivo generado.
-
-La idea es que el analizador léxico resultante procese un buffer de entrada, reconociendo el lexema más largo que coincida con alguna de las expresiones definidas, y ejecute la acción correspondiente a ese patrón.
-
-La llamada esperada para generar el analizador es:
-yalex lexer.yal -o thelexer
-
-donde `lexer.yal` es el archivo de especificación y `thelexer` es el archivo generado con el código del analizador.
-
----
 
 ## Características
 
@@ -168,42 +146,6 @@ README.md      # Este archivo
    Puedes utilizar el módulo `lexer.py` para probar el análisis léxico sobre archivos de entrada (por ejemplo, `input.txt`), y `yalex_parser.py` para el proceso completo de parseo y generación del AFD.
 
 ---
-
-## Ejemplo de Especificación YALex
-
-A modo de ejemplo, se muestra un archivo simplificado `ejemplo.yal`:
-
-```yalex
-(* Lexer para Gramática No. 4 *)
-
-(* Introducir cualquier header aqui *)
-
-let delim = [' ''\t''\n']
-let ws = delim+
-let letter = ['A'-'Z''a'-'z']
-let str = (_)*
-let digit = ['0'-'9']
-let digits = digit+
-let id = letter(letter|str|digit)*
-let number = digits(.digits)?('E'['+''-']?digits)?
-
-rule tokens =
-    ws
-  | id        { return ID }               (* Cambie por una acción válida, que devuelva el token *)
-  | number    { return NUMBER }
-  | ';'       { return SEMICOLON }
-  | ":="      { return ASSIGNOP }
-  | '<'       { return LT }
-  | '='       { return EQ }
-  | '+'       { return PLUS }
-  | '-'       { return MINUS }
-  | '*'       { return TIMES }
-  | '/'       { return DIV }
-  | '('       { return LPAREN }
-  | ')'       { return RPAREN }
-
-(* Introducir cualquier trailer aqui *)
-```
 
 ## Ejecución del proyecto
 
