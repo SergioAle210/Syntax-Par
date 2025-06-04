@@ -78,7 +78,7 @@ let number = digits(.digits)?('E'['+''-']?digits)?
 
 rule tokens =
     ws
-  | id        { return ID }               (* Cambie por una acción válida, que devuelva el token *)
+  | id        { return ID }               
   | number    { return NUMBER }
   | ';'       { return SEMICOLON }
   | ":="      { return ASSIGNOP }
@@ -91,8 +91,6 @@ rule tokens =
   | '('       { return LPAREN }
   | ')'       { return RPAREN }
 
-(* Introducir cualquier trailer aqui *)
-```
 
 ---
 
