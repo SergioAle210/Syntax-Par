@@ -24,17 +24,22 @@ donde `lexer.yal` es el archivo de especificación y `thelexer` es el archivo ge
 
 ## Características
 
-- **Compatibilidad con Lex:** La sintaxis y el comportamiento se inspiran en Lex, facilitando la transición o integración en proyectos existentes.
-- **Soporte para Comentarios:** Los comentarios se delimitan mediante `(*` y `*)`.
-- **Secciones Opcionales:** Permite incluir secciones de header y trailer, cuyo contenido se inserta respectivamente al inicio y al final del archivo generado.
-- **Definiciones de Expresiones Regulares:** Se pueden definir identificadores para expresiones regulares comunes mediante sentencias del tipo `let ident = regexp`.
+- **Compatibilidad con Lex:** La sintaxis de las expresiones regulares, las convenciones de rule, let y la semántica de selección de lexemas están inspiradas en Lex (o flex). Esto permite migrar especificaciones existentes con cambios mínimos, facilitando la adopción de YALex en proyectos que anteriormente utilizaban herramientas tradicionales de Unix. Al mantener la lógica de “preferir el lexema más largo” y “priorizar el orden de aparición en caso de empate”, se asegura un comportamiento equivalente al de Lex, reduciendo la curva de aprendizaje.
+- **Soporte para Comentarios:** Los comentarios en un archivo .yal se delimitan con (* al inicio y *) al final, de forma similar a OCaml. YALex elimina completamente estos comentarios antes de procesar el contenido, garantizando que ni el header, ni las definiciones de expresiones regulares, ni las reglas de tokens se vean afectadas. Esto ofrece al usuario libertad para documentar internamente su especificación léxica sin alterar el comportamiento del analizador.
+- **Secciones Opcionales:** Tanto la sección de header (al principio) como la de trailer (al final) son completamente opcionales. Si no se incluyen, YALex simplemente no genera código adicional en esas zonas. Si el usuario necesita agregar dependencias o inicializaciones previas al autómata, basta con incluirlas dentro de { ... } en la parte superior del .yal. Asimismo, para agregar rutinas o definiciones después de las reglas, se usa el trailer.
+- **Definiciones de Expresiones Regulares:**Gracias a la sintaxis let ident = regexp, es posible factorizar expresiones repetidas o complejas en un solo identificador. Por ejemplo, let letter = ['A'-'Z''a'-'z'] puede reutilizarse en múltiples reglas. Durante el parseo, YALex expande recursivamente cada referencia a ident por su patrón original, envolviendo el resultado entre paréntesis para preservar la precedencia. Esto simplifica el mantenimiento y hace que los archivos .yal sean más legibles.
 - **Operadores y Sintaxis Extendida:**
-  - Literales (caracteres y cadenas) y secuencias de escape.
+  - Literales (caracteres y cadenas): Pueden indicarse con comillas simples o dobles. Por ejemplo, '+', ";=", "while". Internamente se convierten en valores ASCII separados por espacio para constituir transiciones concretas en el autómata.
+  - Secuencias de escape: Para representar saltos de línea (\n), tabulaciones (\t) u otros, se admite la sintaxis habitual de cadenas. Estas secuencias se procesan para generar el código ASCII correspondiente.
   - Metacaracter `_` para denotar cualquier símbolo.
   - Conjuntos de caracteres mediante corchetes, con soporte para rangos y complementos (`[^...]`).
   - Operadores como cerradura de Kleene (`*`), cerradura positiva (`+`), operador opcional (`?`), alternancia (`|`), concatenación implícita y el operador `#` para la diferencia de conjuntos.
-- **Resolución de Ambigüedades:** Se selecciona el lexema más largo; en caso de empate, se prioriza por el orden de definición.
-- **Acciones Asociadas:** Cada patrón puede tener una acción en código (del lenguaje de destino) que se ejecuta al reconocer el token.
+- **Resolución de Ambigüedades:** YALex aplica la estrategia tradicional de “longest match” (lexema más largo). Durante el escaneo, el autómata lleva un registro del último estado de aceptación alcanzado y retrocede a esa posición cuando no hay transiciones válidas. De esta forma, siempre se elige el lexema de mayor longitud posible. Si dos patrones producen el mismo lexema de longitud máxima, se prioriza el que aparece primero en la definición de la regla rule. Esto garantiza predictibilidad y coincide con el comportamiento de Lex clásico.
+- **Acciones Asociadas:** Cada expresión regular en la sección rule lleva un bloque de acción en código. En la mayoría de proyectos educativos, la acción suele ser return TOKEN_NAME, devolviendo un enumerado que representa el tipo de token. Sin embargo, se pueden incluir fragmentos arbitrarios del lenguaje de destino (Python, C, OCaml), permitiendo:
+  - Llevar un conteo de líneas o columnas.
+  - Construir estructuras de datos (nodos de un árbol, entradas en una tabla de símbolos).
+  - Invocar funciones auxiliares para análisis semántico ligero (por ejemplo, conversión de cadenas numéricas a valores enteros).
+  - Detener el escaneo con un error léxico personalizado
 
 ---
 
